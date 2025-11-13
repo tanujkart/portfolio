@@ -1,65 +1,286 @@
+"use client";
+
 import Image from "next/image";
+import RotatingPhotos from "@/components/RotatingPhotos";
+
+// Example photos - replace with your actual photos
+const aboutPhotos = [
+  {
+    src: "/tanuj.png",
+    caption: "Working on robotics projects",
+  },
+  {
+    src: "/researcher.png",
+    caption: "Research and innovation",
+  },
+  // Add more photos as needed
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="mx-auto max-w-7xl px-8">
+      <section id="about" className="scroll-mt-24 pt-16 pb-40 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>About</h2>
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-20">
+          {/* Left side - stationary text */}
+          <div className="flex flex-col justify-center bg-white/60 p-8 rounded-xl border-4 border-blue-200 shadow-xl transform hover:scale-[1.02] transition-all">
+            <p className="text-lg leading-relaxed text-blue-900/80 mb-8">
+              Hey I'm Tanuj! I started with <strong className="text-blue-700">Legos</strong> and then fell in love with <strong className="text-blue-700">technology</strong> so much that I had to spread it. Now, I'm a student at the <strong className="text-blue-700">North Carolina School of Science and Mathematics</strong> exploring the intersection of technology and business.
+            </p>
+            <p className="text-lg leading-relaxed text-blue-900/80 mb-8">
+              I'm an <strong className="text-blue-700">outreach captain</strong> for my school's <strong className="text-blue-700">FIRST Tech Challenge Robotics Team</strong> and have reached over <strong className="text-blue-700">2 million</strong> with our <strong className="text-blue-700">STEM curriculum</strong>. I also love making projects whether my traffic signal modification <strong className="text-blue-700">patent</strong> (<strong className="text-blue-700">11610482</strong>) and my <strong className="text-blue-700">dementia care app</strong>. I'm also researching the forecasting of algal blooms using <strong className="text-blue-700">machine learning</strong> mentored by a <strong className="text-blue-700">Duke Engineering professor</strong>. In my free time, I love debating, playing Spikeball, and exploring with my friends.
+            </p>
+          </div>
+          {/* Right side - rotating photos with captions */}
+          <div className="flex items-center justify-center">
+            <div className="transform hover:scale-105 transition-all">
+              <RotatingPhotos photos={aboutPhotos} interval={4000} />
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+      </section>
+
+      <section id="projects" className="scroll-mt-24 pt-16 pb-32 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Projects</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
+                Traffic Signal Modification
+              </h3>
+              <a 
+                href="https://patents.justia.com/inventor/tanuj-karthikeyan"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button"
+                aria-label="Visit patent page"
+              >
+                <svg 
+                  width="18" 
+                  height="18" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2"
+                  className="transform group-hover/button:translate-x-1 group-hover/button:-translate-y-1 transition-transform"
+                >
+                  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                  <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                  <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                  <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                </svg>
+                <span className="text-sm font-semibold">Take me there</span>
+              </a>
+            </div>
+            <p className="text-base leading-relaxed text-blue-900/70 mb-6">
+              Developed an innovative traffic signal modification system (Patent 11610482) that improves intersection safety and efficiency through intelligent signal timing and adaptive control mechanisms.
+            </p>
+            <div className="mt-auto pt-6 border-t border-blue-100 space-y-4">
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Technologies</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Arduino / ESP32", "Microcontrollers", "C / C++", "Bluetooth", "PCB Design", "3D CAD", "3D Printing"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Skills</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Hardware Prototyping", "Circuit Design", "Firmware Development", "CAD Modeling", "System Architecture"].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
+                ThinkClear
+              </h3>
+              <a 
+                href="https://www.thinkclear.net"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button"
+                aria-label="Visit ThinkClear website"
+              >
+                <svg 
+                  width="18" 
+                  height="18" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2"
+                  className="transform group-hover/button:translate-x-1 group-hover/button:-translate-y-1 transition-transform"
+                >
+                  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                  <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                  <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                  <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                </svg>
+                <span className="text-sm font-semibold">Take me there</span>
+              </a>
+            </div>
+            <p className="text-base leading-relaxed text-blue-900/70 mb-6">
+              A dementia care application designed to support patients and caregivers through innovative technology solutions, improving quality of life and care management.
+            </p>
+            <div className="mt-auto pt-6 border-t border-blue-100 space-y-4">
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Technologies</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {["React", "Next.js", "TypeScript", "Tailwind CSS", "Python", "OpenCV", "Flask", "Face Recognition", "SQLite", "Node.js", "Raspberry Pi", "Bluetooth LE"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Skills</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Full-Stack Development", "Computer Vision", "Facial Recognition", "API Design", "UI/UX", "Embedded Integration", "Rapid Prototyping"].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
+                Engage 360
+              </h3>
+              <a 
+                href="https://github.com/tanujkart/engage360"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button"
+                aria-label="Visit Engage 360 GitHub repository"
+              >
+                <svg 
+                  width="18" 
+                  height="18" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor"
+                  className="transform group-hover/button:scale-110 transition-transform"
+                >
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span className="text-sm font-semibold">Take me there</span>
+              </a>
+            </div>
+            <p className="text-base leading-relaxed text-blue-900/70 mb-6">
+              A congressional app challenge project designed to engage communities and promote civic participation through innovative technology solutions.
+            </p>
+            <div className="mt-auto pt-6 border-t border-blue-100 space-y-4">
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Technologies</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {["React Native", "Expo", "TypeScript", "Expo Router", "Firebase Auth", "REST APIs"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Skills</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Mobile App Development", "Cross-Platform UI Design", "State Management", "API Consumption", "User Authentication Flow"].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="research" className="scroll-mt-24 pt-16 pb-32 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Research</h2>
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Left side - cover image */}
+          <div className="flex items-center justify-center">
+            <div className="relative w-full max-w-4xl rounded-2xl shadow-lg border-2 border-blue-200/50 group hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 overflow-hidden">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+                src="/HOTSPOTcover.png"
+                alt="HOTSPOT Research Cover"
+                width={800}
+                height={600}
+                className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          </div>
+          {/* Right side - text content */}
+          <div className="flex flex-col justify-center">
+            <h3 className="text-3xl font-bold text-blue-900 mb-6">
+              HOTSPOT
+            </h3>
+            <p className="text-lg leading-relaxed text-blue-900/70">
+              <strong className="text-blue-700 font-semibold">HOTSPOT</strong> (Hybrid Oceanic Tracking via Satellite Proxy & Optimized Time-Series) is an AI-powered early-warning system that predicts harmful algal blooms up to two months in advance using open satellite and ocean data. By blending interpretable machine-learning models with ecological reasoning, <strong className="text-blue-700 font-semibold">HOTSPOT</strong> pinpoints bloom risk across global waters to support scientists and policymakers in protecting marine ecosystems and coastal communities.
+            </p>
+            <div className="mt-8 pt-6 border-t border-blue-100">
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-blue-600 mb-3">Technologies</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {["Python", "scikit-learn", "pandas", "NumPy", "xarray", "Jupyter Notebook", "VS Code", "MODIS Aqua", "WOA", "GeoPandas", "Cartopy", "GitHub"].map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full hover:bg-blue-100 hover:border-blue-300 transition-colors"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-blue-600 mb-3">Skills</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {["Machine Learning", "Ensemble Modeling", "Geospatial Analysis", "Data Processing", "Model Evaluation", "Visualization", "Statistical Analysis"].map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full hover:bg-blue-100 hover:border-blue-300 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+
       </main>
-    </div>
   );
 }
