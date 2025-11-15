@@ -1,41 +1,190 @@
 "use client";
 
 import Image from "next/image";
-import RotatingPhotos from "@/components/RotatingPhotos";
+import { useState, useEffect } from "react";
 
-// Example photos - replace with your actual photos
-const aboutPhotos = [
+// Photo gallery - add your photos here
+const galleryPhotos = [
   {
     src: "/tanuj.png",
+    alt: "Tanuj working on projects",
     caption: "Working on robotics projects",
   },
   {
     src: "/researcher.png",
+    alt: "Research work",
     caption: "Research and innovation",
   },
-  // Add more photos as needed
+  {
+    src: "/public speaker.png",
+    alt: "Public speaking",
+    caption: "Public speaking",
+  },
+  // Add more photos here as needed
+];
+
+// Debate experiences - add your debate locations and topics here
+const debateExperiences = [
+  {
+    location: "Stanford Invitational",
+    topic: "The United States should accede to the Rome Statute of the International Criminal Court.",
+    result: "1st place",
+  },
+  {
+    location: "Georgetown Spring Tournament",
+    topic: "In the United States, the benefits of the use of generative artificial intelligence in education outweigh the harms.",
+    result: "1st place",
+  },
+  {
+    location: "Georgetown Fall",
+    topic: "Resolved: The United States federal government should substantially expand its surveillance infrastructure along its southern border.",
+    result: "Quarter-Finalist",
+  },
+  {
+    location: "National Speech and Debate Tournament",
+    topic: "Resolved: The United States federal government should substantially increase fiscal redistribution in the United States by adopting a federal jobs guarantee, expanding Social Security, and/or providing a basic income.",
+    result: "Qualifier",
+  },
+  {
+    location: "Harvard Invitational",
+    topic: "Resolved: The United States should accede to the Rome Statute of the International Criminal Court.",
+    result: "Qualifier",
+  },
+  {
+    location: "Emory Forum",
+    topic: "Resolved: The United States federal government should repeal Section 230 of the Communications Decency Act.",
+    result: "Qualifier",
+  },
 ];
 
 export default function Home() {
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
+  const handlePrevious = () => {
+    setCurrentPhotoIndex((prev) => (prev === 0 ? galleryPhotos.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentPhotoIndex((prev) => (prev === galleryPhotos.length - 1 ? 0 : prev + 1));
+  };
+
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        setCurrentPhotoIndex((prev) => (prev === 0 ? galleryPhotos.length - 1 : prev - 1));
+      } else if (e.key === "ArrowRight") {
+        setCurrentPhotoIndex((prev) => (prev === galleryPhotos.length - 1 ? 0 : prev + 1));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, []);
+
   return (
     <main className="mx-auto max-w-7xl px-8">
-      <section id="about" className="scroll-mt-24 pt-16 pb-40 border-t-4 border-blue-200 bg-white">
-        <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>About</h2>
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-20">
-          {/* Left side - stationary text */}
-          <div className="flex flex-col justify-center bg-white/60 p-8 rounded-xl border-4 border-blue-200 shadow-xl transform hover:scale-[1.02] transition-all">
-            <p className="text-lg leading-relaxed text-blue-900/80 mb-8">
-              Hey I'm Tanuj! I started with <strong className="text-blue-700">Legos</strong> and then fell in love with <strong className="text-blue-700">technology</strong> so much that I had to spread it. Now, I'm a student at the <strong className="text-blue-700">North Carolina School of Science and Mathematics</strong> exploring the intersection of technology and business.
-            </p>
-            <p className="text-lg leading-relaxed text-blue-900/80 mb-8">
-              I'm an <strong className="text-blue-700">outreach captain</strong> for my school's <strong className="text-blue-700">FIRST Tech Challenge Robotics Team</strong> and have reached over <strong className="text-blue-700">2 million</strong> with our <strong className="text-blue-700">STEM curriculum</strong>. I also love making projects whether my traffic signal modification <strong className="text-blue-700">patent</strong> (<strong className="text-blue-700">11610482</strong>) and my <strong className="text-blue-700">dementia care app</strong>. I'm also researching the forecasting of algal blooms using <strong className="text-blue-700">machine learning</strong> mentored by a <strong className="text-blue-700">Duke Engineering professor</strong>. In my free time, I love debating, playing Spikeball, and exploring with my friends.
-            </p>
-          </div>
-          {/* Right side - rotating photos with captions */}
-          <div className="flex items-center justify-center">
-            <div className="transform hover:scale-105 transition-all">
-              <RotatingPhotos photos={aboutPhotos} interval={4000} />
+      <section id="photos" className="scroll-mt-24 pt-16 pb-16 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-4 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Photos</h2>
+        <p className="mb-10 text-center text-lg italic text-blue-700/70 font-medium">
+          "Someone once told me if you didn't take a photo, it didn't happen"
+        </p>
+        <div className="relative max-w-6xl mx-auto px-12">
+          {/* Main photo display - 3 photos at once */}
+          <div className="relative overflow-hidden">
+            <div className="flex gap-4 transition-transform duration-500 ease-in-out" style={{ transform: `translateX(calc(33.333% - ${currentPhotoIndex} * (33.333% + 1rem)))` }}>
+              {galleryPhotos.map((photo, index) => {
+                // Get the 3 photos to show: previous, current, next
+                const getPhotoIndex = (offset: number) => {
+                  let idx = currentPhotoIndex + offset;
+                  if (idx < 0) idx = galleryPhotos.length + idx;
+                  if (idx >= galleryPhotos.length) idx = idx - galleryPhotos.length;
+                  return idx;
+                };
+                
+                const leftIndex = getPhotoIndex(-1);
+                const centerIndex = currentPhotoIndex;
+                const rightIndex = getPhotoIndex(1);
+                
+                const isVisible = index === leftIndex || index === centerIndex || index === rightIndex;
+                const isCenter = index === centerIndex;
+                
+                if (!isVisible) return null;
+                
+                return (
+                  <div
+                    key={`${index}-${currentPhotoIndex}`}
+                    className="flex-shrink-0 w-full md:w-1/3"
+                  >
+                    <div className={`relative overflow-hidden rounded-2xl border-4 shadow-xl bg-white group transition-all duration-300 ${
+                      isCenter 
+                        ? 'border-blue-600 scale-105 z-10' 
+                        : 'border-blue-200 scale-95 opacity-80'
+                    }`}>
+                      <div className="aspect-[4/3] relative">
+                        <Image
+                          src={photo.src}
+                          alt={photo.alt}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          unoptimized
+                        />
+                      </div>
+                      {/* Caption overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                        <p className="text-white font-medium text-sm">
+                          {photo.caption}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
+          </div>
+
+          {/* Left arrow */}
+          <button
+            onClick={handlePrevious}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full p-3 text-blue-700 shadow-lg hover:shadow-xl transition-all hover:scale-110"
+            aria-label="Previous photo"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+
+          {/* Right arrow */}
+          <button
+            onClick={handleNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full p-3 text-blue-700 shadow-lg hover:shadow-xl transition-all hover:scale-110"
+            aria-label="Next photo"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+
+          {/* Dots indicator */}
+          <div className="mt-8 flex justify-center gap-2">
+            {galleryPhotos.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPhotoIndex(index)}
+                className={`h-2 rounded-full transition-all ${
+                  index === currentPhotoIndex
+                    ? "w-8 bg-blue-600"
+                    : "w-2 bg-blue-300 hover:bg-blue-400"
+                }`}
+                aria-label={`Go to photo ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Photo counter */}
+          <div className="mt-4 text-center text-blue-600 font-medium">
+            {currentPhotoIndex + 1} / {galleryPhotos.length}
           </div>
         </div>
       </section>
@@ -279,6 +428,40 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section id="debate" className="scroll-mt-24 pt-16 pb-32 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-4 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Debate</h2>
+        <p className="mb-10 text-center text-lg italic text-blue-700/70 font-medium">
+          "I love to talk."
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {debateExperiences.map((debate, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 rounded-xl border-2 border-blue-200/50"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-lg font-bold text-blue-900">
+                  {debate.location}
+                </h3>
+                {debate.result && (
+                  <span className="px-2 py-1 text-xs font-semibold text-blue-700 bg-blue-100 border border-blue-300 rounded">
+                    {debate.result}
+                  </span>
+                )}
+              </div>
+              <p className="text-sm text-blue-900/80 leading-relaxed">
+                {debate.topic}
+              </p>
+            </div>
+          ))}
+        </div>
+        {debateExperiences.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-blue-600/60 text-lg">Add your debate experiences to the debateExperiences array</p>
+          </div>
+        )}
       </section>
 
       </main>

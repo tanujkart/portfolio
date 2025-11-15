@@ -7,7 +7,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["about", "projects", "research"];
+      const sections = ["photos", "debate", "projects", "research"];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -30,7 +30,8 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { href: "#about", label: "About" },
+    { href: "#photos", label: "Photos" },
+    { href: "#debate", label: "Debate" },
     { href: "#projects", label: "Projects" },
     { href: "#research", label: "Research" },
   ];
