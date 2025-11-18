@@ -89,6 +89,7 @@ export default function Home() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; alt: string } | null>(null);
 
   const photoWidth = 600; // w-[600px] = 600px
   const gap = 16; // gap-4 = 16px
@@ -170,7 +171,8 @@ export default function Home() {
           {[...galleryPhotos, ...galleryPhotos].map((photo, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-[600px] h-80 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300"
+              onClick={() => setSelectedPhoto(photo)}
+              className="flex-shrink-0 w-[600px] h-80 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               <Image
                 src={photo.src}
@@ -183,6 +185,38 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      {/* Photo Modal/Lightbox */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center">
+            <button
+              onClick={() => setSelectedPhoto(null)}
+              className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-all transform hover:scale-110 backdrop-blur-sm"
+              aria-label="Close"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            <div
+              className="relative w-full h-full max-w-7xl max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={selectedPhoto.src}
+                alt={selectedPhoto.alt}
+                fill
+                className="object-contain rounded-lg"
+                unoptimized
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <section id="projects" className="scroll-mt-24 pt-20 pb-32 border-t-4 border-blue-200 bg-white">
         <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Projects</h2>

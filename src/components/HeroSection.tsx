@@ -9,83 +9,83 @@ interface Person {
 
 const people: Person[] = [
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a researcher",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am an engineer",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a public speaker",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a debater",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a builder",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a creator",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a designer",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am an innovator",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a programmer",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a problem-solver",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a leader",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a mentor",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a communicator",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a strategist",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am an entrepreneur",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a storyteller",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am an analyst",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a developer",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a scientist",
   },
   {
-    name: "tanuj karthikeyan",
+    name: "Tanuj Karthikeyan",
     statement: "i am a visionary",
   },
 ];
