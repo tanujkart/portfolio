@@ -10,11 +10,11 @@ interface Person {
 const people: Person[] = [
   {
     name: "tanuj karthikeyan",
-    statement: "i am a student at the north carolina school of science and math",
+    statement: "i am a researcher",
   },
   {
     name: "tanuj karthikeyan",
-    statement: "i am a researcher",
+    statement: "i am an engineer",
   },
   {
     name: "tanuj karthikeyan",
@@ -22,7 +22,71 @@ const people: Person[] = [
   },
   {
     name: "tanuj karthikeyan",
+    statement: "i am a debater",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a builder",
+  },
+  {
+    name: "tanuj karthikeyan",
     statement: "i am a creator",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a designer",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am an innovator",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a programmer",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a problem-solver",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a leader",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a mentor",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a communicator",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a strategist",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am an entrepreneur",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a storyteller",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am an analyst",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a developer",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a scientist",
+  },
+  {
+    name: "tanuj karthikeyan",
+    statement: "i am a visionary",
   },
 ];
 
@@ -36,6 +100,7 @@ export default function HeroSection() {
     setDisplayedText("");
     setIsTyping(true);
     let currentIndex = 0;
+    let advanceTimeout: NodeJS.Timeout | null = null;
     const text = current.statement;
 
     const typeInterval = setInterval(() => {
@@ -45,20 +110,21 @@ export default function HeroSection() {
       } else {
         setIsTyping(false);
         clearInterval(typeInterval);
+        
+        // After typing finishes, wait 2 seconds then advance to next statement
+        advanceTimeout = setTimeout(() => {
+          setSelectedIndex((prevIndex) => (prevIndex + 1) % people.length);
+        }, 2000);
       }
     }, 50); // Typing speed - adjust as needed
 
-    return () => clearInterval(typeInterval);
+    return () => {
+      clearInterval(typeInterval);
+      if (advanceTimeout) {
+        clearTimeout(advanceTimeout);
+      }
+    };
   }, [current.statement]);
-
-  // Auto-advance character every few seconds (no rotation)
-  useEffect(() => {
-    const advanceInterval = setInterval(() => {
-      setSelectedIndex((prevIndex) => (prevIndex + 1) % people.length);
-    }, 4000); // Change character every 4 seconds
-
-    return () => clearInterval(advanceInterval);
-  }, []);
 
 
   return (

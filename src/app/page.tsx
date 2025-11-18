@@ -99,9 +99,9 @@ export default function Home() {
     const scroll = () => {
       setScrollPosition((prev) => {
         const newPos = prev + 0.5;
-        // Reset when we've scrolled through all photos
+        // Reset when we've scrolled through one set of photos (seamless loop)
         if (newPos >= totalWidth) {
-          return 0;
+          return newPos - totalWidth; // Seamlessly continue from the duplicate set
         }
         return newPos;
       });
@@ -115,7 +115,8 @@ export default function Home() {
     setScrollPosition((prev) => {
       const newPos = prev - scrollAmount;
       if (newPos < 0) {
-        return totalWidth - scrollAmount;
+        // Seamlessly loop to the end of the duplicate set
+        return totalWidth + newPos;
       }
       return newPos;
     });
@@ -124,8 +125,9 @@ export default function Home() {
   const handleNext = () => {
     setScrollPosition((prev) => {
       const newPos = prev + scrollAmount;
+      // Seamlessly loop back to start when reaching the end
       if (newPos >= totalWidth) {
-        return 0;
+        return newPos - totalWidth;
       }
       return newPos;
     });
