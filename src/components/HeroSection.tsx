@@ -1,32 +1,26 @@
 "use client";
 
-import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
-interface LegoPerson {
-  image: string;
+interface Person {
   name: string;
   statement: string;
 }
 
-const people: LegoPerson[] = [
+const people: Person[] = [
   {
-    image: "/tanuj.png",
     name: "tanuj karthikeyan",
     statement: "i am a student at the north carolina school of science and math",
   },
   {
-    image: "/researcher.png",
     name: "tanuj karthikeyan",
     statement: "i am a researcher",
   },
   {
-    image: "/public speaker.png",
     name: "tanuj karthikeyan",
     statement: "i am a public speaker",
   },
   {
-    image: "/tanuj.png",
     name: "tanuj karthikeyan",
     statement: "i am a creator",
   },
@@ -37,8 +31,6 @@ export default function HeroSection() {
   const current = people[selectedIndex];
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
-  const [rotation, setRotation] = useState(0);
-  const totalRotationRef = useRef(0);
 
   useEffect(() => {
     setDisplayedText("");
@@ -59,144 +51,31 @@ export default function HeroSection() {
     return () => clearInterval(typeInterval);
   }, [current.statement]);
 
-  // Continuous 3D rotation animation with character change every 90 degrees
+  // Auto-advance character every few seconds (no rotation)
   useEffect(() => {
-    const rotateInterval = setInterval(() => {
-      const previousTotal = totalRotationRef.current;
-      totalRotationRef.current += 0.5;
-      const newRotation = totalRotationRef.current % 360;
-      setRotation(newRotation);
-      
-      // Check if we've crossed a 90-degree boundary
-      const previousMilestone = Math.floor(previousTotal / 90);
-      const currentMilestone = Math.floor(totalRotationRef.current / 90);
-      
-      // If we've crossed a new 90-degree milestone, change character smoothly
-      if (currentMilestone > previousMilestone) {
-        setSelectedIndex((prevIndex) => (prevIndex + 1) % people.length);
-      }
-    }, 50); // Adjust speed: lower = faster rotation
+    const advanceInterval = setInterval(() => {
+      setSelectedIndex((prevIndex) => (prevIndex + 1) % people.length);
+    }, 4000); // Change character every 4 seconds
 
-    return () => clearInterval(rotateInterval);
+    return () => clearInterval(advanceInterval);
   }, []);
 
-  const handlePrevious = () => {
-    setSelectedIndex((prev) => (prev === 0 ? people.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setSelectedIndex((prev) => (prev === people.length - 1 ? 0 : prev + 1));
-  };
 
   return (
-    <div className="mx-auto max-w-7xl px-8 py-32">
-      <div className="flex items-center gap-12 md:gap-20">
-        <div className="flex flex-col items-center">
-          <div className="relative">
-            <button
-              onClick={handlePrevious}
-              className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-blue-100/80 backdrop-blur-sm p-2 text-blue-700 opacity-0 transition-opacity hover:opacity-100 focus:opacity-100 group-hover:opacity-100"
-              aria-label="Previous"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-            <div className="group relative">
-              <div
-                className="cursor-pointer select-none"
-                style={{ perspective: "1000px" }}
-                onMouseDown={(e) => {
-                  const startX = e.clientX;
-                  const handleMouseMove = (moveEvent: MouseEvent) => {
-                    const diff = moveEvent.clientX - startX;
-                    if (Math.abs(diff) > 50) {
-                      if (diff > 0) handlePrevious();
-                      else handleNext();
-                      document.removeEventListener("mousemove", handleMouseMove);
-                      document.removeEventListener("mouseup", handleMouseUp);
-                    }
-                  };
-                  const handleMouseUp = () => {
-                    document.removeEventListener("mousemove", handleMouseMove);
-                    document.removeEventListener("mouseup", handleMouseUp);
-                  };
-                  document.addEventListener("mousemove", handleMouseMove);
-                  document.addEventListener("mouseup", handleMouseUp);
-                }}
-                onTouchStart={(e) => {
-                  const startX = e.touches[0].clientX;
-                  const handleTouchMove = (moveEvent: TouchEvent) => {
-                    const diff = moveEvent.touches[0].clientX - startX;
-                    if (Math.abs(diff) > 50) {
-                      if (diff > 0) handlePrevious();
-                      else handleNext();
-                      document.removeEventListener("touchmove", handleTouchMove);
-                      document.removeEventListener("touchend", handleTouchEnd);
-                    }
-                  };
-                  const handleTouchEnd = () => {
-                    document.removeEventListener("touchmove", handleTouchMove);
-                    document.removeEventListener("touchend", handleTouchEnd);
-                  };
-                  document.addEventListener("touchmove", handleTouchMove);
-                  document.addEventListener("touchend", handleTouchEnd);
-                }}
-                aria-label="Swipe to change figure"
-              >
-                <div
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transform: `rotateY(${rotation}deg)`,
-                  }}
-                >
-                  <Image
-                    src={current.image}
-                    alt="LEGO figurine"
-                    width={220}
-                    height={330}
-                    priority
-                    unoptimized
-                    className="hover:scale-105 transition-transform duration-300"
-                    style={{ backfaceVisibility: "visible" }}
-                    draggable={false}
-                  />
-                </div>
-              </div>
-              <button
-                onClick={handlePrevious}
-                className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-blue-100/80 backdrop-blur-sm p-2 text-blue-700 opacity-0 transition-opacity hover:opacity-100 focus:opacity-100 group-hover:opacity-100"
-                aria-label="Previous"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </button>
-              <button
-                onClick={handleNext}
-                className="absolute -right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white opacity-0 transition-opacity hover:opacity-100 focus:opacity-100 group-hover:opacity-100"
-                aria-label="Next"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          {/* Dots indicator */}
-          <div className="mt-4 flex gap-2">
-            {people.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedIndex(index)}
-                className={`h-1.5 rounded-full border transition-all ${
-                  index === selectedIndex ? "w-8 bg-blue-600 border-blue-600" : "w-1.5 bg-blue-300 border-blue-300 hover:bg-blue-400"
-                }`}
-                aria-label={`Go to ${people[index].statement}`}
-              />
-            ))}
-          </div>
-          <div className="mt-6 flex gap-3">
+    <div className="mx-auto max-w-7xl px-8 pt-32 pb-8">
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="text-6xl font-bold tracking-tight text-blue-900 sm:text-7xl md:text-8xl text-center drop-shadow-lg" style={{ textShadow: '3px 3px 0 rgba(59, 130, 246, 0.2)' }}>
+            {current.name}
+          </h1>
+          <p className="mt-4 text-xl font-bold text-blue-700/80 sm:text-2xl md:text-3xl transition-all text-center leading-relaxed drop-shadow-sm">
+            {displayedText}
+            {isTyping && <span className="animate-pulse text-blue-500">|</span>}
+          </p>
+          <p className="mt-4 max-w-3xl text-center text-base text-blue-600/80 sm:text-lg md:text-xl font-semibold">
+            after playing with legos, i fell in love with tech. now i'm interested in intelligent systems and how they translate to impact.
+          </p>
+          <div className="mt-8 flex gap-3">
             <a
               href="https://github.com/tanujkart"
               target="_blank"
@@ -219,19 +98,17 @@ export default function HeroSection() {
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
             </a>
+            <a
+              href="mailto:soccertanuj@gmail.com"
+              className="flex h-12 w-12 items-center justify-center rounded-lg border-4 border-blue-300 bg-blue-50 text-blue-700 transition-all hover:border-blue-400 hover:bg-blue-100 hover:scale-110 shadow-lg transform"
+              aria-label="Email"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </a>
           </div>
-        </div>
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <h1 className="text-6xl font-bold tracking-tight text-blue-900 sm:text-7xl md:text-8xl text-center drop-shadow-lg" style={{ textShadow: '3px 3px 0 rgba(59, 130, 246, 0.2)' }}>
-            {current.name}
-          </h1>
-          <p className="mt-4 text-xl font-bold text-blue-700/80 sm:text-2xl md:text-3xl transition-all text-center leading-relaxed drop-shadow-sm">
-            {displayedText}
-            {isTyping && <span className="animate-pulse text-blue-500">|</span>}
-          </p>
-          <p className="mt-4 max-w-3xl text-center text-base text-blue-600/80 sm:text-lg md:text-xl font-semibold">
-            after playing with legos, i fell in love with tech. now i'm interested in intelligent systems and how they translate to impact.
-          </p>
         </div>
       </div>
     </div>

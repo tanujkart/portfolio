@@ -7,7 +7,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["photos", "debate", "projects", "research"];
+      const sections = ["awards", "projects", "research", "contact"];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -30,10 +30,10 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { href: "#photos", label: "Photos" },
-    { href: "#debate", label: "Debate" },
     { href: "#projects", label: "Projects" },
     { href: "#research", label: "Research" },
+    { href: "#awards", label: "Awards" },
+    { href: "#contact", label: "Contact" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -51,8 +51,7 @@ export default function Header() {
             window.scrollTo({ top: 0, behavior: "smooth" });
             setActiveSection("");
           }}
-          className="text-base font-bold tracking-tight text-blue-900 transition-all hover:scale-105 drop-shadow-sm"
-          style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)' }}
+          className="text-xl font-bold tracking-tight text-blue-900 transition-all hover:scale-105"
         >
           Tanuj Karthikeyan
         </a>
@@ -67,7 +66,7 @@ export default function Header() {
                 onClick={(e) => handleNavClick(e, id)}
                 className={`relative px-5 py-2 text-base font-bold transition-all transform hover:scale-105 rounded-lg ${
                   isActive
-                    ? "bg-blue-600 text-white shadow-md border-2 border-blue-700"
+                    ? "bg-blue-600 text-white border-2 border-blue-700"
                     : "text-blue-700/80 hover:text-blue-900 hover:bg-blue-50 border-2 border-transparent hover:border-blue-200"
                 }`}
               >
