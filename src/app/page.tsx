@@ -3,25 +3,43 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-// Photo gallery - add your photos here
-const galleryPhotos = [
-  {
-    src: "/tanuj.png",
-    alt: "Tanuj working on projects",
-    caption: "Working on robotics projects",
-  },
-  {
-    src: "/researcher.png",
-    alt: "Research work",
-    caption: "Research and innovation",
-  },
-  {
-    src: "/public speaker.png",
-    alt: "Public speaking",
-    caption: "Public speaking",
-  },
-  // Add more photos here as needed
+// Photo gallery - photos from pics folder (excluding HEIC and TrafficSignal)
+const allPhotos = [
+  { src: "/pics/2024FRCRobot.jpg", alt: "2024 FRC Robot" },
+  { src: "/pics/4thGradeCapitolRobotics.jpg", alt: "4th Grade Capitol Robotics" },
+  { src: "/pics/AttacheAlumniWknd.JPG", alt: "Attache Alumni Weekend" },
+  { src: "/pics/AttacheGroupPhoto.jpg", alt: "Attache Group Photo" },
+  { src: "/pics/FirstDebateTournament.JPG", alt: "First Debate Tournament" },
+  { src: "/pics/GlassesDesign.PNG", alt: "Glasses Design" },
+  { src: "/pics/LemonadeStand.jpg", alt: "Lemonade Stand" },
+  { src: "/pics/M&TSIGlassDesign.png", alt: "M&TSI Glass Design" },
+  { src: "/pics/M&TSIOnStage.jpg", alt: "M&TSI On Stage" },
+  { src: "/pics/M&TSIPracticeBeforeStage.jpg", alt: "M&TSI Practice Before Stage" },
+  { src: "/pics/M&TSIStage.png", alt: "M&TSI Stage" },
+  { src: "/pics/OutstandingVolunteerAward.JPG", alt: "Outstanding Volunteer Award" },
+  { src: "/pics/PresentingToFireDept.JPG", alt: "Presenting To Fire Department" },
+  { src: "/pics/SigmaLolaPhoto.jpg", alt: "Sigma Lola Photo" },
+  { src: "/pics/SigmaTeamPhoto.jpg", alt: "Sigma Team Photo" },
+  { src: "/pics/Soccer.JPG", alt: "Soccer" },
+  { src: "/pics/SoccerAgain.JPG", alt: "Soccer Again" },
+  { src: "/pics/SpeakerEventMcFarland.jpg", alt: "Speaker Event McFarland" },
+  { src: "/pics/VolunteeringAtFLL.JPG", alt: "Volunteering At FLL" },
+  { src: "/pics/VolunteeringAtTitle1.jpg", alt: "Volunteering At Title 1" },
+  { src: "/pics/WinningImpact.jpeg", alt: "Winning Impact" },
 ];
+
+// Shuffle array function
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// Randomize the order of photos
+const galleryPhotos = shuffleArray(allPhotos);
 
 // Awards - add your awards here
 const awards = [
@@ -72,11 +90,12 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [showAllProjects, setShowAllProjects] = useState(false);
 
+  const photoWidth = 600; // w-[600px] = 600px
+  const gap = 16; // gap-4 = 16px
+  const totalWidth = (photoWidth + gap) * galleryPhotos.length;
+  const scrollAmount = photoWidth + gap; // Scroll by one photo width + gap
+
   useEffect(() => {
-    const photoWidth = 480; // w-[480px] = 480px
-    const gap = 16; // gap-4 = 16px
-    const totalWidth = (photoWidth + gap) * galleryPhotos.length;
-    
     const scroll = () => {
       setScrollPosition((prev) => {
         const newPos = prev + 0.5;
@@ -90,16 +109,58 @@ export default function Home() {
 
     const interval = setInterval(scroll, 20); // Smooth scrolling
     return () => clearInterval(interval);
-  }, []);
+  }, [totalWidth]);
+
+  const handlePrevious = () => {
+    setScrollPosition((prev) => {
+      const newPos = prev - scrollAmount;
+      if (newPos < 0) {
+        return totalWidth - scrollAmount;
+      }
+      return newPos;
+    });
+  };
+
+  const handleNext = () => {
+    setScrollPosition((prev) => {
+      const newPos = prev + scrollAmount;
+      if (newPos >= totalWidth) {
+        return 0;
+      }
+      return newPos;
+    });
+  };
 
   return (
     <main className="mx-auto max-w-7xl px-8">
       {/* Photo strip */}
-      <div className="pt-8 pb-12 overflow-hidden">
+      <div className="pt-8 pb-12 overflow-hidden relative">
+        {/* Left arrow */}
+        <button
+          onClick={handlePrevious}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white rounded-full p-3 hover:bg-blue-700 transition-all transform hover:scale-110 shadow-lg"
+          aria-label="Previous photo"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        
+        {/* Right arrow */}
+        <button
+          onClick={handleNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white rounded-full p-3 hover:bg-blue-700 transition-all transform hover:scale-110 shadow-lg"
+          aria-label="Next photo"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+
         <div 
           className="flex gap-4"
           style={{ 
-            transform: `translateX(-${scrollPosition}px)`,
+            transform: `translateX(calc(50vw - 300px - ${scrollPosition}px))`,
             width: 'max-content'
           }}
         >
@@ -107,7 +168,7 @@ export default function Home() {
           {[...galleryPhotos, ...galleryPhotos].map((photo, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-[480px] h-64 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300"
+              className="flex-shrink-0 w-[600px] h-80 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300"
             >
               <Image
                 src={photo.src}
@@ -116,12 +177,6 @@ export default function Home() {
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
                 unoptimized
               />
-              {/* Caption overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <p className="text-white font-medium text-sm">
-                  {photo.caption}
-                </p>
-              </div>
             </div>
           ))}
         </div>
