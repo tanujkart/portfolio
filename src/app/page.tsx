@@ -38,9 +38,6 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-// Randomize the order of photos
-const galleryPhotos = shuffleArray(allPhotos);
-
 // Awards - add your awards here
 const awards = [
   {
@@ -90,23 +87,25 @@ export default function Home() {
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<{ src: string; alt: string } | null>(null);
+  const [galleryPhotos, setGalleryPhotos] = useState(allPhotos);
+
+  useEffect(() => {
+    // Shuffle photos on the client after hydration to avoid SSR mismatch
+    setGalleryPhotos(shuffleArray(allPhotos));
+  }, []);
 
   const photoWidth = 600; // w-[600px] = 600px
   const gap = 16; // gap-4 = 16px
   const totalWidth = (photoWidth + gap) * galleryPhotos.length;
+  const displayPhotos = [...galleryPhotos, ...galleryPhotos];
+  const normalizedScroll =
+    totalWidth === 0 ? 0 : ((scrollPosition % totalWidth) + totalWidth) % totalWidth;
+  const visibleWidth = photoWidth * 3 + gap * 2;
   const scrollAmount = photoWidth + gap; // Scroll by one photo width + gap
 
   useEffect(() => {
     const scroll = () => {
-      setScrollPosition((prev) => {
-        const newPos = prev + 0.5;
-        // Seamlessly loop: when we reach the end of first set, continue from duplicate
-        // This creates an infinite loop without visible restart
-        if (newPos >= totalWidth) {
-          return newPos - totalWidth; // Seamlessly continue from the duplicate set
-        }
-        return newPos;
-      });
+      setScrollPosition((prev) => prev + 0.5);
     };
 
     const interval = setInterval(scroll, 20); // Smooth scrolling
@@ -114,25 +113,11 @@ export default function Home() {
   }, [totalWidth]);
 
   const handlePrevious = () => {
-    setScrollPosition((prev) => {
-      const newPos = prev - scrollAmount;
-      if (newPos < 0) {
-        // Seamlessly loop to the end of the duplicate set
-        return totalWidth + newPos;
-      }
-      return newPos;
-    });
+    setScrollPosition((prev) => prev - scrollAmount);
   };
 
   const handleNext = () => {
-    setScrollPosition((prev) => {
-      const newPos = prev + scrollAmount;
-      // Seamlessly loop back to start when reaching the end
-      if (newPos >= totalWidth) {
-        return newPos - totalWidth;
-      }
-      return newPos;
-    });
+    setScrollPosition((prev) => prev + scrollAmount);
   };
 
   return (
@@ -161,58 +146,60 @@ export default function Home() {
           </svg>
         </button>
 
-        <div 
-          className="flex gap-4"
-          style={{ 
-            transform: `translateX(calc(50vw - 300px - ${scrollPosition % totalWidth}px))`,
-            width: 'max-content',
-            transition: 'transform 0s linear'
-          }}
-        >
-          {/* Duplicate photos multiple times for truly seamless infinite loop */}
-          {[...galleryPhotos, ...galleryPhotos, ...galleryPhotos].map((photo, index) => {
-            // Get the actual photo index (modulo to handle duplicates)
-            const actualPhotoIndex = index % galleryPhotos.length;
-            const actualPhoto = galleryPhotos[actualPhotoIndex];
-            
-            // Custom positioning for specific images
-            const getImageStyle = () => {
-              if (photo.src.includes('WinningImpact')) {
-                return { objectPosition: 'center 30%' }; // Center up a little
-              }
-              if (photo.src.includes('4thGradeCapitolRobotics')) {
-                return { objectPosition: 'center 20%' }; // Move higher
-              }
-              if (photo.src.includes('M&TSIGlassDesign')) {
-                return { transform: 'scale(0.85)' }; // Zoom out
-              }
-              return {};
-            };
-            
-            return (
-              <div
-                key={index}
-                onClick={() => setSelectedPhoto(actualPhoto)}
-                className="flex-shrink-0 w-[600px] h-80 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300 cursor-pointer"
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  style={getImageStyle()}
-                  unoptimized
-                />
-              </div>
-            );
-          })}
-        </div>
+        <div className="overflow-hidden mx-auto" style={{ width: `${visibleWidth}px` }}>
+          <div 
+            className="flex gap-4"
+            style={{ 
+              transform: `translateX(-${normalizedScroll}px)`,
+              width: `${displayPhotos.length * (photoWidth + gap)}px`,
+              transition: 'transform 0s linear'
+            }}
+          >
+            {/* Duplicate photos multiple times for truly seamless infinite loop */}
+            {displayPhotos.map((photo, index) => {
+              // Get the actual photo index (modulo to handle duplicates)
+              const actualPhotoIndex = index % galleryPhotos.length;
+              const actualPhoto = galleryPhotos[actualPhotoIndex];
+              
+              // Custom positioning for specific images
+              const getImageStyle = () => {
+                if (photo.src.includes('WinningImpact')) {
+                  return { objectPosition: 'center 30%' }; // Center up a little
+                }
+                if (photo.src.includes('4thGradeCapitolRobotics')) {
+                  return { objectPosition: 'center 20%' }; // Move higher
+                }
+                if (photo.src.includes('M&TSIGlassDesign')) {
+                  return { transform: 'scale(0.85)' }; // Zoom out
+                }
+                return {};
+              };
+              
+              return (
+                <div
+                  key={index}
+                  onClick={() => setSelectedPhoto(actualPhoto)}
+                  className="flex-shrink-0 w-[600px] h-80 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300 cursor-pointer"
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                    style={getImageStyle()}
+                    unoptimized
+                  />
+                </div>
+              );
+            })}
           </div>
+        </div>
+      </div>
 
       {/* Photo Modal/Lightbox */}
       {selectedPhoto && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
           onClick={() => setSelectedPhoto(null)}
         >
           <div className="relative max-w-4xl max-h-[80vh] w-full h-full flex items-center justify-center">
@@ -745,6 +732,11 @@ export default function Home() {
           </form>
         </div>
       </section>
+
+      <footer className="py-10 text-center text-sm text-blue-700 border-t border-blue-100 bg-white">
+        <p className="font-semibold">Designed and Built by Tanuj Karthikeyan</p>
+        <p className="mt-2">&copy; 2025 All Rights Reserved</p>
+      </footer>
 
       </main>
   );
