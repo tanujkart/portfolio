@@ -100,7 +100,8 @@ export default function Home() {
     const scroll = () => {
       setScrollPosition((prev) => {
         const newPos = prev + 0.5;
-        // Reset when we've scrolled through one set of photos (seamless loop)
+        // Seamlessly loop: when we reach the end of first set, continue from duplicate
+        // This creates an infinite loop without visible restart
         if (newPos >= totalWidth) {
           return newPos - totalWidth; // Seamlessly continue from the duplicate set
         }
@@ -163,28 +164,50 @@ export default function Home() {
         <div 
           className="flex gap-4"
           style={{ 
-            transform: `translateX(calc(50vw - 300px - ${scrollPosition}px))`,
-            width: 'max-content'
+            transform: `translateX(calc(50vw - 300px - ${scrollPosition % totalWidth}px))`,
+            width: 'max-content',
+            transition: 'transform 0s linear'
           }}
         >
-          {/* Duplicate photos for seamless loop */}
-          {[...galleryPhotos, ...galleryPhotos].map((photo, index) => (
-            <div
-              key={index}
-              onClick={() => setSelectedPhoto(photo)}
-              className="flex-shrink-0 w-[600px] h-80 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300 cursor-pointer"
-            >
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                className="object-cover group-hover:scale-110 transition-transform duration-300"
-                unoptimized
-              />
-            </div>
-          ))}
+          {/* Duplicate photos multiple times for truly seamless infinite loop */}
+          {[...galleryPhotos, ...galleryPhotos, ...galleryPhotos].map((photo, index) => {
+            // Get the actual photo index (modulo to handle duplicates)
+            const actualPhotoIndex = index % galleryPhotos.length;
+            const actualPhoto = galleryPhotos[actualPhotoIndex];
+            
+            // Custom positioning for specific images
+            const getImageStyle = () => {
+              if (photo.src.includes('WinningImpact')) {
+                return { objectPosition: 'center 30%' }; // Center up a little
+              }
+              if (photo.src.includes('4thGradeCapitolRobotics')) {
+                return { objectPosition: 'center 20%' }; // Move higher
+              }
+              if (photo.src.includes('M&TSIGlassDesign')) {
+                return { transform: 'scale(0.85)' }; // Zoom out
+              }
+              return {};
+            };
+            
+            return (
+              <div
+                key={index}
+                onClick={() => setSelectedPhoto(actualPhoto)}
+                className="flex-shrink-0 w-[600px] h-80 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300 cursor-pointer"
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  style={getImageStyle()}
+                  unoptimized
+                />
+              </div>
+            );
+          })}
         </div>
-      </div>
+          </div>
 
       {/* Photo Modal/Lightbox */}
       {selectedPhoto && (
@@ -192,7 +215,7 @@ export default function Home() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
           onClick={() => setSelectedPhoto(null)}
         >
-          <div className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center">
+          <div className="relative max-w-4xl max-h-[80vh] w-full h-full flex items-center justify-center">
             <button
               onClick={() => setSelectedPhoto(null)}
               className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition-all transform hover:scale-110 backdrop-blur-sm"
@@ -203,7 +226,7 @@ export default function Home() {
               </svg>
             </button>
             <div
-              className="relative w-full h-full max-w-7xl max-h-[90vh]"
+              className="relative w-full h-full max-w-4xl max-h-[80vh]"
               onClick={(e) => e.stopPropagation()}
             >
               <Image
@@ -221,7 +244,7 @@ export default function Home() {
       <section id="projects" className="scroll-mt-24 pt-20 pb-32 border-t-4 border-blue-200 bg-white">
         <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Projects</h2>
         <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
             <div className="flex items-center justify-between mb-4 gap-4">
               <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors flex-shrink min-w-0">
@@ -400,7 +423,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          </div>
+        </div>
           {showAllProjects && (
             <div className="flex justify-center gap-8">
               <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col w-full max-w-lg">
