@@ -60,14 +60,6 @@ export default function BackgroundEffects() {
       handleMove(e.clientX, e.clientY);
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      // Don't prevent default - allow scrolling
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        handleMove(touch.clientX, touch.clientY);
-      }
-    };
-
     const handleStart = (x: number, y: number) => {
       isDrawing = true;
       addPoint(x, y);
@@ -75,13 +67,6 @@ export default function BackgroundEffects() {
 
     const handleMouseDown = (e: MouseEvent) => {
       handleStart(e.clientX, e.clientY);
-    };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        const touch = e.touches[0];
-        handleStart(touch.clientX, touch.clientY);
-      }
     };
 
     const handleEnd = () => {
@@ -92,17 +77,10 @@ export default function BackgroundEffects() {
       handleEnd();
     };
 
-    const handleTouchEnd = () => {
-      handleEnd();
-    };
-
-    // Add event listeners - make touch events passive to allow scrolling
+    // Only add mouse event listeners (desktop only - no touch events for mobile)
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchmove", handleTouchMove, { passive: true });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     const drawLine = () => {
       const now = Date.now();
@@ -169,9 +147,6 @@ export default function BackgroundEffects() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("resize", handleResize);
     };
   }, [mounted]);
