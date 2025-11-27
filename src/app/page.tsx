@@ -94,14 +94,36 @@ export default function Home() {
     setGalleryPhotos(shuffleArray(allPhotos));
   }, []);
 
-  const photoWidth = 600; // w-[600px] = 600px
+  // Responsive photo dimensions
+  const [photoWidth, setPhotoWidth] = useState(600);
+  const [windowWidth, setWindowWidth] = useState(1024);
   const gap = 16; // gap-4 = 16px
+  
+  useEffect(() => {
+    const updateDimensions = () => {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+      if (width < 640) {
+        setPhotoWidth(280); // Mobile: smaller photos
+      } else if (width < 1024) {
+        setPhotoWidth(400); // Tablet: medium photos
+      } else {
+        setPhotoWidth(600); // Desktop: full size
+      }
+    };
+    
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+  
   const totalWidth = (photoWidth + gap) * galleryPhotos.length;
   const displayPhotos = [...galleryPhotos, ...galleryPhotos];
   const normalizedScroll =
     totalWidth === 0 ? 0 : ((scrollPosition % totalWidth) + totalWidth) % totalWidth;
-  const visibleWidth = photoWidth * 3 + gap * 2;
+  const visibleWidth = Math.min(photoWidth * 3 + gap * 2, windowWidth - 32);
   const scrollAmount = photoWidth + gap; // Scroll by one photo width + gap
+  const photoHeight = windowWidth < 640 ? 200 : windowWidth < 1024 ? 250 : 320;
 
   useEffect(() => {
     const scroll = () => {
@@ -121,16 +143,16 @@ export default function Home() {
   };
 
   return (
-    <main className="mx-auto max-w-7xl px-8">
+    <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {/* Photo strip */}
-      <div className="pt-8 pb-12 overflow-hidden relative">
+      <div className="pt-4 sm:pt-8 pb-8 sm:pb-12 overflow-hidden relative">
         {/* Left arrow */}
         <button
           onClick={handlePrevious}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white rounded-full p-3 hover:bg-blue-700 transition-all transform hover:scale-110 shadow-lg"
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white rounded-full p-2 sm:p-3 hover:bg-blue-700 transition-all transform hover:scale-110 shadow-lg"
           aria-label="Previous photo"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
@@ -138,17 +160,17 @@ export default function Home() {
         {/* Right arrow */}
         <button
           onClick={handleNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white rounded-full p-3 hover:bg-blue-700 transition-all transform hover:scale-110 shadow-lg"
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-blue-600 text-white rounded-full p-2 sm:p-3 hover:bg-blue-700 transition-all transform hover:scale-110 shadow-lg"
           aria-label="Next photo"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 18l6-6-6-6" />
           </svg>
         </button>
 
-        <div className="overflow-hidden mx-auto" style={{ width: `${visibleWidth}px` }}>
+        <div className="overflow-hidden mx-auto" style={{ width: `min(100%, ${visibleWidth}px)` }}>
           <div 
-            className="flex gap-4"
+            className="flex gap-3 sm:gap-4"
             style={{ 
               transform: `translateX(-${normalizedScroll}px)`,
               width: `${displayPhotos.length * (photoWidth + gap)}px`,
@@ -179,7 +201,11 @@ export default function Home() {
                 <div
                   key={index}
                   onClick={() => setSelectedPhoto(actualPhoto)}
-                  className="flex-shrink-0 w-[600px] h-80 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300 cursor-pointer"
+                  className="flex-shrink-0 relative rounded-lg overflow-hidden border-2 border-blue-200 group hover:border-blue-400 hover:scale-105 transition-all duration-300 cursor-pointer"
+                  style={{ 
+                    width: `${photoWidth}px`,
+                    height: `${photoHeight}px`
+                  }}
                 >
                   <Image
                     src={photo.src}
@@ -228,20 +254,20 @@ export default function Home() {
         </div>
       )}
 
-      <section id="projects" className="scroll-mt-24 pt-20 pb-32 border-t-4 border-blue-200 bg-white">
-        <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Projects</h2>
-        <div className="space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
-            <div className="flex items-center justify-between mb-4 gap-4">
-              <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors flex-shrink min-w-0">
+      <section id="projects" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Projects</h2>
+        <div className="space-y-6 sm:space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div className="group bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3 sm:gap-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
                 Traffic Signal Modification
               </h3>
               <a 
                 href="https://patents.justia.com/inventor/tanuj-karthikeyan"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button whitespace-nowrap flex-shrink-0"
+                className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button whitespace-nowrap text-sm sm:text-base"
                 aria-label="Visit patent page"
               >
                 <svg 
@@ -293,16 +319,16 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
+          <div className="group bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3 sm:gap-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
                 ThinkClear
               </h3>
               <a 
                 href="https://www.thinkclear.net"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button"
+                className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button text-sm sm:text-base"
                 aria-label="Visit ThinkClear website"
               >
                 <svg 
@@ -354,16 +380,16 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
+          <div className="group bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3 sm:gap-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
                 Engage 360
               </h3>
               <a 
                 href="https://github.com/tanujkart/engage360"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button"
+                className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button text-sm sm:text-base"
                 aria-label="Visit Engage 360 GitHub repository"
               >
                 <svg 
@@ -412,17 +438,17 @@ export default function Home() {
           </div>
         </div>
           {showAllProjects && (
-            <div className="flex justify-center gap-8">
-              <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col w-full max-w-lg">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 lg:gap-8">
+              <div className="group bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col w-full max-w-lg">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3 sm:gap-4">
+                  <h3 className="text-xl sm:text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
                     Lotka-Volterra Model
                   </h3>
                   <a 
                     href="https://github.com/tanujkart/predatorprey"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button"
+                    className="inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg group/button text-sm sm:text-base"
                     aria-label="Visit Predator-Prey Model GitHub repository"
                   >
                     <svg 
@@ -469,9 +495,9 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="group bg-white p-8 rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col w-full max-w-lg">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
+              <div className="group bg-white p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border-2 border-blue-200/50 shadow-lg hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 flex flex-col w-full max-w-lg">
+                <div className="mb-4">
+                  <h3 className="text-xl sm:text-2xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors">
                     Memo – AI Memory-Assist Pendant
                   </h3>
                 </div>
@@ -511,10 +537,10 @@ export default function Home() {
           )}
         </div>
         {!showAllProjects && (
-          <div className="mt-8 flex justify-center">
+          <div className="mt-6 sm:mt-8 flex justify-center">
             <button
               onClick={() => setShowAllProjects(true)}
-              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="px-5 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               See more
             </button>
@@ -522,9 +548,9 @@ export default function Home() {
         )}
       </section>
 
-      <section id="research" className="scroll-mt-24 pt-16 pb-32 border-t-4 border-blue-200 bg-white">
-        <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Research</h2>
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+      <section id="research" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Research</h2>
+        <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left side - cover image */}
           <div className="flex items-center justify-center">
             <div className="relative w-full max-w-4xl rounded-2xl shadow-lg border-2 border-blue-200/50 group hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 overflow-hidden">
@@ -538,11 +564,11 @@ export default function Home() {
             </div>
           </div>
           {/* Right side - text content */}
-          <div className="flex flex-col justify-center">
-            <h3 className="text-3xl font-bold text-blue-900 mb-6">
+          <div className="flex flex-col justify-center px-4 sm:px-0">
+            <h3 className="text-2xl sm:text-3xl font-bold text-blue-900 mb-4 sm:mb-6">
               HOTSPOT
             </h3>
-            <p className="text-lg leading-relaxed text-blue-900/70">
+            <p className="text-base sm:text-lg leading-relaxed text-blue-900/70">
               <strong className="text-blue-700 font-semibold">HOTSPOT</strong> (Hybrid Oceanic Tracking via Satellite Proxy & Optimized Time-Series) is an AI-powered early-warning system that predicts harmful algal blooms up to two months in advance using open satellite and ocean data. By blending interpretable machine-learning models with ecological reasoning, <strong className="text-blue-700 font-semibold">HOTSPOT</strong> pinpoints bloom risk across global waters to support scientists and policymakers in protecting marine ecosystems and coastal communities.
             </p>
             <div className="mt-8 pt-6 border-t border-blue-100">
@@ -579,15 +605,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="awards" className="scroll-mt-24 pt-12 pb-20 border-t-4 border-blue-200 bg-white">
-        <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Awards</h2>
-        <div className="overflow-x-auto rounded-xl border-2 border-blue-200/50 shadow-lg bg-white">
-          <table className="w-full border-collapse">
+      <section id="awards" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-12 sm:pb-20 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Awards</h2>
+        <div className="overflow-x-auto rounded-xl border-2 border-blue-200/50 shadow-lg bg-white mx-4 sm:mx-0">
+          <table className="w-full border-collapse min-w-[600px]">
             <thead>
               <tr className="bg-gradient-to-r from-blue-50 to-blue-100/50 border-b-2 border-blue-300">
-                <th className="text-left py-4 px-6 text-sm font-bold text-blue-900 uppercase tracking-wider">Organization</th>
-                <th className="text-left py-4 px-6 text-sm font-bold text-blue-900 uppercase tracking-wider">Name</th>
-                <th className="text-left py-4 px-6 text-sm font-bold text-blue-900 uppercase tracking-wider">Year</th>
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider">Organization</th>
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider">Name</th>
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider">Year</th>
               </tr>
             </thead>
             <tbody>
@@ -609,13 +635,13 @@ export default function Home() {
                     {isFirstOfOrganization && (
                       <td 
                         rowSpan={rowSpan}
-                        className="py-5 px-6 text-base font-semibold text-blue-900 align-top border-r border-blue-200/50"
+                        className="py-4 sm:py-5 px-3 sm:px-6 text-sm sm:text-base font-semibold text-blue-900 align-top border-r border-blue-200/50"
                       >
                         {award.organization}
                       </td>
                     )}
-                    <td className="py-5 px-6 text-base text-blue-900 font-medium">{award.name}</td>
-                    <td className="py-5 px-6 text-base text-blue-700 font-semibold">{award.year}</td>
+                    <td className="py-4 sm:py-5 px-3 sm:px-6 text-sm sm:text-base text-blue-900 font-medium">{award.name}</td>
+                    <td className="py-4 sm:py-5 px-3 sm:px-6 text-sm sm:text-base text-blue-700 font-semibold">{award.year}</td>
                   </tr>
                 );
               })}
@@ -629,9 +655,9 @@ export default function Home() {
         )}
       </section>
 
-      <section id="contact" className="scroll-mt-24 pt-16 pb-32 border-t-4 border-blue-200 bg-white">
-        <h2 className="mb-10 text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Contact</h2>
-        <div className="max-w-5xl mx-auto">
+      <section id="contact" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-white">
+        <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Contact</h2>
+        <div className="max-w-5xl mx-auto px-4 sm:px-0">
           <form 
             onSubmit={async (e) => {
               e.preventDefault();
@@ -664,9 +690,9 @@ export default function Home() {
               }
             }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
               {/* Left side - Name and Email */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-blue-900 mb-2">
                     Name
@@ -677,7 +703,7 @@ export default function Home() {
                     name="name"
                     required
                     disabled={formStatus === "submitting"}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border-2 border-blue-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 text-blue-900 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Your name"
                   />
                 </div>
@@ -691,7 +717,7 @@ export default function Home() {
                     name="email"
                     required
                     disabled={formStatus === "submitting"}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border-2 border-blue-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 text-blue-900 text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -707,7 +733,7 @@ export default function Home() {
                   required
                   rows={6}
                   disabled={formStatus === "submitting"}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 text-blue-900 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border-2 border-blue-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 text-blue-900 text-sm sm:text-base resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Your message..."
                 />
               </div>
@@ -725,7 +751,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={formStatus === "submitting"}
-              className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full px-5 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {formStatus === "submitting" ? "Sending..." : "Send Message"}
             </button>
@@ -733,7 +759,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="py-10 text-center text-sm text-blue-700 border-t border-blue-100 bg-white">
+      <footer className="py-6 sm:py-8 lg:py-10 text-center text-xs sm:text-sm text-blue-700 border-t border-blue-100 bg-white px-4">
         <p className="font-semibold">Designed and Built by Tanuj Karthikeyan</p>
         <p className="mt-2">&copy; 2025 All Rights Reserved</p>
       </footer>
