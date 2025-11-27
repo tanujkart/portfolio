@@ -52,9 +52,8 @@ export default function BackgroundEffects() {
     const handleMove = (x: number, y: number) => {
       currentX = x;
       currentY = y;
-      if (isDrawing) {
-        addPoint(x, y);
-      }
+      // Always add points when moving, whether drawing or not
+      addPoint(x, y);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -62,7 +61,7 @@ export default function BackgroundEffects() {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
+      // Don't prevent default - allow scrolling
       if (e.touches.length > 0) {
         const touch = e.touches[0];
         handleMove(touch.clientX, touch.clientY);
@@ -71,7 +70,6 @@ export default function BackgroundEffects() {
 
     const handleStart = (x: number, y: number) => {
       isDrawing = true;
-      trail.length = 0; // Clear trail on new touch/click
       addPoint(x, y);
     };
 
@@ -98,13 +96,13 @@ export default function BackgroundEffects() {
       handleEnd();
     };
 
-    // Add event listeners
+    // Add event listeners - make touch events passive to allow scrolling
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     const drawLine = () => {
       const now = Date.now();
