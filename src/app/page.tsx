@@ -116,7 +116,7 @@ const awards = [
   },
 ];
 
-export default function Home() {
+export function V1HomePage() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [showAllProjects, setShowAllProjects] = useState(false);
@@ -797,4 +797,8 @@ export default function Home() {
 
       </main>
   );
+}
+
+export default function Home() {
+  return <main className="min-h-screen bg-white" />;
 }

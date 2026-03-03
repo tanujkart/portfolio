@@ -1,7 +1,7 @@
 "use client";
 
-import Home from "../page";
+import { V1HomePage } from "../page";
 
 export default function V1Page() {
-  return <Home />;
+  return <V1HomePage />;
 }
