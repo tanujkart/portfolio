@@ -17,13 +17,16 @@ const stickers = [
 ];
 
 function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
-  // Laptop SCREEN area only (not keyboard/desk)
-  const screenLeft = imgRect.left + imgRect.width * 0.07;
-  const screenTop = imgRect.top + imgRect.height * 0.63;
-  const screenW = imgRect.width * 0.56;
-  const screenH = imgRect.height * 0.15;
+  // The laptop screen face in tanujhero.png:
+  // - starts at ~17% from left, ~65% from top
+  // - spans ~45% wide, ~11% tall
+  const pad = 4;
+  const screenLeft = imgRect.left + imgRect.width * 0.17 + pad;
+  const screenTop = imgRect.top + imgRect.height * 0.65 + pad;
+  const screenW = imgRect.width * 0.45 - pad * 2;
+  const screenH = imgRect.height * 0.11 - pad * 2;
 
-  const stickerSize = Math.min(38, imgRect.width * 0.10);
+  const stickerSize = Math.min(32, imgRect.width * 0.085);
   const positions: Array<{ x: number; y: number; rotation: number }> = [];
 
   for (let i = 0; i < count; i++) {
@@ -34,12 +37,12 @@ function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
       y = screenTop + Math.random() * (screenH - stickerSize);
       attempts++;
     } while (
-      attempts < 150 &&
+      attempts < 200 &&
       positions.some(
-        (p) => Math.abs(p.x - x) < stickerSize * 0.7 && Math.abs(p.y - y) < stickerSize * 0.7
+        (p) => Math.abs(p.x - x) < stickerSize * 0.6 && Math.abs(p.y - y) < stickerSize * 0.6
       )
     );
-    const rotation = Math.round((Math.random() - 0.5) * 50);
+    const rotation = Math.round((Math.random() - 0.5) * 40);
     positions.push({ x, y, rotation });
   }
   return positions;
@@ -94,7 +97,7 @@ export default function Home() {
     const rect = imageRef.current.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     const positions = getStickerPositionsOnLaptop(rect, stickers.length);
-    setStickerSize(Math.min(38, rect.width * 0.10));
+    setStickerSize(Math.min(32, rect.width * 0.085));
     setStickerPositions(positions);
   }, []);
 
