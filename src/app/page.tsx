@@ -21,7 +21,7 @@ function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
   const laptopH = imgRect.height * 0.28;
 
   const stickerSize = Math.min(55, imgRect.width * 0.14);
-  const positions: Array<{ x: number; y: number }> = [];
+  const positions: Array<{ x: number; y: number; rotation: number }> = [];
 
   for (let i = 0; i < count; i++) {
     let x: number, y: number;
@@ -36,7 +36,8 @@ function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
         (p) => Math.abs(p.x - x) < stickerSize * 0.85 && Math.abs(p.y - y) < stickerSize * 0.85
       )
     );
-    positions.push({ x, y });
+    const rotation = Math.round((Math.random() - 0.5) * 40);
+    positions.push({ x, y, rotation });
   }
   return positions;
 }
@@ -48,7 +49,7 @@ function DraggableSticker({
   onDragEnd,
 }: {
   sticker: (typeof stickers)[number];
-  position: { x: number; y: number };
+  position: { x: number; y: number; rotation: number };
   size: number;
   onDragEnd: (id: string, x: number, y: number) => void;
 }) {
@@ -61,9 +62,9 @@ function DraggableSticker({
   useEffect(() => {
     pos.current = { x: position.x, y: position.y };
     if (ref.current) {
-      ref.current.style.transform = `translate(${position.x}px, ${position.y}px) rotate(${sticker.rotation}deg)`;
+      ref.current.style.transform = `translate(${position.x}px, ${position.y}px) rotate(${position.rotation}deg)`;
     }
-  }, [position.x, position.y, sticker.rotation]);
+  }, [position.x, position.y, position.rotation]);
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     e.preventDefault();
@@ -99,7 +100,7 @@ function DraggableSticker({
       onPointerUp={handlePointerUp}
       className="absolute top-0 left-0 select-none touch-none"
       style={{
-        transform: `translate(${position.x}px, ${position.y}px) rotate(${sticker.rotation}deg)`,
+        transform: `translate(${position.x}px, ${position.y}px) rotate(${position.rotation}deg)`,
         zIndex: isDragging ? 50 : 10,
         cursor: isDragging ? "grabbing" : "grab",
         transition: isDragging ? "none" : "transform 0.3s ease",
@@ -123,7 +124,7 @@ function DraggableSticker({
 }
 
 export default function Home() {
-  const [stickerPositions, setStickerPositions] = useState<Array<{ x: number; y: number }>>([]);
+  const [stickerPositions, setStickerPositions] = useState<Array<{ x: number; y: number; rotation: number }>>([]);
   const [stickerSize, setStickerSize] = useState(55);
   const [mounted, setMounted] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -156,7 +157,7 @@ export default function Home() {
       const idx = stickers.findIndex((s) => s.id === id);
       if (idx === -1) return prev;
       const next = [...prev];
-      next[idx] = { x, y };
+      next[idx] = { ...next[idx], x, y };
       return next;
     });
   }, []);
@@ -219,6 +220,21 @@ export default function Home() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Bottom-left credit */}
+      <div className="absolute bottom-5 left-5 sm:bottom-8 sm:left-8 z-20 font-mono">
+        <span className="text-[10px] sm:text-[11px] text-gray-400">
+          inspired by{" "}
+          <a
+            href="https://www.charlotterosario.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="underline underline-offset-2 hover:text-black transition-colors"
+          >
+            charlotterosario.com
+          </a>
+        </span>
       </div>
 
       {/* Bottom-right links — monospace, gray */}
