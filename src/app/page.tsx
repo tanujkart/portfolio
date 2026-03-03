@@ -180,8 +180,8 @@ export default function Home() {
       {/* Centered composition — matches Charlotte Rosario layout */}
       <div className="relative z-5 flex min-h-screen items-center justify-center">
         <div className="relative flex items-start">
-          {/* Name + nav — left side, overlapping into the image area */}
-          <div className="relative z-20 flex flex-col mt-[5%] mr-[-30px] sm:mr-[-50px] md:mr-[-70px]">
+          {/* Name + nav — left side, overlapping closer to the face */}
+          <div className="relative z-20 flex flex-col mt-[5%] mr-[-60px] sm:mr-[-90px] md:mr-[-110px]">
             <h1 className="text-[28px] sm:text-4xl md:text-5xl font-bold tracking-tight text-black leading-[1.15]">
               tanuj
               <br />
@@ -212,7 +212,7 @@ export default function Home() {
               src="/tanujhero.png"
               alt="Tanuj Karthikeyan"
               onLoad={placeStickers}
-              className="h-[50vh] sm:h-[55vh] md:h-[62vh] lg:h-[68vh] w-auto"
+              className="h-[60vh] sm:h-[68vh] md:h-[75vh] lg:h-[82vh] w-auto"
               draggable={false}
             />
             <p className="mt-2 text-[10px] sm:text-[11px] tracking-[0.2em] text-gray-400 font-mono">
@@ -222,22 +222,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Bottom-left credit */}
-      <div className="absolute bottom-5 left-5 sm:bottom-8 sm:left-8 z-20 font-mono">
-        <span className="text-[10px] sm:text-[11px] text-gray-400">
-          inspired by{" "}
-          <a
-            href="https://www.charlotterosario.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="underline underline-offset-2 hover:text-black transition-colors"
-          >
-            charlotterosario.com
-          </a>
-        </span>
-      </div>
-
-      {/* Bottom-right links — monospace, gray */}
+      {/* Bottom-right links + credit — monospace, gray */}
       <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-0.5 font-mono">
         <a
           href="mailto:soccertanuj@gmail.com"
@@ -269,6 +254,17 @@ export default function Home() {
         >
           check my linkedin
         </a>
+        <span className="text-[10px] sm:text-[11px] text-gray-400 mt-1">
+          inspired by{" "}
+          <a
+            href="https://www.charlotterosario.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="underline underline-offset-2 hover:text-black transition-colors"
+          >
+            charlotterosario.com
+          </a>
+        </span>
       </div>
     </main>
   );
