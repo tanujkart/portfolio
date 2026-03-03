@@ -1,128 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { useState, useEffect, useRef, useCallback } from "react";
-
-const stickers = [
-  { id: "thinkclear", src: "/stickers/thinkclear.png", alt: "ThinkClear" },
-  { id: "foundation", src: "/stickers/foundation.png", alt: "NCSSM Foundation" },
-  { id: "first", src: "/stickers/first.png", alt: "FIRST Robotics" },
-  { id: "nsda", src: "/stickers/nsda.png", alt: "NSDA Debate" },
-  { id: "bcvp", src: "/stickers/bcvp.png", alt: "Bull City Venture Partners" },
-  { id: "docubridge", src: "/stickers/docubridge.png", alt: "DocuBridge" },
-  { id: "spikeball", src: "/stickers/spikeball.png", alt: "Spikeball" },
-  { id: "ncdot", src: "/stickers/ncdot.png", alt: "NC DOT" },
-  { id: "medium", src: "/stickers/medium.png", alt: "Medium" },
-];
-
-function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
-  // Laptop cover — shifted up, wider to fill the screen like Charlotte's
-  const coverLeft = imgRect.left + imgRect.width * 0.12;
-  const coverTop = imgRect.top + imgRect.height * 0.56;
-  const coverW = imgRect.width * 0.52;
-  const coverH = imgRect.height * 0.22;
-
-  const stickerSize = Math.min(34, imgRect.width * 0.085);
-  const pad = stickerSize * 0.4;
-  const positions: Array<{ x: number; y: number; rotation: number }> = [];
-
-  for (let i = 0; i < count; i++) {
-    let x: number, y: number;
-    let attempts = 0;
-    do {
-      x = coverLeft + pad + Math.random() * (coverW - stickerSize - pad * 2);
-      y = coverTop + pad + Math.random() * (coverH - stickerSize - pad * 2);
-      attempts++;
-    } while (
-      attempts < 200 &&
-      positions.some(
-        (p) => Math.abs(p.x - x) < stickerSize * 0.65 && Math.abs(p.y - y) < stickerSize * 0.65
-      )
-    );
-    const rotation = Math.round((Math.random() - 0.5) * 40);
-    positions.push({ x, y, rotation });
-  }
-  return positions;
-}
-
-function Sticker({
-  sticker,
-  position,
-  size,
-}: {
-  sticker: (typeof stickers)[number];
-  position: { x: number; y: number; rotation: number };
-  size: number;
-}) {
-  return (
-    <div
-      className="absolute top-0 left-0 select-none pointer-events-none"
-      style={{
-        transform: `translate(${position.x}px, ${position.y}px) rotate(${position.rotation}deg)`,
-        zIndex: 10,
-      }}
-    >
-      <div
-        className="relative"
-        style={{ width: size, height: size }}
-      >
-        <Image
-          src={sticker.src}
-          alt={sticker.alt}
-          fill
-          className="object-contain drop-shadow-lg"
-          unoptimized
-          draggable={false}
-        />
-      </div>
-    </div>
-  );
-}
-
 export default function Home() {
-  const [stickerPositions, setStickerPositions] = useState<Array<{ x: number; y: number; rotation: number }>>([]);
-  const [stickerSize, setStickerSize] = useState(55);
-  const [mounted, setMounted] = useState(false);
-  const imageRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const placeStickers = useCallback(() => {
-    if (!imageRef.current) return;
-    const rect = imageRef.current.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) return;
-    const positions = getStickerPositionsOnLaptop(rect, stickers.length);
-    setStickerSize(Math.min(34, rect.width * 0.085));
-    setStickerPositions(positions);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const timer = setTimeout(placeStickers, 200);
-    window.addEventListener("resize", placeStickers);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("resize", placeStickers);
-    };
-  }, [mounted, placeStickers]);
-
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-white">
-      {/* Stickers layer */}
-      {mounted &&
-        stickerPositions.length === stickers.length &&
-        stickers.map((sticker, i) => (
-          <Sticker
-            key={sticker.id}
-            sticker={sticker}
-            position={stickerPositions[i]}
-            size={stickerSize}
-          />
-        ))}
-
-      {/* Centered composition — matches Charlotte Rosario layout */}
+      {/* Centered composition */}
       <div className="relative z-5 flex min-h-screen items-center justify-center">
         <div className="relative flex items-start">
           {/* Name + nav — left side, overlapping closer to the face */}
@@ -156,16 +37,11 @@ export default function Home() {
           <div className="relative flex flex-col items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              ref={imageRef}
               src="/tanujhero.png"
               alt="Tanuj Karthikeyan"
-              onLoad={placeStickers}
               className="h-[60vh] sm:h-[68vh] md:h-[75vh] lg:h-[82vh] w-auto"
               draggable={false}
             />
-            <p className="mt-2 text-[10px] sm:text-[11px] tracking-[0.2em] text-gray-400 font-mono">
-              click the stickers
-            </p>
           </div>
         </div>
       </div>
