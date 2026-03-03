@@ -21,7 +21,7 @@ function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
   const laptopW = imgRect.width * 0.84;
   const laptopH = imgRect.height * 0.28;
 
-  const stickerSize = Math.min(55, imgRect.width * 0.14);
+  const stickerSize = Math.min(45, imgRect.width * 0.11);
   const positions: Array<{ x: number; y: number; rotation: number }> = [];
 
   for (let i = 0; i < count; i++) {
@@ -37,7 +37,7 @@ function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
         (p) => Math.abs(p.x - x) < stickerSize * 0.85 && Math.abs(p.y - y) < stickerSize * 0.85
       )
     );
-    const rotation = Math.round((Math.random() - 0.5) * 40);
+    const rotation = Math.round((Math.random() - 0.5) * 60);
     positions.push({ x, y, rotation });
   }
   return positions;
@@ -139,7 +139,7 @@ export default function Home() {
     const rect = imageRef.current.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     const positions = getStickerPositionsOnLaptop(rect, stickers.length);
-    setStickerSize(Math.min(55, rect.width * 0.14));
+    setStickerSize(Math.min(45, rect.width * 0.11));
     setStickerPositions(positions);
   }, []);
 
