@@ -4,14 +4,15 @@ import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const stickers = [
-  { id: "duke", src: "/stickers/duke.png", alt: "Duke University", rotation: -8 },
-  { id: "thinkclear", src: "/stickers/thinkclear.png", alt: "ThinkClear", rotation: 12 },
-  { id: "foundation", src: "/stickers/foundation.png", alt: "NCSSM Foundation", rotation: -5 },
-  { id: "first", src: "/stickers/first.png", alt: "FIRST Robotics", rotation: 7 },
-  { id: "nsda", src: "/stickers/nsda.png", alt: "NSDA Debate", rotation: -10 },
-  { id: "bcvp", src: "/stickers/bcvp.png", alt: "Bull City Venture Partners", rotation: 15 },
-  { id: "docubridge", src: "/stickers/docubridge.png", alt: "DocuBridge", rotation: -12 },
-  { id: "spikeball", src: "/stickers/spikeball.png", alt: "Spikeball", rotation: 6 },
+  { id: "hotspot", src: "/stickers/HOTSPOT.png", alt: "HOTSPOT Research" },
+  { id: "thinkclear", src: "/stickers/thinkclear.png", alt: "ThinkClear" },
+  { id: "foundation", src: "/stickers/foundation.png", alt: "NCSSM Foundation" },
+  { id: "first", src: "/stickers/first.png", alt: "FIRST Robotics" },
+  { id: "nsda", src: "/stickers/nsda.png", alt: "NSDA Debate" },
+  { id: "bcvp", src: "/stickers/bcvp.png", alt: "Bull City Venture Partners" },
+  { id: "docubridge", src: "/stickers/docubridge.png", alt: "DocuBridge" },
+  { id: "spikeball", src: "/stickers/spikeball.png", alt: "Spikeball" },
+  { id: "ncdot", src: "/stickers/ncdot.png", alt: "NC DOT" },
 ];
 
 function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
@@ -181,7 +182,7 @@ export default function Home() {
       <div className="relative z-5 flex min-h-screen items-center justify-center">
         <div className="relative flex items-start">
           {/* Name + nav — left side, overlapping closer to the face */}
-          <div className="relative z-20 flex flex-col mt-[5%] mr-[-60px] sm:mr-[-90px] md:mr-[-110px]">
+          <div className="relative z-20 flex flex-col mt-[5%] mr-[-80px] sm:mr-[-120px] md:mr-[-150px]">
             <h1 className="text-[28px] sm:text-4xl md:text-5xl font-bold tracking-tight text-black leading-[1.15]">
               tanuj
               <br />
@@ -231,7 +232,7 @@ export default function Home() {
           send an email
         </a>
         <a
-          href="https://medium.com/@tanujkart"
+          href="https://medium.com/@tkart"
           target="_blank"
           rel="noreferrer"
           className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
