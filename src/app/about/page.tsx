@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-white px-6 py-16 sm:py-24">
+    <main className="min-h-screen bg-[#f5f5f5] px-6 py-16 sm:py-24">
       <div className="max-w-xl mx-auto">
         <Link href="/" className="text-gray-400 hover:text-black text-sm font-mono transition-colors">
           ← back
@@ -21,6 +21,9 @@ export default function AboutPage() {
           </p>
           <p>
             i like first-principles thinking, building from scratch, and going 0 → 1.
+          </p>
+          <p>
+            also interested in scaling ventures — how early-stage ideas become real companies.
           </p>
           <p className="text-gray-400">durham, nc.</p>
         </div>

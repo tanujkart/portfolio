@@ -2,7 +2,7 @@
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-white">
+    <main className="relative min-h-screen w-full overflow-hidden bg-[#f5f5f5]">
       {/* Centered composition */}
       <div className="relative z-5 flex min-h-screen items-center justify-center">
         <div className="relative flex items-start">
