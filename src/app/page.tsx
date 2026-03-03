@@ -14,10 +14,7 @@ const stickers = [
   { id: "spikeball", src: "/stickers/spikeball.png", alt: "Spikeball", rotation: 6 },
 ];
 
-function getStickerPositionsOnLaptop(
-  imgRect: DOMRect,
-  count: number
-) {
+function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
   const laptopLeft = imgRect.left + imgRect.width * 0.08;
   const laptopTop = imgRect.top + imgRect.height * 0.63;
   const laptopW = imgRect.width * 0.84;
@@ -165,7 +162,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-[#1a1a2e]">
+    <main className="relative min-h-screen w-full overflow-hidden bg-white">
       {/* Stickers layer */}
       {mounted &&
         stickerPositions.length === stickers.length &&
@@ -179,37 +176,34 @@ export default function Home() {
           />
         ))}
 
-      {/* Centered composition */}
+      {/* Centered composition — matches Charlotte Rosario layout */}
       <div className="relative z-5 flex min-h-screen items-center justify-center">
         <div className="relative flex items-start">
-          {/* Text content — positioned to the left, overlapping the image */}
-          <div className="relative z-20 flex flex-col mr-[-40px] sm:mr-[-60px] md:mr-[-80px] mt-[10%]">
-            <h1
-              className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-[1.1]"
-              style={{ fontFamily: "var(--font-figtree), system-ui, sans-serif" }}
-            >
+          {/* Name + nav — left side, overlapping into the image area */}
+          <div className="relative z-20 flex flex-col mt-[5%] mr-[-30px] sm:mr-[-50px] md:mr-[-70px]">
+            <h1 className="text-[28px] sm:text-4xl md:text-5xl font-bold tracking-tight text-black leading-[1.15]">
               tanuj
               <br />
               karthikeyan
             </h1>
 
-            <nav className="mt-6 flex flex-col gap-1 text-sm sm:text-base font-mono">
-              <a href="/v1#projects" className="text-gray-400 hover:text-white transition-colors">
+            <nav className="mt-5 sm:mt-6 flex flex-col gap-0.5 text-[13px] sm:text-sm font-mono tracking-wide">
+              <a href="/v1#projects" className="text-gray-500 hover:text-black transition-colors">
                 robotics
               </a>
-              <a href="/v1#research" className="text-gray-400 hover:text-white transition-colors">
+              <a href="/v1#research" className="text-gray-500 hover:text-black transition-colors">
                 research
               </a>
-              <a href="/v1#projects" className="text-gray-400 hover:text-white transition-colors">
+              <a href="/v1#projects" className="text-gray-500 hover:text-black transition-colors">
                 projects
               </a>
-              <a href="/v1#awards" className="text-gray-400 hover:text-white transition-colors">
+              <a href="/v1#awards" className="text-gray-500 hover:text-black transition-colors">
                 debate
               </a>
             </nav>
           </div>
 
-          {/* Hero image */}
+          {/* Hero sketch — blends into white bg naturally */}
           <div className="relative flex flex-col items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -217,23 +211,21 @@ export default function Home() {
               src="/tanujhero.png"
               alt="Tanuj Karthikeyan"
               onLoad={placeStickers}
-              className="h-[55vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] w-auto object-contain"
+              className="h-[50vh] sm:h-[55vh] md:h-[62vh] lg:h-[68vh] w-auto"
               draggable={false}
             />
-            <p
-              className="mt-3 text-[11px] sm:text-xs tracking-[0.2em] text-gray-500 font-mono"
-            >
+            <p className="mt-2 text-[10px] sm:text-[11px] tracking-[0.2em] text-gray-400 font-mono">
               click the stickers
             </p>
           </div>
         </div>
       </div>
 
-      {/* Bottom-right links */}
-      <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-1 font-mono">
+      {/* Bottom-right links — monospace, gray */}
+      <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-0.5 font-mono">
         <a
           href="mailto:soccertanuj@gmail.com"
-          className="text-[11px] sm:text-xs text-gray-500 hover:text-white transition-colors"
+          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
         >
           send an email
         </a>
@@ -241,7 +233,7 @@ export default function Home() {
           href="https://medium.com/@tanujkart"
           target="_blank"
           rel="noreferrer"
-          className="text-[11px] sm:text-xs text-gray-500 hover:text-white transition-colors"
+          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
         >
           read articles on my medium
         </a>
@@ -249,7 +241,7 @@ export default function Home() {
           href="https://github.com/tanujkart"
           target="_blank"
           rel="noreferrer"
-          className="text-[11px] sm:text-xs text-gray-500 hover:text-white transition-colors"
+          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
         >
           check out projects on my github
         </a>
@@ -257,7 +249,7 @@ export default function Home() {
           href="https://www.linkedin.com/in/tanujkart/"
           target="_blank"
           rel="noreferrer"
-          className="text-[11px] sm:text-xs text-gray-500 hover:text-white transition-colors"
+          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
         >
           check my linkedin
         </a>
