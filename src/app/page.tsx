@@ -4,28 +4,26 @@ import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const stickers = [
-  { id: "duke", src: "/stickers/duke.svg", alt: "Duke University", rotation: -8 },
-  { id: "thinkclear", src: "/stickers/thinkclear.svg", alt: "ThinkClear", rotation: 12 },
-  { id: "ncssm", src: "/stickers/ncssm.svg", alt: "NCSSM", rotation: -5 },
-  { id: "first", src: "/stickers/first.svg", alt: "FIRST Robotics", rotation: 7 },
-  { id: "nsda", src: "/stickers/nsda.svg", alt: "NSDA Debate", rotation: -10 },
-  { id: "bcvp", src: "/stickers/bcvp.svg", alt: "Bull City Venture Partners", rotation: 15 },
-  { id: "docubridge", src: "/stickers/docubridge.svg", alt: "DocuBridge", rotation: -12 },
-  { id: "spikeball", src: "/stickers/spikeball.svg", alt: "Spikeball", rotation: 6 },
+  { id: "duke", src: "/stickers/duke.png", alt: "Duke University", rotation: -8 },
+  { id: "thinkclear", src: "/stickers/thinkclear.png", alt: "ThinkClear", rotation: 12 },
+  { id: "foundation", src: "/stickers/foundation.png", alt: "NCSSM Foundation", rotation: -5 },
+  { id: "first", src: "/stickers/first.png", alt: "FIRST Robotics", rotation: 7 },
+  { id: "nsda", src: "/stickers/nsda.png", alt: "NSDA Debate", rotation: -10 },
+  { id: "bcvp", src: "/stickers/bcvp.png", alt: "Bull City Venture Partners", rotation: 15 },
+  { id: "docubridge", src: "/stickers/docubridge.png", alt: "DocuBridge", rotation: -12 },
+  { id: "spikeball", src: "/stickers/spikeball.png", alt: "Spikeball", rotation: 6 },
 ];
 
 function getStickerPositionsOnLaptop(
-  imgRect: { left: number; top: number; width: number; height: number },
+  imgRect: DOMRect,
   count: number
 ) {
-  // The laptop in the image occupies roughly the bottom 35% vertically,
-  // centered horizontally across ~80% of the image width
-  const laptopLeft = imgRect.left + imgRect.width * 0.1;
-  const laptopTop = imgRect.top + imgRect.height * 0.62;
-  const laptopW = imgRect.width * 0.8;
-  const laptopH = imgRect.height * 0.32;
+  const laptopLeft = imgRect.left + imgRect.width * 0.08;
+  const laptopTop = imgRect.top + imgRect.height * 0.63;
+  const laptopW = imgRect.width * 0.84;
+  const laptopH = imgRect.height * 0.28;
 
-  const stickerSize = 70;
+  const stickerSize = Math.min(55, imgRect.width * 0.14);
   const positions: Array<{ x: number; y: number }> = [];
 
   for (let i = 0; i < count; i++) {
@@ -36,9 +34,9 @@ function getStickerPositionsOnLaptop(
       y = laptopTop + Math.random() * (laptopH - stickerSize);
       attempts++;
     } while (
-      attempts < 80 &&
+      attempts < 100 &&
       positions.some(
-        (p) => Math.abs(p.x - x) < stickerSize + 5 && Math.abs(p.y - y) < stickerSize + 5
+        (p) => Math.abs(p.x - x) < stickerSize * 0.85 && Math.abs(p.y - y) < stickerSize * 0.85
       )
     );
     positions.push({ x, y });
@@ -49,10 +47,12 @@ function getStickerPositionsOnLaptop(
 function DraggableSticker({
   sticker,
   position,
+  size,
   onDragEnd,
 }: {
   sticker: (typeof stickers)[number];
   position: { x: number; y: number };
+  size: number;
   onDragEnd: (id: string, x: number, y: number) => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -87,15 +87,12 @@ function DraggableSticker({
     }
   }, []);
 
-  const handlePointerUp = useCallback(
-    () => {
-      if (!dragging.current) return;
-      dragging.current = false;
-      setIsDragging(false);
-      onDragEnd(sticker.id, pos.current.x, pos.current.y);
-    },
-    [onDragEnd, sticker.id]
-  );
+  const handlePointerUp = useCallback(() => {
+    if (!dragging.current) return;
+    dragging.current = false;
+    setIsDragging(false);
+    onDragEnd(sticker.id, pos.current.x, pos.current.y);
+  }, [onDragEnd, sticker.id]);
 
   return (
     <div
@@ -111,7 +108,10 @@ function DraggableSticker({
         transition: isDragging ? "none" : "transform 0.3s ease",
       }}
     >
-      <div className="w-[60px] h-[60px] sm:w-[70px] sm:h-[70px] md:w-[80px] md:h-[80px] relative hover:scale-110 transition-transform duration-200">
+      <div
+        className="relative hover:scale-110 transition-transform duration-200"
+        style={{ width: size, height: size }}
+      >
         <Image
           src={sticker.src}
           alt={sticker.alt}
@@ -126,52 +126,46 @@ function DraggableSticker({
 }
 
 export default function Home() {
-  const [stickerPositions, setStickerPositions] = useState<
-    Array<{ x: number; y: number }>
-  >([]);
+  const [stickerPositions, setStickerPositions] = useState<Array<{ x: number; y: number }>>([]);
+  const [stickerSize, setStickerSize] = useState(55);
   const [mounted, setMounted] = useState(false);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const placeStickers = useCallback(() => {
+    if (!imageRef.current) return;
+    const rect = imageRef.current.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+    const positions = getStickerPositionsOnLaptop(rect, stickers.length);
+    setStickerSize(Math.min(55, rect.width * 0.14));
+    setStickerPositions(positions);
+  }, []);
+
   useEffect(() => {
-    if (!mounted || !imageRef.current) return;
-
-    const placeStickers = () => {
-      const rect = imageRef.current!.getBoundingClientRect();
-      const positions = getStickerPositionsOnLaptop(
-        { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
-        stickers.length
-      );
-      setStickerPositions(positions);
-    };
-
-    // Small delay to ensure image has rendered and sized
-    const timer = setTimeout(placeStickers, 100);
+    if (!mounted) return;
+    const timer = setTimeout(placeStickers, 200);
     window.addEventListener("resize", placeStickers);
     return () => {
       clearTimeout(timer);
       window.removeEventListener("resize", placeStickers);
     };
-  }, [mounted]);
+  }, [mounted, placeStickers]);
 
-  const handleDragEnd = useCallback(
-    (id: string, x: number, y: number) => {
-      setStickerPositions((prev) => {
-        const idx = stickers.findIndex((s) => s.id === id);
-        if (idx === -1) return prev;
-        const next = [...prev];
-        next[idx] = { x, y };
-        return next;
-      });
-    },
-    []
-  );
+  const handleDragEnd = useCallback((id: string, x: number, y: number) => {
+    setStickerPositions((prev) => {
+      const idx = stickers.findIndex((s) => s.id === id);
+      if (idx === -1) return prev;
+      const next = [...prev];
+      next[idx] = { x, y };
+      return next;
+    });
+  }, []);
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-white">
+    <main className="relative min-h-screen w-full overflow-hidden bg-[#1a1a2e]">
       {/* Stickers layer */}
       {mounted &&
         stickerPositions.length === stickers.length &&
@@ -180,73 +174,74 @@ export default function Home() {
             key={sticker.id}
             sticker={sticker}
             position={stickerPositions[i]}
+            size={stickerSize}
             onDragEnd={handleDragEnd}
           />
         ))}
 
-      {/* Main layout */}
-      <div className="relative z-5 flex min-h-screen flex-col lg:flex-row items-center justify-center px-6 sm:px-10 lg:px-16 gap-8 lg:gap-12">
-        {/* Left: text content */}
-        <div className="flex flex-col items-center lg:items-start text-center lg:text-left z-20 pt-16 lg:pt-0">
-          <p className="text-[11px] sm:text-xs tracking-[0.25em] uppercase text-gray-400 mb-5">
-            click the stickers
-          </p>
+      {/* Centered composition */}
+      <div className="relative z-5 flex min-h-screen items-center justify-center">
+        <div className="relative flex items-start">
+          {/* Text content — positioned to the left, overlapping the image */}
+          <div className="relative z-20 flex flex-col mr-[-40px] sm:mr-[-60px] md:mr-[-80px] mt-[10%]">
+            <h1
+              className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-[1.1]"
+              style={{ fontFamily: "var(--font-figtree), system-ui, sans-serif" }}
+            >
+              tanuj
+              <br />
+              karthikeyan
+            </h1>
 
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-black leading-[0.95]">
-            tanuj
-            <br />
-            karthikeyan
-          </h1>
+            <nav className="mt-6 flex flex-col gap-1 text-sm sm:text-base font-mono">
+              <a href="/v1#projects" className="text-gray-400 hover:text-white transition-colors">
+                robotics
+              </a>
+              <a href="/v1#research" className="text-gray-400 hover:text-white transition-colors">
+                research
+              </a>
+              <a href="/v1#projects" className="text-gray-400 hover:text-white transition-colors">
+                projects
+              </a>
+              <a href="/v1#awards" className="text-gray-400 hover:text-white transition-colors">
+                debate
+              </a>
+            </nav>
+          </div>
 
-          <nav className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-2 text-sm sm:text-base">
-            <a href="/v1#projects" className="text-black font-medium hover:underline underline-offset-4 transition-all">
-              robotics
-            </a>
-            <span className="text-gray-300">|</span>
-            <a href="/v1#research" className="text-black font-medium hover:underline underline-offset-4 transition-all">
-              research
-            </a>
-            <span className="text-gray-300">|</span>
-            <a href="/v1#projects" className="text-black font-medium hover:underline underline-offset-4 transition-all">
-              projects
-            </a>
-            <span className="text-gray-300">|</span>
-            <a href="/v1#awards" className="text-black font-medium hover:underline underline-offset-4 transition-all">
-              debate
-            </a>
-          </nav>
-        </div>
-
-        {/* Right: hero image with stickers on the laptop */}
-        <div
-          ref={imageRef}
-          className="relative w-[280px] h-[400px] sm:w-[340px] sm:h-[490px] md:w-[400px] md:h-[570px] lg:w-[440px] lg:h-[630px] xl:w-[480px] xl:h-[690px] flex-shrink-0"
-        >
-          <Image
-            src="/tanujhero.png"
-            alt="Tanuj Karthikeyan"
-            fill
-            className="object-contain pointer-events-none"
-            priority
-          />
+          {/* Hero image */}
+          <div className="relative flex flex-col items-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              ref={imageRef}
+              src="/tanujhero.png"
+              alt="Tanuj Karthikeyan"
+              onLoad={placeStickers}
+              className="h-[55vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] w-auto object-contain"
+              draggable={false}
+            />
+            <p
+              className="mt-3 text-[11px] sm:text-xs tracking-[0.2em] text-gray-500 font-mono"
+            >
+              click the stickers
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Bottom-right links */}
-      <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-1.5">
+      <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-1 font-mono">
         <a
-          href="https://www.linkedin.com/in/tanujkart/"
-          target="_blank"
-          rel="noreferrer"
-          className="text-xs sm:text-sm text-gray-400 hover:text-black transition-colors"
+          href="mailto:soccertanuj@gmail.com"
+          className="text-[11px] sm:text-xs text-gray-500 hover:text-white transition-colors"
         >
-          check my linkedin
+          send an email
         </a>
         <a
           href="https://medium.com/@tanujkart"
           target="_blank"
           rel="noreferrer"
-          className="text-xs sm:text-sm text-gray-400 hover:text-black transition-colors"
+          className="text-[11px] sm:text-xs text-gray-500 hover:text-white transition-colors"
         >
           read articles on my medium
         </a>
@@ -254,15 +249,17 @@ export default function Home() {
           href="https://github.com/tanujkart"
           target="_blank"
           rel="noreferrer"
-          className="text-xs sm:text-sm text-gray-400 hover:text-black transition-colors"
+          className="text-[11px] sm:text-xs text-gray-500 hover:text-white transition-colors"
         >
           check out projects on my github
         </a>
         <a
-          href="mailto:soccertanuj@gmail.com"
-          className="text-xs sm:text-sm text-gray-400 hover:text-black transition-colors"
+          href="https://www.linkedin.com/in/tanujkart/"
+          target="_blank"
+          rel="noreferrer"
+          className="text-[11px] sm:text-xs text-gray-500 hover:text-white transition-colors"
         >
-          send an email
+          check my linkedin
         </a>
       </div>
     </main>
