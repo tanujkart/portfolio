@@ -16,14 +16,14 @@ const stickers = [
 ];
 
 function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
-  // Full laptop cover/lid front face in tanujhero.png
-  const coverLeft = imgRect.left + imgRect.width * 0.10;
-  const coverTop = imgRect.top + imgRect.height * 0.58;
-  const coverW = imgRect.width * 0.55;
-  const coverH = imgRect.height * 0.24;
+  // Laptop cover contained area — padded well inside the edges
+  const coverLeft = imgRect.left + imgRect.width * 0.20;
+  const coverTop = imgRect.top + imgRect.height * 0.61;
+  const coverW = imgRect.width * 0.42;
+  const coverH = imgRect.height * 0.15;
 
-  const stickerSize = Math.min(36, imgRect.width * 0.09);
-  const pad = stickerSize * 0.3;
+  const stickerSize = Math.min(34, imgRect.width * 0.085);
+  const pad = stickerSize * 0.5;
   const positions: Array<{ x: number; y: number; rotation: number }> = [];
 
   for (let i = 0; i < count; i++) {
@@ -94,7 +94,7 @@ export default function Home() {
     const rect = imageRef.current.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     const positions = getStickerPositionsOnLaptop(rect, stickers.length);
-    setStickerSize(Math.min(36, rect.width * 0.09));
+    setStickerSize(Math.min(34, rect.width * 0.085));
     setStickerPositions(positions);
   }, []);
 
