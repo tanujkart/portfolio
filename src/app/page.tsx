@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const stickers = [
-  { id: "hotspot", src: "/stickers/HOTSPOT.png", alt: "HOTSPOT Research" },
+  { id: "hotspot", src: "/stickers/hotspot.png", alt: "HOTSPOT Research" },
   { id: "thinkclear", src: "/stickers/thinkclear.png", alt: "ThinkClear" },
   { id: "foundation", src: "/stickers/foundation.png", alt: "NCSSM Foundation" },
   { id: "first", src: "/stickers/first.png", alt: "FIRST Robotics" },
@@ -13,31 +13,33 @@ const stickers = [
   { id: "docubridge", src: "/stickers/docubridge.png", alt: "DocuBridge" },
   { id: "spikeball", src: "/stickers/spikeball.png", alt: "Spikeball" },
   { id: "ncdot", src: "/stickers/ncdot.png", alt: "NC DOT" },
+  { id: "medium", src: "/stickers/medium.png", alt: "Medium" },
 ];
 
 function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
-  const laptopLeft = imgRect.left + imgRect.width * 0.08;
-  const laptopTop = imgRect.top + imgRect.height * 0.63;
-  const laptopW = imgRect.width * 0.84;
-  const laptopH = imgRect.height * 0.28;
+  // Laptop SCREEN area only (not keyboard/desk)
+  const screenLeft = imgRect.left + imgRect.width * 0.07;
+  const screenTop = imgRect.top + imgRect.height * 0.63;
+  const screenW = imgRect.width * 0.56;
+  const screenH = imgRect.height * 0.15;
 
-  const stickerSize = Math.min(45, imgRect.width * 0.11);
+  const stickerSize = Math.min(38, imgRect.width * 0.10);
   const positions: Array<{ x: number; y: number; rotation: number }> = [];
 
   for (let i = 0; i < count; i++) {
     let x: number, y: number;
     let attempts = 0;
     do {
-      x = laptopLeft + Math.random() * (laptopW - stickerSize);
-      y = laptopTop + Math.random() * (laptopH - stickerSize);
+      x = screenLeft + Math.random() * (screenW - stickerSize);
+      y = screenTop + Math.random() * (screenH - stickerSize);
       attempts++;
     } while (
-      attempts < 100 &&
+      attempts < 150 &&
       positions.some(
-        (p) => Math.abs(p.x - x) < stickerSize * 0.85 && Math.abs(p.y - y) < stickerSize * 0.85
+        (p) => Math.abs(p.x - x) < stickerSize * 0.7 && Math.abs(p.y - y) < stickerSize * 0.7
       )
     );
-    const rotation = Math.round((Math.random() - 0.5) * 60);
+    const rotation = Math.round((Math.random() - 0.5) * 50);
     positions.push({ x, y, rotation });
   }
   return positions;
@@ -92,7 +94,7 @@ export default function Home() {
     const rect = imageRef.current.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     const positions = getStickerPositionsOnLaptop(rect, stickers.length);
-    setStickerSize(Math.min(45, rect.width * 0.11));
+    setStickerSize(Math.min(38, rect.width * 0.10));
     setStickerPositions(positions);
   }, []);
 
