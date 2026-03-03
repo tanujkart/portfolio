@@ -38,44 +38,81 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-const awardGroups = [
+const awards = [
   {
-    category: "Research",
-    awards: [
-      "2nd Place Stockholm Junior Water Prize ('26)",
-      "3rd Place NC Region 3B Science Fair - Earth and Environmental Science ('26)",
-    ],
+    organization: "Research",
+    name: "2nd Place Stockholm Junior Water Prize",
+    year: "2026",
   },
   {
-    category: "Robotics",
-    awards: [
-      "Innovate Award World Champion ('25)",
-      "Inspire Award State Champion ('25, '26)",
-      "Impact Award State Champion ('24)",
-      "3x Worlds Qualifier ('24, '25, '26)",
-    ],
+    organization: "Research",
+    name: "3rd Place NC Region 3B Science Fair - Earth and Environmental Science",
+    year: "2026",
   },
   {
-    category: "Debate",
-    awards: [
-      "Champion of Stanford Invitational Debate Tournament ('25)",
-      "Champion of Georgetown Invitational Debate Tournament ('25)",
-      "Quarter-Finalist of Georgetown Fall Debate Tournament ('24)",
-      "2x Nationals Qualifier ('24, '25)",
-    ],
+    organization: "Robotics",
+    name: "Innovate Award World Champion",
+    year: "2025",
   },
   {
-    category: "Business",
-    awards: [
-      "Sales Presentation Finalist ('23)",
-      "Data Analysis Finalist ('24)",
-      "Help Desk Finalist ('25)",
-      "Nationals Qualifier ('25)",
-    ],
+    organization: "Robotics",
+    name: "Inspire Award State Champion",
+    year: "2025, 2026",
   },
   {
-    category: "Academic",
-    awards: ["National Merit Finalist ('26)"],
+    organization: "Robotics",
+    name: "Impact Award State Champion",
+    year: "2024",
+  },
+  {
+    organization: "Robotics",
+    name: "3x Worlds Qualifier",
+    year: "2024, 2025, 2026",
+  },
+  {
+    organization: "Debate",
+    name: "Champion of Stanford Invitational Debate Tournament",
+    year: "2025",
+  },
+  {
+    organization: "Debate",
+    name: "Champion of Georgetown Invitational Debate Tournament",
+    year: "2025",
+  },
+  {
+    organization: "Debate",
+    name: "Quarter-Finalist of Georgetown Fall Debate Tournament",
+    year: "2024",
+  },
+  {
+    organization: "Debate",
+    name: "2x Nationals Qualifier",
+    year: "2024, 2025",
+  },
+  {
+    organization: "Business",
+    name: "Sales Presentation Finalist",
+    year: "2023",
+  },
+  {
+    organization: "Business",
+    name: "Data Analysis Finalist",
+    year: "2024",
+  },
+  {
+    organization: "Business",
+    name: "Help Desk Finalist",
+    year: "2025",
+  },
+  {
+    organization: "Business",
+    name: "Nationals Qualifier",
+    year: "2025",
+  },
+  {
+    organization: "Academic",
+    name: "National Merit Finalist",
+    year: "2026",
   },
 ];
 
@@ -545,33 +582,55 @@ export default function Home() {
         )}
       </section>
 
-      <section id="research" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-12 sm:pb-16 border-t-4 border-blue-200 bg-white">
+      <section id="research" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-white">
         <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Research</h2>
-        <div className="mx-4 sm:mx-0 rounded-2xl border-2 border-blue-200/50 bg-white p-4 sm:p-6 shadow-lg">
-          <div className="grid grid-cols-1 items-center gap-4 sm:gap-6 md:grid-cols-[220px_1fr]">
-            <div className="relative overflow-hidden rounded-xl border-2 border-blue-200/50">
+        <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="flex items-center justify-center px-4 sm:px-0">
+            <div className="relative w-full max-w-4xl rounded-2xl shadow-lg border-2 border-blue-200/50 group hover:shadow-2xl hover:border-blue-300 transform hover:scale-[1.02] transition-all duration-300 overflow-hidden">
               <Image
                 src="/HOTSPOTcover.png"
                 alt="HOTSPOT Research Cover"
                 width={800}
                 height={600}
-                className="h-auto w-full object-contain"
+                className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
               />
             </div>
-            <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-blue-900">HOTSPOT</h3>
-              <p className="mt-2 text-sm sm:text-base leading-relaxed text-blue-900/75">
-                AI-powered early warning system for harmful algal blooms using satellite and ocean data, with interpretable models and ecological filtering.
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {["Python", "scikit-learn", "xarray", "GeoPandas", "Ensemble Modeling", "Time-Series Analysis"].map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2.5 py-1 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
+          </div>
+          <div className="flex flex-col justify-center px-4 sm:px-0">
+            <h3 className="text-2xl sm:text-3xl font-bold text-blue-900 mb-4 sm:mb-6">
+              HOTSPOT
+            </h3>
+            <p className="text-base sm:text-lg leading-relaxed text-blue-900/70">
+              <strong className="text-blue-700 font-semibold">HOTSPOT</strong> (Hybrid Oceanic Tracking via Satellite Proxy & Optimized Time-Series) is an AI-powered early-warning system that predicts harmful algal blooms up to two months in advance using open satellite and ocean data. By blending interpretable machine-learning models with ecological reasoning, <strong className="text-blue-700 font-semibold">HOTSPOT</strong> pinpoints bloom risk across global waters to support scientists and policymakers in protecting marine ecosystems and coastal communities.
+            </p>
+            <div className="mt-8 pt-6 border-t border-blue-100">
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-blue-600 mb-3">Technologies</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {["Python", "scikit-learn", "pandas", "NumPy", "xarray", "Jupyter Notebook", "MODIS Aqua", "GeoPandas", "Cartopy", "GitHub"].map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full hover:bg-blue-100 hover:border-blue-300 transition-colors"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-blue-600 mb-3">Outcomes</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {["2nd Place Stockholm Junior Water Prize (2026)", "3rd Place NC Region 3B Science Fair (2026)", "20-page Regeneron STS research paper"].map((item) => (
+                      <span
+                        key={item}
+                        className="px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 rounded-full hover:bg-blue-100 hover:border-blue-300 transition-colors"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -580,28 +639,51 @@ export default function Home() {
 
       <section id="awards" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-12 sm:pb-20 border-t-4 border-blue-200 bg-white">
         <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Awards</h2>
-        <div className="mx-4 sm:mx-0 grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
-          {awardGroups.map((group) => (
-            <div
-              key={group.category}
-              className="rounded-xl border-2 border-blue-200/50 bg-white p-4 sm:p-5 shadow-md"
-            >
-              <h3 className="text-lg sm:text-xl font-bold text-blue-900">{group.category}</h3>
-              <ul className="mt-3 space-y-2">
-                {group.awards.map((award) => (
-                  <li key={award} className="text-sm sm:text-base text-blue-900/80 leading-relaxed">
-                    {award}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          {awardGroups.length === 0 && (
-            <p className="text-blue-600/60 text-lg">
-              Add your awards to the awardGroups array
-            </p>
-          )}
+        <div className="overflow-x-auto rounded-xl border-2 border-blue-200/50 shadow-lg bg-white mx-4 sm:mx-0">
+          <table className="w-full border-collapse min-w-[700px]">
+            <thead>
+              <tr className="bg-gradient-to-r from-blue-50 to-blue-100/50 border-b-2 border-blue-300">
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider">Category</th>
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider">Award</th>
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs sm:text-sm font-bold text-blue-900 uppercase tracking-wider">Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              {awards.map((award, index) => {
+                const isFirstOfOrganization = index === 0 || awards[index - 1].organization !== award.organization;
+                const rowSpan = isFirstOfOrganization
+                  ? awards.filter((a) => a.organization === award.organization).length
+                  : 0;
+                const isEven = index % 2 === 0;
+
+                return (
+                  <tr
+                    key={`${award.organization}-${award.name}`}
+                    className={`border-b border-blue-100/50 transition-all ${
+                      isEven ? "bg-white" : "bg-blue-50/30"
+                    } hover:bg-blue-100/50 hover:shadow-sm`}
+                  >
+                    {isFirstOfOrganization && (
+                      <td
+                        rowSpan={rowSpan}
+                        className="py-4 sm:py-5 px-3 sm:px-6 text-sm sm:text-base font-semibold text-blue-900 align-top border-r border-blue-200/50"
+                      >
+                        {award.organization}
+                      </td>
+                    )}
+                    <td className="py-4 sm:py-5 px-3 sm:px-6 text-sm sm:text-base text-blue-900 font-medium">{award.name}</td>
+                    <td className="py-4 sm:py-5 px-3 sm:px-6 text-sm sm:text-base text-blue-700 font-semibold">{award.year}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
           </div>
+        {awards.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-blue-600/60 text-lg">Add your awards to the awards array</p>
+          </div>
+        )}
       </section>
 
       <section id="contact" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-white">
