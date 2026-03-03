@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const stickers = [
-  { id: "hotspot", src: "/stickers/hotspot.png", alt: "HOTSPOT Research" },
   { id: "thinkclear", src: "/stickers/thinkclear.png", alt: "ThinkClear" },
   { id: "foundation", src: "/stickers/foundation.png", alt: "NCSSM Foundation" },
   { id: "first", src: "/stickers/first.png", alt: "FIRST Robotics" },
@@ -17,29 +16,27 @@ const stickers = [
 ];
 
 function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
-  // The laptop screen face in tanujhero.png:
-  // - starts at ~17% from left, ~65% from top
-  // - spans ~45% wide, ~11% tall
-  const pad = 4;
-  const screenLeft = imgRect.left + imgRect.width * 0.17 + pad;
-  const screenTop = imgRect.top + imgRect.height * 0.65 + pad;
-  const screenW = imgRect.width * 0.45 - pad * 2;
-  const screenH = imgRect.height * 0.11 - pad * 2;
+  // Full laptop cover/lid front face in tanujhero.png
+  const coverLeft = imgRect.left + imgRect.width * 0.10;
+  const coverTop = imgRect.top + imgRect.height * 0.58;
+  const coverW = imgRect.width * 0.55;
+  const coverH = imgRect.height * 0.24;
 
-  const stickerSize = Math.min(32, imgRect.width * 0.085);
+  const stickerSize = Math.min(36, imgRect.width * 0.09);
+  const pad = stickerSize * 0.3;
   const positions: Array<{ x: number; y: number; rotation: number }> = [];
 
   for (let i = 0; i < count; i++) {
     let x: number, y: number;
     let attempts = 0;
     do {
-      x = screenLeft + Math.random() * (screenW - stickerSize);
-      y = screenTop + Math.random() * (screenH - stickerSize);
+      x = coverLeft + pad + Math.random() * (coverW - stickerSize - pad * 2);
+      y = coverTop + pad + Math.random() * (coverH - stickerSize - pad * 2);
       attempts++;
     } while (
       attempts < 200 &&
       positions.some(
-        (p) => Math.abs(p.x - x) < stickerSize * 0.6 && Math.abs(p.y - y) < stickerSize * 0.6
+        (p) => Math.abs(p.x - x) < stickerSize * 0.65 && Math.abs(p.y - y) < stickerSize * 0.65
       )
     );
     const rotation = Math.round((Math.random() - 0.5) * 40);
@@ -97,7 +94,7 @@ export default function Home() {
     const rect = imageRef.current.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     const positions = getStickerPositionsOnLaptop(rect, stickers.length);
-    setStickerSize(Math.min(32, rect.width * 0.085));
+    setStickerSize(Math.min(36, rect.width * 0.09));
     setStickerPositions(positions);
   }, []);
 
@@ -110,16 +107,6 @@ export default function Home() {
       window.removeEventListener("resize", placeStickers);
     };
   }, [mounted, placeStickers]);
-
-  const handleDragEnd = useCallback((id: string, x: number, y: number) => {
-    setStickerPositions((prev) => {
-      const idx = stickers.findIndex((s) => s.id === id);
-      if (idx === -1) return prev;
-      const next = [...prev];
-      next[idx] = { ...next[idx], x, y };
-      return next;
-    });
-  }, []);
 
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-white">
@@ -173,52 +160,52 @@ export default function Home() {
               className="h-[60vh] sm:h-[68vh] md:h-[75vh] lg:h-[82vh] w-auto"
               draggable={false}
             />
-            <p className="mt-2 text-[10px] sm:text-[11px] tracking-[0.2em] text-black font-mono">
+            <p className="mt-2 text-[10px] sm:text-[11px] tracking-[0.2em] text-gray-400 font-mono">
               click the stickers
             </p>
           </div>
         </div>
       </div>
 
-      {/* Bottom-right links + credit — monospace, black */}
+      {/* Bottom-right links */}
       <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-0.5 font-mono">
         <a
           href="mailto:soccertanuj@gmail.com"
-          className="text-[10px] sm:text-[11px] text-black hover:underline transition-all"
+          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
         >
-          send an email
+          email
         </a>
         <a
           href="https://medium.com/@tkart"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-black hover:underline transition-all"
+          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
         >
-          read articles on my medium
+          medium
         </a>
         <a
           href="https://github.com/tanujkart"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-black hover:underline transition-all"
+          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
         >
-          check out projects on my github
+          github
         </a>
         <a
           href="https://www.linkedin.com/in/tanujkart/"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-black hover:underline transition-all"
+          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
         >
-          check my linkedin
+          linkedin
         </a>
-        <span className="text-[10px] sm:text-[11px] text-black mt-1">
+        <span className="text-[10px] sm:text-[11px] text-gray-400 mt-1">
           inspired by{" "}
           <a
             href="https://www.charlotterosario.com/"
             target="_blank"
             rel="noreferrer"
-            className="underline underline-offset-2 hover:text-gray-600 transition-colors"
+            className="underline underline-offset-2 hover:text-black transition-colors"
           >
             charlotterosario.com
           </a>
