@@ -43,79 +43,32 @@ function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
   return positions;
 }
 
-function DraggableSticker({
+function Sticker({
   sticker,
   position,
   size,
-  onDragEnd,
 }: {
   sticker: (typeof stickers)[number];
   position: { x: number; y: number; rotation: number };
   size: number;
-  onDragEnd: (id: string, x: number, y: number) => void;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const dragging = useRef(false);
-  const offset = useRef({ x: 0, y: 0 });
-  const pos = useRef({ x: position.x, y: position.y });
-  const [isDragging, setIsDragging] = useState(false);
-
-  useEffect(() => {
-    pos.current = { x: position.x, y: position.y };
-    if (ref.current) {
-      ref.current.style.transform = `translate(${position.x}px, ${position.y}px) rotate(${position.rotation}deg)`;
-    }
-  }, [position.x, position.y, position.rotation]);
-
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    e.preventDefault();
-    dragging.current = true;
-    setIsDragging(true);
-    const rect = ref.current!.getBoundingClientRect();
-    offset.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
-  }, []);
-
-  const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    if (!dragging.current) return;
-    const x = e.clientX - offset.current.x;
-    const y = e.clientY - offset.current.y;
-    pos.current = { x, y };
-    if (ref.current) {
-      ref.current.style.transform = `translate(${x}px, ${y}px) rotate(0deg)`;
-    }
-  }, []);
-
-  const handlePointerUp = useCallback(() => {
-    if (!dragging.current) return;
-    dragging.current = false;
-    setIsDragging(false);
-    onDragEnd(sticker.id, pos.current.x, pos.current.y);
-  }, [onDragEnd, sticker.id]);
-
   return (
     <div
-      ref={ref}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      className="absolute top-0 left-0 select-none touch-none"
+      className="absolute top-0 left-0 select-none pointer-events-none"
       style={{
         transform: `translate(${position.x}px, ${position.y}px) rotate(${position.rotation}deg)`,
-        zIndex: isDragging ? 50 : 10,
-        cursor: isDragging ? "grabbing" : "grab",
-        transition: isDragging ? "none" : "transform 0.3s ease",
+        zIndex: 10,
       }}
     >
       <div
-        className="relative hover:scale-110 transition-transform duration-200"
+        className="relative"
         style={{ width: size, height: size }}
       >
         <Image
           src={sticker.src}
           alt={sticker.alt}
           fill
-          className="object-contain drop-shadow-lg pointer-events-none"
+          className="object-contain drop-shadow-lg"
           unoptimized
           draggable={false}
         />
@@ -169,12 +122,11 @@ export default function Home() {
       {mounted &&
         stickerPositions.length === stickers.length &&
         stickers.map((sticker, i) => (
-          <DraggableSticker
+          <Sticker
             key={sticker.id}
             sticker={sticker}
             position={stickerPositions[i]}
             size={stickerSize}
-            onDragEnd={handleDragEnd}
           />
         ))}
 
@@ -189,17 +141,17 @@ export default function Home() {
               karthikeyan
             </h1>
 
-            <nav className="mt-5 sm:mt-6 flex flex-col gap-0.5 text-[13px] sm:text-sm font-mono tracking-wide">
-              <a href="/v1#projects" className="text-gray-500 hover:text-black transition-colors">
+            <nav className="mt-5 sm:mt-6 flex flex-col gap-0.5 text-[13px] sm:text-sm font-sans tracking-wide font-bold">
+              <a href="/v1#projects" className="text-black hover:underline transition-all">
                 robotics
               </a>
-              <a href="/v1#research" className="text-gray-500 hover:text-black transition-colors">
+              <a href="/v1#research" className="text-black hover:underline transition-all">
                 research
               </a>
-              <a href="/v1#projects" className="text-gray-500 hover:text-black transition-colors">
+              <a href="/v1#projects" className="text-black hover:underline transition-all">
                 projects
               </a>
-              <a href="/v1#awards" className="text-gray-500 hover:text-black transition-colors">
+              <a href="/v1#awards" className="text-black hover:underline transition-all">
                 debate
               </a>
             </nav>
@@ -216,18 +168,18 @@ export default function Home() {
               className="h-[60vh] sm:h-[68vh] md:h-[75vh] lg:h-[82vh] w-auto"
               draggable={false}
             />
-            <p className="mt-2 text-[10px] sm:text-[11px] tracking-[0.2em] text-gray-400 font-mono">
+            <p className="mt-2 text-[10px] sm:text-[11px] tracking-[0.2em] text-black font-mono">
               click the stickers
             </p>
           </div>
         </div>
       </div>
 
-      {/* Bottom-right links + credit — monospace, gray */}
+      {/* Bottom-right links + credit — monospace, black */}
       <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-0.5 font-mono">
         <a
           href="mailto:soccertanuj@gmail.com"
-          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
+          className="text-[10px] sm:text-[11px] text-black hover:underline transition-all"
         >
           send an email
         </a>
@@ -235,7 +187,7 @@ export default function Home() {
           href="https://medium.com/@tkart"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
+          className="text-[10px] sm:text-[11px] text-black hover:underline transition-all"
         >
           read articles on my medium
         </a>
@@ -243,7 +195,7 @@ export default function Home() {
           href="https://github.com/tanujkart"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
+          className="text-[10px] sm:text-[11px] text-black hover:underline transition-all"
         >
           check out projects on my github
         </a>
@@ -251,17 +203,17 @@ export default function Home() {
           href="https://www.linkedin.com/in/tanujkart/"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
+          className="text-[10px] sm:text-[11px] text-black hover:underline transition-all"
         >
           check my linkedin
         </a>
-        <span className="text-[10px] sm:text-[11px] text-gray-400 mt-1">
+        <span className="text-[10px] sm:text-[11px] text-black mt-1">
           inspired by{" "}
           <a
             href="https://www.charlotterosario.com/"
             target="_blank"
             rel="noreferrer"
-            className="underline underline-offset-2 hover:text-black transition-colors"
+            className="underline underline-offset-2 hover:text-gray-600 transition-colors"
           >
             charlotterosario.com
           </a>
