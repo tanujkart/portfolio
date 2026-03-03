@@ -16,11 +16,11 @@ const stickers = [
 ];
 
 function getStickerPositionsOnLaptop(imgRect: DOMRect, count: number) {
-  // Laptop cover — between the edges with moderate padding
-  const coverLeft = imgRect.left + imgRect.width * 0.15;
-  const coverTop = imgRect.top + imgRect.height * 0.59;
-  const coverW = imgRect.width * 0.48;
-  const coverH = imgRect.height * 0.19;
+  // Laptop cover — shifted up, wider to fill the screen like Charlotte's
+  const coverLeft = imgRect.left + imgRect.width * 0.12;
+  const coverTop = imgRect.top + imgRect.height * 0.56;
+  const coverW = imgRect.width * 0.52;
+  const coverH = imgRect.height * 0.22;
 
   const stickerSize = Math.min(34, imgRect.width * 0.085);
   const pad = stickerSize * 0.4;
