@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import BackgroundEffects from "@/components/BackgroundEffects";
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
 import { Figtree, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -19,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Tanuj Karthikeyan",
-  description: "Personal site built from modular Lego-like blocks",
+  description: "Personal site of Tanuj Karthikeyan",
 };
 
 export default function RootLayout({
@@ -30,9 +27,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${figtree.variable} ${jetbrainsMono.variable} antialiased`}>
-        <BackgroundEffects />
-        <Header />
-        <HeroSection />
         {children}
       </body>
     </html>
