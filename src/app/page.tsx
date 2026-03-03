@@ -792,7 +792,7 @@ export default function Home() {
 
       <footer className="py-6 sm:py-8 lg:py-10 text-center text-xs sm:text-sm text-blue-700 border-t border-blue-100 bg-white px-4">
         <p className="font-semibold">Designed and Built by Tanuj Karthikeyan</p>
-        <p className="mt-2">&copy; 2025 All Rights Reserved</p>
+        <p className="mt-2">&copy; 2026 All Rights Reserved</p>
       </footer>
 
       </main>
