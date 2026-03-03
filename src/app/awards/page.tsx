@@ -1,8 +1,16 @@
 import Link from "next/link";
 
 const awards = [
-  "1st inspire award (state)",
+  "1st innovate award — worlds",
+  "3× world championship qualifier",
+  "",
+  "3rd place — regional science fair (environmental science)",
   "2nd stockholm junior water prize (regional)",
+  "",
+  "stanford invitational champion",
+  "georgetown tournament champion",
+  "2x nationals qualifier",
+  "",
   "national merit finalist",
 ];
 
@@ -16,12 +24,16 @@ export default function AwardsPage() {
 
         <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">awards</h1>
 
-        <ul className="space-y-2">
-          {awards.map((award) => (
-            <li key={award} className="text-[15px] leading-relaxed text-gray-700">
-              {award}
-            </li>
-          ))}
+        <ul className="space-y-1.5">
+          {awards.map((award, i) =>
+            award === "" ? (
+              <li key={i} className="h-4" />
+            ) : (
+              <li key={i} className="text-[15px] leading-relaxed text-gray-700">
+                {award}
+              </li>
+            )
+          )}
         </ul>
       </div>
     </main>
