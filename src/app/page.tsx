@@ -14,7 +14,7 @@ export default function Home() {
               karthikeyan
             </h1>
 
-            <nav className="mt-5 sm:mt-6 flex flex-col gap-0.5 text-[13px] sm:text-sm font-sans tracking-wide font-bold">
+            <nav className="mt-5 sm:mt-6 flex flex-col gap-0.5 text-[16px] sm:text-lg font-sans tracking-wide font-bold">
               <a href="/about" className="text-black hover:underline transition-all">
                 about
               </a>

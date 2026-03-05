@@ -11,19 +11,17 @@ export default function AboutPage() {
         <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">about</h1>
 
         <div className="space-y-4 text-[15px] leading-relaxed text-gray-700">
-          <p>i&apos;m tanuj ;)</p>
+          <p>i&apos;m tanuj :)</p>
           <p>
-            i build things that turn messy data into something useful.
+            i like figuring out how things work — and building them.
           </p>
           <p>
-            right now that&apos;s ocean forecasting models, ai systems, and hardware
-            that helps people remember what matters.
+            right now that means ai systems, hardware projects, and research into how neural networks
+            represent and compute information.
           </p>
           <p>
-            i like first-principles thinking, building from scratch, and going 0 → 1.
-          </p>
-          <p>
-            also interested in scaling ventures — how early-stage ideas become real companies.
+            i&apos;m interested in first-principles thinking, going 0 → 1, and how early ideas scale into
+            real ventures.
           </p>
           <p className="text-gray-400">durham, nc.</p>
         </div>
