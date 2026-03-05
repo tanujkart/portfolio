@@ -24,6 +24,25 @@ export default function ResearchPage() {
           <p>
             always trying to reduce false positives and make environmental prediction actually usable.
           </p>
+
+          <div className="h-2" />
+
+          <h2 className="text-lg font-bold text-black">ai interpretability research: mechanistic interpretability</h2>
+          <p className="text-gray-400 text-sm">
+            studying how neural networks represent concepts internally using modern interpretability methods.
+          </p>
+          <p>
+            analyzed feature discovery, probing, activation patching, and weight-based analysis to understand
+            how models encode and manipulate information.
+          </p>
+          <p>
+            focused on representation geometry, sparse feature directions, and toy models that reveal
+            mechanisms like superposition and grokking.
+          </p>
+          <p>
+            synthesized 30+ papers on modern mechanistic interpretability as part of the NCSSM research in
+            computational science program.
+          </p>
         </div>
       </div>
     </main>
