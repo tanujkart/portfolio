@@ -11,18 +11,19 @@ export default function ResearchPage() {
         <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">research</h1>
 
         <div className="space-y-4 text-[15px] leading-relaxed text-gray-700">
-          <h2 className="text-lg font-bold text-black">hotspot</h2>
+          <h2 className="text-lg font-bold text-black">
+            hotspot (hybrid oceanic tracking via satellite proxy and optimized time-series)
+          </h2>
           <p className="text-gray-400 text-sm">
-            forecasting harmful algal blooms using satellite data + ocean nutrient models.
+            designed ecological constraint filters and local time-series interpolation to reconstruct
+            missing data and enforce physically consistent predictions.
           </p>
           <p>
-            built rule-based ecological filters + time-series interpolation.
+            stockholm regional water prize; 3rd at regionals; advancing to state science fair.
           </p>
           <p>
-            3rd at regionals. moving on to state.
-          </p>
-          <p>
-            always trying to reduce false positives and make environmental prediction actually usable.
+            optimized for low false-positive rates under deployment constraints to ensure actionable
+            environmental forecasts.
           </p>
 
           <div className="h-2" />
