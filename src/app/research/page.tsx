@@ -14,7 +14,7 @@ export default function ResearchPage() {
           <h2 className="text-lg font-bold text-black">
             hotspot (hybrid oceanic tracking via satellite proxy and optimized time-series)
           </h2>
-          <p>
+          <p className="text-gray-400 text-sm">
             studying how remote sensing and time-series modeling can be used to infer nutrient-driven
             ecological changes in marine environments.
           </p>
