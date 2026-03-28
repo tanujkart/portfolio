@@ -14,16 +14,21 @@ export default function ResearchPage() {
           <h2 className="text-lg font-bold text-black">
             hotspot (hybrid oceanic tracking via satellite proxy and optimized time-series)
           </h2>
-          <p className="text-gray-400 text-sm">
+          <p>
+            studying how remote sensing and time-series modeling can be used to infer nutrient-driven
+            ecological changes in marine environments.
+          </p>
+          <p>
             designed ecological constraint filters and local time-series interpolation to reconstruct
             missing data and enforce physically consistent predictions.
           </p>
           <p>
-            stockholm regional water prize; 3rd at regionals; advancing to state science fair.
+            focused on reducing false positives and improving reliability so environmental forecasts
+            remain usable in real-world monitoring settings.
           </p>
           <p>
-            optimized for low false-positive rates under deployment constraints to ensure actionable
-            environmental forecasts.
+            earned the stockholm regional water prize, placed 3rd at regionals, and advanced to the
+            state science fair.
           </p>
 
           <div className="h-2" />

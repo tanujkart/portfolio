@@ -18,11 +18,11 @@ export default function Home() {
               <a href="/about" className="text-black hover:underline transition-all">
                 about
               </a>
-              <a href="/research" className="text-black hover:underline transition-all">
-                research
-              </a>
               <a href="/projects" className="text-black hover:underline transition-all">
                 projects
+              </a>
+              <a href="/research" className="text-black hover:underline transition-all">
+                research
               </a>
               <a href="/awards" className="text-black hover:underline transition-all">
                 awards

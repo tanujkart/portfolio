@@ -9,7 +9,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["awards", "projects", "research", "contact"];
+      const sections = ["projects", "research", "awards", "contact"];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
