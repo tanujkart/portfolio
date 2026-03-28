@@ -2,20 +2,38 @@ import Link from "next/link";
 
 const projects = [
   {
-    name: "thinkclear",
-    description: "ai-powered memory assist platform.\n300k+ interactions. facial recognition + adaptive recall.",
+    name: "tagopt",
+    description:
+      "building… ai for seo by optimizing hashtags for platform and goal. pitched to vcs.",
   },
   {
-    name: "tagopt",
-    description: "ai marketing optimization tool.\nagent workflows + custom frontend.",
+    name: "patent 11610482",
+    description:
+      "system to warn a motorist of the presence of a pedestrian in a crosswalk at a traffic intersection. collaborating with 20+ department of transportation officials for compliance & testing.",
+  },
+  {
+    name: "thinkclear",
+    description:
+      "smart glasses with facial recognition technology + ai-powered gamification. 400k+ interactions. pitched to ceo of an 8-figure digital therapeutics company and penn faculty. m&tsi 2025.",
   },
   {
     name: "memo",
-    description: "wearable audio capture + on-device summarization.",
+    description:
+      "wearable recording device + ai summarization and note-taking. backed by ncssm colopy entrepreneurship fund. ncssm entrepreneurship program fall 2025.",
   },
   {
-    name: "student founders association",
-    description: "connecting high school founders with real vcs in nc.",
+    name: "nemo",
+    description:
+      "autonomous data-gathering submarine + live global modeling dashboard. smath hacks 2026.",
+  },
+  {
+    name: "engage360",
+    description:
+      "civic engagement platform. presented to congressman timmons (district SC-04). congressional app challenge grand winner 2025.",
+  },
+  {
+    name: "portfolio",
+    description: "what ur looking at right now!! 30k+ interactions.",
   },
 ];
 
