@@ -11,19 +11,30 @@ export default function AboutPage() {
         <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">about</h1>
 
         <div className="space-y-4 text-[15px] leading-relaxed text-gray-700">
-          <p>i&apos;m tanuj :)</p>
+          <p>i&apos;m tanuj (tuh-nooj).</p>
+          <p>i like figuring out why things work the way they do.</p>
           <p>
-            i like figuring out how things work — and building them.
+            in 2024, i interned at an agentic financial modeling start-up where i helped raise
+            6-figures.
           </p>
           <p>
-            right now that means ai systems, hardware projects, and research into how neural networks
-            represent and compute information.
+            in 2025, i was all in on ai. over the summer i was at the university of pennsylvania
+            working on an ai dementia care product, now with over 400k interactions. i was also doing
+            ai modeling research at duke.
           </p>
           <p>
-            i&apos;m interested in first-principles thinking, going 0 → 1, and how early ideas scale into
-            real ventures.
+            now, i&apos;m looking for opportunities in tech and/or venture. i&apos;m also working on{" "}
+            <a
+              href="https://tagopt.com"
+              className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              tagopt
+            </a>
+            : agents for seo.
           </p>
-          <p className="text-gray-400">durham, nc.</p>
+          <p>i also like food, spikeball, and running :)</p>
         </div>
       </div>
     </main>
