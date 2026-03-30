@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  /* Matches tanujhero.png paper / backdrop (avg ~#f6f6f6), not pure white */
+  --background: #f6f6f6;
   --foreground: #1e3a5f;
 }
 
@@ -15,7 +16,7 @@
 /* Force light theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
+    --background: #f6f6f6;
     --foreground: #1e3a5f;
   }
 }

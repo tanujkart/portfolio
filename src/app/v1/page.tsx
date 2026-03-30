@@ -288,7 +288,7 @@ export default function V1Page() {
         </div>
       )}
 
-      <section id="projects" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-white">
+      <section id="projects" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-background">
         <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Projects</h2>
         <div className="space-y-6 sm:space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
@@ -582,7 +582,7 @@ export default function V1Page() {
         )}
       </section>
 
-      <section id="research" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-white">
+      <section id="research" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-background">
         <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Research</h2>
         <div className="grid grid-cols-1 gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="flex items-center justify-center px-4 sm:px-0">
@@ -637,7 +637,7 @@ export default function V1Page() {
         </div>
       </section>
 
-      <section id="awards" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-12 sm:pb-20 border-t-4 border-blue-200 bg-white">
+      <section id="awards" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-12 sm:pb-20 border-t-4 border-blue-200 bg-background">
         <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Awards</h2>
         <div className="overflow-x-auto rounded-xl border-2 border-blue-200/50 shadow-lg bg-white mx-4 sm:mx-0">
           <table className="w-full border-collapse min-w-[700px]">
@@ -686,7 +686,7 @@ export default function V1Page() {
         )}
       </section>
 
-      <section id="contact" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-white">
+      <section id="contact" className="scroll-mt-20 sm:scroll-mt-24 pt-12 sm:pt-16 pb-16 sm:pb-24 lg:pb-32 border-t-4 border-blue-200 bg-background">
         <h2 className="mb-6 sm:mb-8 lg:mb-10 text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-blue-600 drop-shadow-sm px-4 sm:px-0" style={{ textShadow: '2px 2px 0 rgba(59, 130, 246, 0.2)', letterSpacing: '-0.03em' }}>Contact</h2>
         <div className="max-w-5xl mx-auto px-4 sm:px-0">
           <form 
@@ -790,7 +790,7 @@ export default function V1Page() {
         </div>
       </section>
 
-      <footer className="py-6 sm:py-8 lg:py-10 text-center text-xs sm:text-sm text-blue-700 border-t border-blue-100 bg-white px-4">
+      <footer className="py-6 sm:py-8 lg:py-10 text-center text-xs sm:text-sm text-blue-700 border-t border-blue-100 bg-background px-4">
         <p className="font-semibold">Designed and Built by Tanuj Karthikeyan</p>
         <p className="mt-2">&copy; 2026 All Rights Reserved</p>
       </footer>

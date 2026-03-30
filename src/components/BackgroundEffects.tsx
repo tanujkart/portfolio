@@ -78,10 +78,10 @@ export default function BackgroundEffects() {
 
   return (
     <>
-      {/* White base background */}
+      {/* Page base — matches hero photo paper tone */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 -z-10 bg-white"
+        className="pointer-events-none fixed inset-0 -z-10 bg-background"
       />
       {/* Cursor outline layer */}
       <canvas

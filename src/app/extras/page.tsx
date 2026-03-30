@@ -9,7 +9,7 @@ const extras = [
 
 export default function ExtrasPage() {
   return (
-    <main className="min-h-screen bg-white px-6 py-16 sm:py-24">
+    <main className="min-h-screen bg-background px-6 py-16 sm:py-24">
       <div className="max-w-xl mx-auto">
         <Link href="/" className="text-gray-400 hover:text-black text-sm font-mono transition-colors">
           ← back

@@ -69,7 +69,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b-4 border-blue-300 bg-white/95 backdrop-blur-xl supports-[backdrop-filter]:bg-white/90 shadow-lg">
+    <header className="sticky top-0 z-50 border-b-4 border-blue-300 bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/90 shadow-lg">
       <nav ref={navRef} className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
         <a
           href="#"
@@ -133,7 +133,7 @@ export default function Header() {
 
       {/* Mobile Dropdown Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t-2 border-blue-200 bg-white/95 backdrop-blur-xl">
+        <div className="md:hidden border-t-2 border-blue-200 bg-background/95 backdrop-blur-xl">
           <div className="mx-auto max-w-7xl px-4 py-2 space-y-1">
             {navLinks.map((link) => {
               const id = link.href.replace("#", "");
