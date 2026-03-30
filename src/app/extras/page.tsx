@@ -1,12 +1,5 @@
 import Link from "next/link";
 
-const extras = [
-  "spikeball > most sports",
-  "learning to skate without breaking bones",
-  "thrifting > retail",
-  "coffee, whiteboards, late-night build sessions",
-];
-
 export default function ExtrasPage() {
   return (
     <main className="min-h-screen bg-background px-6 py-16 sm:py-24">
@@ -17,13 +10,41 @@ export default function ExtrasPage() {
 
         <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">extras</h1>
 
-        <ul className="space-y-2">
-          {extras.map((item) => (
-            <li key={item} className="text-[15px] leading-relaxed text-gray-700">
-              {item}
-            </li>
-          ))}
-        </ul>
+        <div className="space-y-8 text-[15px] leading-relaxed text-gray-700">
+          <div>
+            <h2 className="text-lg font-bold text-black">life goals (as of march 26)</h2>
+            <p className="mt-2">run a marathon, get a summer job, write every day</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold text-black">learning to</h2>
+            <p className="mt-2">draw, skateboard, play the guitar, line dance, and italian</p>
+          </div>
+
+          <div>
+            <p>
+              after i retire, i want to be a food critic so i&apos;ve started practicing my writing on{" "}
+              <a
+                href="https://medium.com/@tkart"
+                className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                medium
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://substack.com/@tanujkarthikeyan"
+                className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                substack
+              </a>
+              .
+            </p>
+          </div>
+        </div>
       </div>
     </main>
   );
