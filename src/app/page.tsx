@@ -47,10 +47,10 @@ export default function Home() {
       </div>
 
       {/* Bottom-right links */}
-      <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-0.5 font-mono">
+      <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-1 font-mono">
         <a
           href="mailto:soccertanuj@gmail.com"
-          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
+          className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
         >
           email
         </a>
@@ -58,7 +58,7 @@ export default function Home() {
           href="https://medium.com/@tkart"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
+          className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
         >
           medium
         </a>
@@ -66,7 +66,7 @@ export default function Home() {
           href="https://github.com/tanujkart"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
+          className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
         >
           github
         </a>
@@ -74,17 +74,17 @@ export default function Home() {
           href="https://www.linkedin.com/in/tanujkart/"
           target="_blank"
           rel="noreferrer"
-          className="text-[10px] sm:text-[11px] text-gray-400 hover:text-black transition-colors"
+          className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
         >
           linkedin
         </a>
-        <span className="text-[10px] sm:text-[11px] text-gray-400 mt-1">
+        <span className="text-[12px] sm:text-[13px] text-black mt-1">
           inspired by{" "}
           <a
             href="https://www.charlotterosario.com/"
             target="_blank"
             rel="noreferrer"
-            className="underline underline-offset-2 hover:text-black transition-colors"
+            className="underline underline-offset-2 text-black hover:text-gray-600 transition-colors"
           >
             charlotterosario.com
           </a>
