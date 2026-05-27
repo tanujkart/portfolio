@@ -24,9 +24,6 @@ export default function Home() {
               <a href="/research" className="text-black hover:underline transition-all">
                 research
               </a>
-              <a href="/awards" className="text-black hover:underline transition-all">
-                awards
-              </a>
               <a href="/extras" className="text-black hover:underline transition-all">
                 extras
               </a>
