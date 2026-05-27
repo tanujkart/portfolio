@@ -10,83 +10,83 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: "tagopt",
-    timeframe: "building…",
+    name: "Tagopt",
+    timeframe: "Building…",
     description:
-      "ai for seo by optimizing hashtags per platform and goal.",
-    tags: ["ai", "seo", "startup"],
-    highlights: ["pitched to vcs"],
+      "AI for SEO by optimizing hashtags per platform and goal.",
+    tags: ["AI", "SEO", "Startup"],
+    highlights: ["Pitched to VCs"],
   },
   {
-    name: "hotspot",
-    timeframe: "feb 2025 – mar 2026",
+    name: "HOTSPOT",
+    timeframe: "Feb 2025 – Mar 2026",
     description:
-      "multi-source ml pipeline for harmful algal bloom (hab) early warning — fuses nasa aqua modis spectral retrievals, world ocean atlas phosphate climatologies, and noaa bloom event records into a spatially blocked logistic regression + random forest ensemble. converted raw satellite readings to monthly anomalies to capture trend signals over absolute values; applied spatial interpolation across cloud-induced data gaps. rule-based threshold filter post-processes model outputs to suppress low-confidence predictions. ~75% tpr with a two-month lead time, no local sensor infrastructure required.",
-    tags: ["ml", "remote sensing", "research"],
+      "Multi-source ML pipeline for harmful algal bloom (HAB) early warning — fuses NASA Aqua MODIS spectral retrievals, World Ocean Atlas phosphate climatologies, and NOAA bloom event records into a spatially blocked logistic regression + random forest ensemble. Converted raw satellite readings to monthly anomalies to capture trend signals over absolute values; applied spatial interpolation across cloud-induced data gaps. A rule-based threshold filter post-processes model outputs to suppress low-confidence predictions. Achieves ~75% TPR with a two-month lead time, no local sensor infrastructure required.",
+    tags: ["ML", "Remote Sensing", "Research"],
     highlights: [
-      "regional stockholm junior water prize",
-      "regional science fair 3rd place",
-      "presented at ncssm research symposium",
+      "Regional Stockholm Junior Water Prize",
+      "Regional Science Fair 3rd Place",
+      "Presented at NCSSM Research Symposium",
     ],
   },
   {
-    name: "nemo",
-    timeframe: "mar 2026",
+    name: "NEMO",
+    timeframe: "Mar 2026",
     description:
-      "autonomous aquatic data-gathering submarine on a raspberry pi — water quality, temperature, and depth sensors with a remote navigation interface. next.js dashboard for real-time sensor streaming, historical trend analysis, and geospatial mapping of environmental readings. architected for multi-unit global deployment so additional units feed into a unified modeling layer without infrastructure changes.",
-    tags: ["hardware", "raspberry pi", "next.js"],
-    highlights: ["built for smath hacks 2026"],
+      "Autonomous aquatic data-gathering submarine on a Raspberry Pi — water quality, temperature, and depth sensors with a remote navigation interface. Next.js dashboard for real-time sensor streaming, historical trend analysis, and geospatial mapping of environmental readings. Architected for multi-unit global deployment so additional units feed into a unified modeling layer without infrastructure changes.",
+    tags: ["Hardware", "Raspberry Pi", "Next.js"],
+    highlights: ["Built for SMath Hacks 2026"],
   },
   {
-    name: "memo",
-    timeframe: "aug 2025 – dec 2025",
+    name: "Memo",
+    timeframe: "Aug 2025 – Dec 2025",
     description:
-      "wearable audio capture device on a raspberry pi with a two-mode recording interface — forward-trigger continuous capture and a reverse-buffer mode that retroactively saves the prior 60 seconds of audio. recordings run through openai whisper for on-device transcription, then gpt-4o via api to extract structured summaries and to-do lists. paired react native mobile app handles cloud sync, time/date/location tagging, and natural language search over transcript history.",
-    tags: ["wearable", "whisper", "react native"],
+      "Wearable audio capture device on a Raspberry Pi with a two-mode recording interface — forward-trigger continuous capture and a reverse-buffer mode that retroactively saves the prior 60 seconds of audio. Recordings run through OpenAI Whisper for on-device transcription, then GPT-4o via API to extract structured summaries and to-do lists. Paired React Native mobile app handles cloud sync, time/date/location tagging, and natural language search over transcript history.",
+    tags: ["Wearable", "Whisper", "React Native"],
     highlights: [
-      "backed by ncssm colopy entrepreneurship fund",
-      "2nd most innovative venture, ncssm entrepreneurship fair",
-      "selected for ncssm entrepreneurship program, fall 2025",
+      "Backed by the NCSSM Colopy Entrepreneurship Fund",
+      "2nd Most Innovative Venture, NCSSM Entrepreneurship Fair",
+      "Selected for NCSSM Entrepreneurship Program, Fall 2025",
     ],
   },
   {
-    name: "thinkclear",
-    timeframe: "jul 2025 – dec 2025",
+    name: "ThinkClear",
+    timeframe: "Jul 2025 – Dec 2025",
     description:
-      "facial recognition pipeline on a raspberry pi + camera module using deepface for real-time identity matching, integrated into a smart glasses form factor to surface contextual memory cues for users with early-to-mid stage dementia. paired with a react native-backed web app delivering ai-powered memory matching games clinically targeting cognitive retention — designed to slow dementia progression through spaced repetition and personalized recall challenges. 400k+ interactions across the web platform.",
-    tags: ["smart glasses", "deepface", "healthtech"],
+      "Facial recognition pipeline on a Raspberry Pi + camera module using DeepFace for real-time identity matching, integrated into a smart glasses form factor to surface contextual memory cues for users with early-to-mid stage dementia. Paired with a React Native-backed web app delivering AI-powered memory matching games clinically targeting cognitive retention — designed to slow dementia progression through spaced repetition and personalized recall challenges. 400K+ interactions across the web platform.",
+    tags: ["Smart Glasses", "DeepFace", "Healthtech"],
     highlights: [
-      "pitched to ceo of an 8-figure digital therapeutics company and penn faculty",
-      "m&tsi 2025",
+      "Pitched to the CEO of an 8-figure digital therapeutics company and Penn faculty",
+      "M&TSI 2025",
     ],
   },
   {
-    name: "engage360",
-    timeframe: "aug 2024 – oct 2024",
+    name: "Engage360",
+    timeframe: "Aug 2024 – Oct 2024",
     description:
-      "civic engagement platform in next.js consolidating voter registration, representative lookup, and issue tracking into a single interface — reducing the friction of navigating fragmented government data sources.",
-    tags: ["next.js", "civic tech"],
+      "Civic engagement platform in Next.js consolidating voter registration, representative lookup, and issue tracking into a single interface — reducing the friction of navigating fragmented government data sources.",
+    tags: ["Next.js", "Civic Tech"],
     highlights: [
-      "grand winner, 2025 congressional app challenge",
-      "presented to congressman timmons (sc-04)",
+      "Grand Winner, 2025 Congressional App Challenge",
+      "Presented to Congressman Timmons (SC-04)",
     ],
   },
   {
-    name: "patent 11610482",
-    timeframe: "pedestrian crosswalk warning system",
+    name: "Patent 11610482",
+    timeframe: "Pedestrian Crosswalk Warning System",
     description:
-      "real-time pedestrian detection and motorist alert system using an ultrasonic sensor array deployed at traffic intersections. continuously measures proximity of pedestrians in crosswalk zones and triggers alerts to approaching motorists below a distance threshold, reducing collision risk without camera-based infrastructure or cv compute overhead.",
-    tags: ["hardware", "patent", "safety"],
+      "Real-time pedestrian detection and motorist alert system using an ultrasonic sensor array deployed at traffic intersections. Continuously measures proximity of pedestrians in crosswalk zones and triggers alerts to approaching motorists below a distance threshold, reducing collision risk without camera-based infrastructure or CV compute overhead.",
+    tags: ["Hardware", "Patent", "Safety"],
     highlights: [
-      "collaborated with 20+ dot officials for compliance & field testing",
-      "u.s. patent 11610482",
+      "Collaborated with 20+ DOT officials for compliance & field testing",
+      "U.S. Patent 11610482",
     ],
   },
   {
-    name: "portfolio",
-    description: "what ur looking at right now!!",
-    tags: ["next.js", "design"],
-    highlights: ["30k+ interactions"],
+    name: "Portfolio",
+    description: "What you’re looking at right now!!",
+    tags: ["Next.js", "Design"],
+    highlights: ["30K+ interactions"],
   },
 ];
 
@@ -95,10 +95,10 @@ export default function ProjectsPage() {
     <main className="min-h-screen bg-background px-6 py-16 sm:py-24">
       <div className="max-w-4xl mx-auto">
         <Link href="/" className="text-gray-400 hover:text-black text-sm font-mono transition-colors">
-          ← back
+          ← Back
         </Link>
 
-        <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">projects</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">Projects</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {projects.map((project) => (

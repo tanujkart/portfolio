@@ -5,36 +5,36 @@ export default function AboutPage() {
     <main className="min-h-screen bg-background px-6 py-16 sm:py-24">
       <div className="max-w-xl mx-auto">
         <Link href="/" className="text-gray-400 hover:text-black text-sm font-mono transition-colors">
-          ← back
+          ← Back
         </Link>
 
-        <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">about</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">About</h1>
 
         <div className="space-y-4 text-[15px] leading-relaxed text-gray-700">
-          <p>i&apos;m tanuj (tuh-nooj).</p>
-          <p>i like figuring out why things work the way they do.</p>
+          <p>I&apos;m Tanuj (tuh-nooj).</p>
+          <p>I like figuring out why things work the way they do.</p>
           <p>
-            in 2024, i interned at an agentic financial modeling start-up where i helped raise
+            In 2024, I interned at an agentic financial modeling start-up where I helped raise
             6-figures.
           </p>
           <p>
-            in 2025, i was all in on ai. over the summer i was at the university of pennsylvania
-            working on an ai dementia care product, now with over 400k interactions. i was also doing
-            ai modeling research at duke.
+            In 2025, I was all in on AI. Over the summer I was at the University of Pennsylvania
+            working on an AI dementia care product, now with over 400k interactions. I was also doing
+            AI modeling research at Duke.
           </p>
           <p>
-            now, i&apos;m looking for opportunities in tech and/or venture. i&apos;m also working on{" "}
+            Now, I&apos;m looking for opportunities in tech and/or venture. I&apos;m also working on{" "}
             <a
               href="https://tagopt.com"
               className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
               target="_blank"
               rel="noopener noreferrer"
             >
-              tagopt
+              Tagopt
             </a>
-            : agents for seo.
+            : agents for SEO.
           </p>
-          <p>i also like food, spikeball, and running :)</p>
+          <p>I also like food, spikeball, and running :)</p>
         </div>
       </div>
     </main>

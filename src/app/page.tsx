@@ -9,23 +9,23 @@ export default function Home() {
           {/* Name + nav — left side, overlapping closer to the face */}
           <div className="relative z-20 flex flex-col mt-[5%] mr-[-80px] sm:mr-[-120px] md:mr-[-150px]">
             <h1 className="text-[28px] sm:text-4xl md:text-5xl font-bold tracking-tight text-black leading-[1.15]">
-              tanuj
+              Tanuj
               <br />
-              karthikeyan
+              Karthikeyan
             </h1>
 
             <nav className="mt-5 sm:mt-6 flex flex-col gap-0.5 text-[16px] sm:text-lg font-sans tracking-wide font-bold">
               <a href="/about" className="text-black hover:underline transition-all">
-                about
+                About
               </a>
               <a href="/projects" className="text-black hover:underline transition-all">
-                projects
+                Projects
               </a>
               <a href="/research" className="text-black hover:underline transition-all">
-                research
+                Research
               </a>
               <a href="/extras" className="text-black hover:underline transition-all">
-                extras
+                Extras
               </a>
             </nav>
           </div>
@@ -49,7 +49,7 @@ export default function Home() {
           href="mailto:soccertanuj@gmail.com"
           className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
         >
-          email
+          Email
         </a>
         <a
           href="https://medium.com/@tkart"
@@ -57,7 +57,7 @@ export default function Home() {
           rel="noreferrer"
           className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
         >
-          medium
+          Medium
         </a>
         <a
           href="https://github.com/tanujkart"
@@ -65,7 +65,7 @@ export default function Home() {
           rel="noreferrer"
           className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
         >
-          github
+          GitHub
         </a>
         <a
           href="https://www.linkedin.com/in/tanujkart/"
@@ -73,10 +73,10 @@ export default function Home() {
           rel="noreferrer"
           className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
         >
-          linkedin
+          LinkedIn
         </a>
         <span className="text-[12px] sm:text-[13px] text-black mt-1">
-          inspired by{" "}
+          Inspired by{" "}
           <a
             href="https://www.charlotterosario.com/"
             target="_blank"
