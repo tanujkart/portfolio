@@ -8,9 +8,21 @@ const links = [
     external: false,
   },
   {
+    label: "Email",
+    href: "mailto:tanuj@unc.edu",
+    display: "tanuj@unc.edu",
+    external: false,
+  },
+  {
     label: "Medium",
     href: "https://medium.com/@tkart",
     display: "medium.com/@tkart",
+    external: true,
+  },
+  {
+    label: "Substack",
+    href: "https://substack.com/@tanujkarthikeyan",
+    display: "substack.com/@tanujkarthikeyan",
     external: true,
   },
   {
@@ -47,7 +59,7 @@ export default function ContactPage() {
 
         <ul className="divide-y divide-black/10 border-y border-black/10">
           {links.map((link) => (
-            <li key={link.label}>
+            <li key={link.href}>
               <a
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
