@@ -50,47 +50,35 @@ html {
     radial-gradient(circle at 56px 12px, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 4px, transparent 5px);
 }
 
-/* Floating LEGO bricks — drifting loops with real travel.
-   Each brick has a CSS variable --rot for its resting rotation;
-   the keyframes wobble around that value so different bricks
-   tilt differently while sharing the same animation. */
-@keyframes drift-a {
-  0%, 100% { transform: translate3d(0, 0, 0)         rotate(var(--rot, 0deg)); }
-  25%      { transform: translate3d(20px, -28px, 0)  rotate(calc(var(--rot, 0deg) + 14deg)); }
-  50%      { transform: translate3d(-12px, -48px, 0) rotate(calc(var(--rot, 0deg) - 8deg)); }
-  75%      { transform: translate3d(-30px, -18px, 0) rotate(calc(var(--rot, 0deg) + 10deg)); }
+/* Newton's cradle — leftmost & rightmost pendulums swing in alternation.
+   The per-keyframe animation-timing-function mimics pendulum physics:
+   accelerate falling toward center (ease-in), decelerate climbing
+   to the peak (ease-out), instantaneous transfer at impact (linear). */
+@keyframes cradle-swing-left {
+  0%   { transform: rotate(-55deg); animation-timing-function: ease-in; }
+  25%  { transform: rotate(0deg);   animation-timing-function: linear; }
+  75%  { transform: rotate(0deg);   animation-timing-function: ease-out; }
+  100% { transform: rotate(-55deg); }
 }
 
-@keyframes drift-b {
-  0%, 100% { transform: translate3d(0, 0, 0)         rotate(var(--rot, 0deg)); }
-  20%      { transform: translate3d(-34px, -16px, 0) rotate(calc(var(--rot, 0deg) - 12deg)); }
-  45%      { transform: translate3d(26px, -42px, 0)  rotate(calc(var(--rot, 0deg) + 18deg)); }
-  70%      { transform: translate3d(40px, 8px, 0)    rotate(calc(var(--rot, 0deg) + 6deg)); }
-  85%      { transform: translate3d(10px, 22px, 0)   rotate(calc(var(--rot, 0deg) - 10deg)); }
+@keyframes cradle-swing-right {
+  0%   { transform: rotate(0deg);   animation-timing-function: linear; }
+  25%  { transform: rotate(0deg);   animation-timing-function: ease-out; }
+  50%  { transform: rotate(55deg);  animation-timing-function: ease-in; }
+  75%  { transform: rotate(0deg);   animation-timing-function: linear; }
+  100% { transform: rotate(0deg); }
 }
 
-@keyframes drift-c {
-  0%, 100% { transform: translate3d(0, 0, 0)         rotate(var(--rot, 0deg)); }
-  20%      { transform: translate3d(28px, 18px, 0)   rotate(calc(var(--rot, 0deg) + 16deg)); }
-  40%      { transform: translate3d(-22px, -28px, 0) rotate(calc(var(--rot, 0deg) - 14deg)); }
-  60%      { transform: translate3d(-38px, 12px, 0)  rotate(calc(var(--rot, 0deg) + 8deg)); }
-  80%      { transform: translate3d(18px, -36px, 0)  rotate(calc(var(--rot, 0deg) - 6deg)); }
+.cradle-pendulum-0 {
+  animation: cradle-swing-left 1.8s infinite;
 }
-
-/* spinny variant — slow continuous rotation with a wandering path */
-@keyframes drift-d {
-  0%   { transform: translate3d(0, 0, 0)          rotate(var(--rot, 0deg)); }
-  25%  { transform: translate3d(18px, -22px, 0)   rotate(calc(var(--rot, 0deg) + 90deg)); }
-  50%  { transform: translate3d(-12px, -38px, 0)  rotate(calc(var(--rot, 0deg) + 180deg)); }
-  75%  { transform: translate3d(-26px, -8px, 0)   rotate(calc(var(--rot, 0deg) + 270deg)); }
-  100% { transform: translate3d(0, 0, 0)          rotate(calc(var(--rot, 0deg) + 360deg)); }
+.cradle-pendulum-4 {
+  animation: cradle-swing-right 1.8s infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [style*="drift-a"],
-  [style*="drift-b"],
-  [style*="drift-c"],
-  [style*="drift-d"] {
+  .cradle-pendulum-0,
+  .cradle-pendulum-4 {
     animation: none !important;
   }
 }

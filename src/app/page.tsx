@@ -1,6 +1,6 @@
 "use client";
 
-import FloatingBricks from "@/components/FloatingBricks";
+import NewtonsCradle from "@/components/NewtonsCradle";
 
 export default function Home() {
   return (
@@ -42,13 +42,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Right half — Floating bricks behind name + nav */}
-        <section className="relative w-full md:w-1/2 min-h-[60vh] md:min-h-screen flex items-center justify-center px-6 py-12 md:py-0 overflow-hidden">
-          {/* Floating LEGO bricks fill the half */}
-          <FloatingBricks className="absolute inset-0" />
-
-          {/* Name + nav — focal foreground */}
-          <div className="relative z-10 flex flex-col items-start">
+        {/* Right half — Name + nav above a Newton's cradle */}
+        <section className="relative w-full md:w-1/2 min-h-[60vh] md:min-h-screen flex flex-col items-center justify-center gap-10 sm:gap-12 px-6 py-12 md:py-0">
+          {/* Name + nav */}
+          <div className="flex flex-col items-start">
             <h1 className="text-[36px] sm:text-5xl md:text-6xl font-bold tracking-tight text-black leading-[1.05]">
               Tanuj
               <br />
@@ -70,6 +67,9 @@ export default function Home() {
               </a>
             </nav>
           </div>
+
+          {/* Newton's cradle */}
+          <NewtonsCradle />
         </section>
       </div>
     </main>
