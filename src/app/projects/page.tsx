@@ -112,6 +112,28 @@ const projects: Project[] = [
     ],
   },
   {
+    name: "student work optimization tool",
+    date: "dec 2023 – feb 2024",
+    description:
+      "Built a student productivity tool with algorithm-driven task prioritization and real-time assignment tracking. Designed to reduce cognitive load and help students manage deadlines more effectively.",
+    pills: [
+      { label: "algorithms", category: "be" },
+      { label: "full-stack", category: "fe" },
+      { label: "product design", category: "fe" },
+    ],
+  },
+  {
+    name: "pneumonia detection algorithm",
+    date: "jun – jul 2023",
+    description:
+      "Trained a machine learning model on 2,400 labeled lung images to detect pneumonia with 85% accuracy. Applied data augmentation to improve model robustness, then presented findings and real-world clinical applications to a technical audience.",
+    pills: [
+      { label: "machine learning", category: "ai" },
+      { label: "computer vision", category: "ai" },
+      { label: "data augmentation", category: "ai" },
+    ],
+  },
+  {
     name: "patent 11610482",
     date: "granted mar 2023",
     href: "https://patents.justia.com/patent/11610482",
