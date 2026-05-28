@@ -50,30 +50,47 @@ html {
     radial-gradient(circle at 56px 12px, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 4px, transparent 5px);
 }
 
-/* Floating LEGO bricks — gentle drift loops.
+/* Floating LEGO bricks — drifting loops with real travel.
    Each brick has a CSS variable --rot for its resting rotation;
    the keyframes wobble around that value so different bricks
    tilt differently while sharing the same animation. */
 @keyframes drift-a {
-  0%, 100% { transform: translate3d(0, 0, 0)        rotate(var(--rot, 0deg)); }
-  50%      { transform: translate3d(6px, -14px, 0)  rotate(calc(var(--rot, 0deg) + 4deg)); }
+  0%, 100% { transform: translate3d(0, 0, 0)         rotate(var(--rot, 0deg)); }
+  25%      { transform: translate3d(20px, -28px, 0)  rotate(calc(var(--rot, 0deg) + 14deg)); }
+  50%      { transform: translate3d(-12px, -48px, 0) rotate(calc(var(--rot, 0deg) - 8deg)); }
+  75%      { transform: translate3d(-30px, -18px, 0) rotate(calc(var(--rot, 0deg) + 10deg)); }
 }
 
 @keyframes drift-b {
-  0%, 100% { transform: translate3d(0, 0, 0)        rotate(var(--rot, 0deg)); }
-  33%      { transform: translate3d(-10px, -8px, 0) rotate(calc(var(--rot, 0deg) - 3deg)); }
-  66%      { transform: translate3d(8px, -16px, 0)  rotate(calc(var(--rot, 0deg) + 5deg)); }
+  0%, 100% { transform: translate3d(0, 0, 0)         rotate(var(--rot, 0deg)); }
+  20%      { transform: translate3d(-34px, -16px, 0) rotate(calc(var(--rot, 0deg) - 12deg)); }
+  45%      { transform: translate3d(26px, -42px, 0)  rotate(calc(var(--rot, 0deg) + 18deg)); }
+  70%      { transform: translate3d(40px, 8px, 0)    rotate(calc(var(--rot, 0deg) + 6deg)); }
+  85%      { transform: translate3d(10px, 22px, 0)   rotate(calc(var(--rot, 0deg) - 10deg)); }
 }
 
 @keyframes drift-c {
-  0%, 100% { transform: translate3d(0, 0, 0)        rotate(var(--rot, 0deg)); }
-  25%      { transform: translate3d(8px, 6px, 0)    rotate(calc(var(--rot, 0deg) + 6deg)); }
-  50%      { transform: translate3d(-4px, -10px, 0) rotate(calc(var(--rot, 0deg) - 2deg)); }
-  75%      { transform: translate3d(-10px, 4px, 0)  rotate(calc(var(--rot, 0deg) + 3deg)); }
+  0%, 100% { transform: translate3d(0, 0, 0)         rotate(var(--rot, 0deg)); }
+  20%      { transform: translate3d(28px, 18px, 0)   rotate(calc(var(--rot, 0deg) + 16deg)); }
+  40%      { transform: translate3d(-22px, -28px, 0) rotate(calc(var(--rot, 0deg) - 14deg)); }
+  60%      { transform: translate3d(-38px, 12px, 0)  rotate(calc(var(--rot, 0deg) + 8deg)); }
+  80%      { transform: translate3d(18px, -36px, 0)  rotate(calc(var(--rot, 0deg) - 6deg)); }
+}
+
+/* spinny variant — slow continuous rotation with a wandering path */
+@keyframes drift-d {
+  0%   { transform: translate3d(0, 0, 0)          rotate(var(--rot, 0deg)); }
+  25%  { transform: translate3d(18px, -22px, 0)   rotate(calc(var(--rot, 0deg) + 90deg)); }
+  50%  { transform: translate3d(-12px, -38px, 0)  rotate(calc(var(--rot, 0deg) + 180deg)); }
+  75%  { transform: translate3d(-26px, -8px, 0)   rotate(calc(var(--rot, 0deg) + 270deg)); }
+  100% { transform: translate3d(0, 0, 0)          rotate(calc(var(--rot, 0deg) + 360deg)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [style*="drift-a"], [style*="drift-b"], [style*="drift-c"] {
+  [style*="drift-a"],
+  [style*="drift-b"],
+  [style*="drift-c"],
+  [style*="drift-d"] {
     animation: none !important;
   }
 }

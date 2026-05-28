@@ -21,7 +21,7 @@ type Brick = {
   /** animation delay in seconds */
   delay: number;
   /** which keyframe animation to use */
-  motion: "drift-a" | "drift-b" | "drift-c";
+  motion: "drift-a" | "drift-b" | "drift-c" | "drift-d";
 };
 
 const UNIT_PX = 26;
@@ -31,26 +31,26 @@ const UNIT_PX = 26;
 // half so the name + nav in the center stays readable.
 const BRICKS: Brick[] = [
   // top edge
-  { id: 1, cols: 2, rows: 1, color: "bg-rose-300",    studColor: "bg-rose-400",    top: "6%",  left: "8%",  rotate: -10, duration: 16, delay: 0,   motion: "drift-a" },
-  { id: 2, cols: 3, rows: 1, color: "bg-amber-300",   studColor: "bg-amber-400",   top: "12%", left: "62%", rotate: 6,   duration: 19, delay: 1.2, motion: "drift-b" },
-  { id: 3, cols: 1, rows: 1, color: "bg-sky-300",     studColor: "bg-sky-400",     top: "4%",  left: "44%", rotate: 14,  duration: 13, delay: 2.5, motion: "drift-c" },
+  { id: 1,  cols: 2, rows: 1, color: "bg-rose-300",    studColor: "bg-rose-400",    top: "6%",  left: "8%",  rotate: -10, duration: 9,  delay: 0,   motion: "drift-a" },
+  { id: 2,  cols: 3, rows: 1, color: "bg-amber-300",   studColor: "bg-amber-400",   top: "12%", left: "62%", rotate: 6,   duration: 11, delay: 1.2, motion: "drift-b" },
+  { id: 3,  cols: 1, rows: 1, color: "bg-sky-300",     studColor: "bg-sky-400",     top: "4%",  left: "44%", rotate: 14,  duration: 7,  delay: 2.5, motion: "drift-d" },
 
   // upper-mid
-  { id: 4, cols: 2, rows: 2, color: "bg-violet-300",  studColor: "bg-violet-400",  top: "26%", left: "4%",  rotate: 4,   duration: 22, delay: 0.6, motion: "drift-b" },
-  { id: 5, cols: 1, rows: 1, color: "bg-emerald-300", studColor: "bg-emerald-400", top: "30%", left: "82%", rotate: -16, duration: 15, delay: 1.8, motion: "drift-a" },
+  { id: 4,  cols: 2, rows: 2, color: "bg-violet-300",  studColor: "bg-violet-400",  top: "26%", left: "4%",  rotate: 4,   duration: 13, delay: 0.6, motion: "drift-b" },
+  { id: 5,  cols: 1, rows: 1, color: "bg-emerald-300", studColor: "bg-emerald-400", top: "30%", left: "82%", rotate: -16, duration: 8,  delay: 1.8, motion: "drift-c" },
 
   // mid (outer ring — avoid centerline)
-  { id: 6, cols: 2, rows: 1, color: "bg-blue-300",    studColor: "bg-blue-400",    top: "48%", left: "78%", rotate: 22,  duration: 20, delay: 0.3, motion: "drift-c" },
-  { id: 7, cols: 1, rows: 2, color: "bg-rose-300",    studColor: "bg-rose-400",    top: "52%", left: "2%",  rotate: -6,  duration: 17, delay: 3.0, motion: "drift-b" },
+  { id: 6,  cols: 2, rows: 1, color: "bg-blue-300",    studColor: "bg-blue-400",    top: "48%", left: "78%", rotate: 22,  duration: 12, delay: 0.3, motion: "drift-a" },
+  { id: 7,  cols: 1, rows: 2, color: "bg-rose-300",    studColor: "bg-rose-400",    top: "52%", left: "2%",  rotate: -6,  duration: 10, delay: 3.0, motion: "drift-c" },
 
   // lower-mid
-  { id: 8, cols: 3, rows: 1, color: "bg-sky-300",     studColor: "bg-sky-400",     top: "70%", left: "10%", rotate: -14, duration: 18, delay: 0.9, motion: "drift-a" },
-  { id: 9, cols: 1, rows: 1, color: "bg-amber-300",   studColor: "bg-amber-400",   top: "66%", left: "70%", rotate: 8,   duration: 14, delay: 2.1, motion: "drift-c" },
+  { id: 8,  cols: 3, rows: 1, color: "bg-sky-300",     studColor: "bg-sky-400",     top: "70%", left: "10%", rotate: -14, duration: 10, delay: 0.9, motion: "drift-b" },
+  { id: 9,  cols: 1, rows: 1, color: "bg-amber-300",   studColor: "bg-amber-400",   top: "66%", left: "70%", rotate: 8,   duration: 8,  delay: 2.1, motion: "drift-d" },
 
   // bottom edge
-  { id: 10, cols: 2, rows: 1, color: "bg-emerald-300", studColor: "bg-emerald-400", top: "84%", left: "54%", rotate: -4, duration: 21, delay: 1.5, motion: "drift-b" },
-  { id: 11, cols: 1, rows: 1, color: "bg-violet-300",  studColor: "bg-violet-400",  top: "88%", left: "30%", rotate: 12, duration: 13, delay: 0,   motion: "drift-a" },
-  { id: 12, cols: 2, rows: 2, color: "bg-blue-300",    studColor: "bg-blue-400",    top: "78%", left: "84%", rotate: -8, duration: 23, delay: 2.7, motion: "drift-c" },
+  { id: 10, cols: 2, rows: 1, color: "bg-emerald-300", studColor: "bg-emerald-400", top: "84%", left: "54%", rotate: -4,  duration: 12, delay: 1.5, motion: "drift-c" },
+  { id: 11, cols: 1, rows: 1, color: "bg-violet-300",  studColor: "bg-violet-400",  top: "88%", left: "30%", rotate: 12,  duration: 7,  delay: 0,   motion: "drift-a" },
+  { id: 12, cols: 2, rows: 2, color: "bg-blue-300",    studColor: "bg-blue-400",    top: "78%", left: "84%", rotate: -8,  duration: 14, delay: 2.7, motion: "drift-b" },
 ];
 
 function BrickEl({ brick }: { brick: Brick }) {

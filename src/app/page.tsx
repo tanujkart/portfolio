@@ -10,14 +10,14 @@ export default function Home() {
         <section className="w-full md:w-1/2 flex items-center justify-center px-6 py-12 md:py-24 md:pl-12 lg:pl-20">
           <div className="max-w-md w-full">
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-black mb-6">
-              About
+              Tanuj Karthikeyan
             </h2>
             <div className="space-y-4 text-[15px] leading-relaxed text-gray-700">
               <p>I&apos;m Tanuj (tuh-nooj).</p>
               <p>I like figuring out why things work the way they do.</p>
               <p>
                 In 2024, I interned at an agentic financial modeling start-up where I helped raise
-                6-figures.
+                7-figures.
               </p>
               <p>
                 In 2025, I was all in on AI. Over the summer I was at the University of Pennsylvania
@@ -33,11 +33,11 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Tagopt
+                  TagOpt
                 </a>
                 : agents for SEO.
               </p>
-              <p>I also like food, spikeball, and running :)</p>
+              <p>I also like ravioli and running :)</p>
             </div>
           </div>
         </section>
@@ -65,54 +65,12 @@ export default function Home() {
               <a href="/extras" className="text-black hover:underline transition-all">
                 Extras
               </a>
+              <a href="/contact" className="text-black hover:underline transition-all">
+                Contact
+              </a>
             </nav>
           </div>
         </section>
-      </div>
-
-      {/* Bottom-right links */}
-      <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 z-20 flex flex-col items-end gap-1 font-mono">
-        <a
-          href="mailto:soccertanuj@gmail.com"
-          className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
-        >
-          Email
-        </a>
-        <a
-          href="https://medium.com/@tkart"
-          target="_blank"
-          rel="noreferrer"
-          className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
-        >
-          Medium
-        </a>
-        <a
-          href="https://github.com/tanujkart"
-          target="_blank"
-          rel="noreferrer"
-          className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
-        >
-          GitHub
-        </a>
-        <a
-          href="https://www.linkedin.com/in/tanujkart/"
-          target="_blank"
-          rel="noreferrer"
-          className="text-[12px] sm:text-[13px] text-black hover:text-gray-600 transition-colors"
-        >
-          LinkedIn
-        </a>
-        <span className="text-[12px] sm:text-[13px] text-black mt-1">
-          Inspired by{" "}
-          <a
-            href="https://www.charlotterosario.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="underline underline-offset-2 text-black hover:text-gray-600 transition-colors"
-          >
-            charlotterosario.com
-          </a>
-        </span>
       </div>
     </main>
   );

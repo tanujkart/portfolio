@@ -10,7 +10,7 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: "Tagopt",
+    name: "TagOpt",
     timeframe: "Building…",
     description:
       "AI for SEO by optimizing hashtags per platform and goal.",
