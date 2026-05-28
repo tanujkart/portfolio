@@ -136,6 +136,7 @@ const projects: Project[] = [
   {
     name: "predator-prey model",
     date: "jan 2025",
+    href: "https://github.com/tanujkart/predatorprey",
     description:
       "Simulated predator and prey population dynamics using the Lotka-Volterra differential equations in Mathematica. Built adjustable parameter controls, time-series plots, phase plane visualizations, and equilibrium analysis to model cyclical ecological behavior.",
     pills: [
