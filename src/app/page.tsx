@@ -1,12 +1,10 @@
 "use client";
 
-import NewtonsCradle from "@/components/NewtonsCradle";
-
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-background">
       <div className="relative z-5 flex min-h-screen flex-col-reverse md:flex-row items-center md:items-stretch">
-        {/* Left half — About */}
+        {/* Left half — About + inline nav */}
         <section className="w-full md:w-1/2 flex items-center justify-center px-6 py-12 md:py-24 md:pl-12 lg:pl-20">
           <div className="max-w-md w-full">
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-black mb-6">
@@ -39,37 +37,36 @@ export default function Home() {
               </p>
               <p>I also like ravioli and running :)</p>
             </div>
-          </div>
-        </section>
 
-        {/* Right half — Name + nav above a Newton's cradle */}
-        <section className="relative w-full md:w-1/2 min-h-[60vh] md:min-h-screen flex flex-col items-center justify-center gap-10 sm:gap-12 px-6 py-12 md:py-0">
-          {/* Name + nav */}
-          <div className="flex flex-col items-start">
-            <h1 className="text-[36px] sm:text-5xl md:text-6xl font-bold tracking-tight text-black leading-[1.05]">
-              Tanuj
-              <br />
-              Karthikeyan
-            </h1>
-
-            <nav className="mt-6 flex flex-col gap-0.5 text-[16px] sm:text-lg font-sans tracking-wide font-bold">
-              <a href="/projects" className="text-black hover:underline transition-all">
+            <nav className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-[15px] font-bold text-black">
+              <a href="/projects" className="hover:underline transition-all">
                 Projects
               </a>
-              <a href="/research" className="text-black hover:underline transition-all">
+              <span className="text-gray-400 select-none">|</span>
+              <a href="/research" className="hover:underline transition-all">
                 Research
               </a>
-              <a href="/extras" className="text-black hover:underline transition-all">
+              <span className="text-gray-400 select-none">|</span>
+              <a href="/extras" className="hover:underline transition-all">
                 Extras
               </a>
-              <a href="/contact" className="text-black hover:underline transition-all">
+              <span className="text-gray-400 select-none">|</span>
+              <a href="/contact" className="hover:underline transition-all">
                 Contact
               </a>
             </nav>
           </div>
+        </section>
 
-          {/* Newton's cradle */}
-          <NewtonsCradle />
+        {/* Right half — Hero image only */}
+        <section className="w-full md:w-1/2 flex items-center justify-center px-6 py-12 md:py-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/tanujhero.png"
+            alt="Tanuj Karthikeyan"
+            className="h-[60vh] sm:h-[75vh] md:h-[88vh] lg:h-[92vh] w-auto"
+            draggable={false}
+          />
         </section>
       </div>
     </main>
