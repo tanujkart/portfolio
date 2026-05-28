@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function ResearchPage() {
   return (
     <main className="min-h-screen bg-background px-6 py-16 sm:py-24">
-      <div className="max-w-xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <Link href="/" className="text-gray-400 hover:text-black text-sm font-mono transition-colors">
           ← Back
         </Link>
@@ -30,6 +30,36 @@ export default function ResearchPage() {
             Earned the Stockholm Regional Water Prize, placed 3rd at regionals, and advanced to the
             state science fair.
           </p>
+
+          <div className="pt-4">
+            <div className="flex items-baseline justify-between mb-2">
+              <p className="text-sm font-mono text-gray-500">Read the paper</p>
+              <a
+                href="/research/hotspot-paper.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-mono text-gray-400 hover:text-black transition-colors"
+              >
+                open in new tab ↗
+              </a>
+            </div>
+            <object
+              data="/research/hotspot-paper.pdf"
+              type="application/pdf"
+              className="w-full h-[80vh] border border-black/10 rounded-lg bg-white"
+            >
+              <p className="p-4 text-sm text-gray-600">
+                Your browser can&apos;t display PDFs inline.{" "}
+                <a
+                  href="/research/hotspot-paper.pdf"
+                  className="underline hover:text-black"
+                >
+                  Download the paper
+                </a>
+                .
+              </p>
+            </object>
+          </div>
 
           <div className="h-2" />
 
