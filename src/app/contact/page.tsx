@@ -1,17 +1,26 @@
 import Link from "next/link";
 
-const links = [
+type Single = {
+  label: string;
+  href: string;
+  display: string;
+  external: boolean;
+};
+
+type Multi = {
+  label: string;
+  addresses: { href: string; display: string }[];
+};
+
+type Entry = Single | Multi;
+
+const links: Entry[] = [
   {
     label: "Email",
-    href: "mailto:soccertanuj@gmail.com",
-    display: "soccertanuj@gmail.com",
-    external: false,
-  },
-  {
-    label: "Email",
-    href: "mailto:tanuj@unc.edu",
-    display: "tanuj@unc.edu",
-    external: false,
+    addresses: [
+      { href: "mailto:soccertanuj@gmail.com", display: "soccertanuj@gmail.com" },
+      { href: "mailto:tanuj@unc.edu", display: "tanuj@unc.edu" },
+    ],
   },
   {
     label: "Medium",
@@ -59,20 +68,39 @@ export default function ContactPage() {
 
         <ul className="divide-y divide-black/10 border-y border-black/10">
           {links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-                className="group flex items-baseline justify-between gap-4 py-4 transition-colors"
-              >
-                <span className="text-lg font-bold text-black group-hover:underline">
-                  {link.label}
-                </span>
-                <span className="text-[13px] font-mono text-gray-400 group-hover:text-black transition-colors">
-                  {link.display}
-                </span>
-              </a>
+            <li key={link.label}>
+              {"addresses" in link ? (
+                <div className="flex items-baseline justify-between gap-4 py-4">
+                  <span className="text-lg font-bold text-black">
+                    {link.label}
+                  </span>
+                  <div className="flex flex-col items-end gap-1">
+                    {link.addresses.map((addr) => (
+                      <a
+                        key={addr.href}
+                        href={addr.href}
+                        className="text-[13px] font-mono text-gray-400 hover:text-black transition-colors"
+                      >
+                        {addr.display}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <a
+                  href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
+                  className="group flex items-baseline justify-between gap-4 py-4 transition-colors"
+                >
+                  <span className="text-lg font-bold text-black group-hover:underline">
+                    {link.label}
+                  </span>
+                  <span className="text-[13px] font-mono text-gray-400 group-hover:text-black transition-colors">
+                    {link.display}
+                  </span>
+                </a>
+              )}
             </li>
           ))}
         </ul>
