@@ -1,5 +1,7 @@
 "use client";
 
+import FloatingBricks from "@/components/FloatingBricks";
+
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-background">
@@ -40,40 +42,30 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Right half — Hero + name + nav */}
-        <section className="w-full md:w-1/2 flex items-center justify-center px-6 py-12 md:py-0">
-          <div className="relative flex items-start">
-            {/* Name + nav — overlapping closer to the face */}
-            <div className="relative z-20 flex flex-col mt-[5%] mr-[-80px] sm:mr-[-120px] md:mr-[-150px]">
-              <h1 className="text-[28px] sm:text-4xl md:text-5xl font-bold tracking-tight text-black leading-[1.15]">
-                Tanuj
-                <br />
-                Karthikeyan
-              </h1>
+        {/* Right half — Floating bricks behind name + nav */}
+        <section className="relative w-full md:w-1/2 min-h-[60vh] md:min-h-screen flex items-center justify-center px-6 py-12 md:py-0 overflow-hidden">
+          {/* Floating LEGO bricks fill the half */}
+          <FloatingBricks className="absolute inset-0" />
 
-              <nav className="mt-5 sm:mt-6 flex flex-col gap-0.5 text-[16px] sm:text-lg font-sans tracking-wide font-bold">
-                <a href="/projects" className="text-black hover:underline transition-all">
-                  Projects
-                </a>
-                <a href="/research" className="text-black hover:underline transition-all">
-                  Research
-                </a>
-                <a href="/extras" className="text-black hover:underline transition-all">
-                  Extras
-                </a>
-              </nav>
-            </div>
+          {/* Name + nav — focal foreground */}
+          <div className="relative z-10 flex flex-col items-start">
+            <h1 className="text-[36px] sm:text-5xl md:text-6xl font-bold tracking-tight text-black leading-[1.05]">
+              Tanuj
+              <br />
+              Karthikeyan
+            </h1>
 
-            {/* Hero sketch — blends into white bg naturally */}
-            <div className="relative flex flex-col items-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/tanujhero.png"
-                alt="Tanuj Karthikeyan"
-                className="h-[55vh] sm:h-[60vh] md:h-[70vh] lg:h-[78vh] w-auto"
-                draggable={false}
-              />
-            </div>
+            <nav className="mt-6 flex flex-col gap-0.5 text-[16px] sm:text-lg font-sans tracking-wide font-bold">
+              <a href="/projects" className="text-black hover:underline transition-all">
+                Projects
+              </a>
+              <a href="/research" className="text-black hover:underline transition-all">
+                Research
+              </a>
+              <a href="/extras" className="text-black hover:underline transition-all">
+                Extras
+              </a>
+            </nav>
           </div>
         </section>
       </div>

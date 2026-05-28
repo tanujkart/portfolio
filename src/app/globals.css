@@ -49,3 +49,31 @@ html {
     radial-gradient(circle at 16px 12px, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 4px, transparent 5px),
     radial-gradient(circle at 56px 12px, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 4px, transparent 5px);
 }
+
+/* Floating LEGO bricks — gentle drift loops.
+   Each brick has a CSS variable --rot for its resting rotation;
+   the keyframes wobble around that value so different bricks
+   tilt differently while sharing the same animation. */
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0)        rotate(var(--rot, 0deg)); }
+  50%      { transform: translate3d(6px, -14px, 0)  rotate(calc(var(--rot, 0deg) + 4deg)); }
+}
+
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0)        rotate(var(--rot, 0deg)); }
+  33%      { transform: translate3d(-10px, -8px, 0) rotate(calc(var(--rot, 0deg) - 3deg)); }
+  66%      { transform: translate3d(8px, -16px, 0)  rotate(calc(var(--rot, 0deg) + 5deg)); }
+}
+
+@keyframes drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0)        rotate(var(--rot, 0deg)); }
+  25%      { transform: translate3d(8px, 6px, 0)    rotate(calc(var(--rot, 0deg) + 6deg)); }
+  50%      { transform: translate3d(-4px, -10px, 0) rotate(calc(var(--rot, 0deg) - 2deg)); }
+  75%      { transform: translate3d(-10px, 4px, 0)  rotate(calc(var(--rot, 0deg) + 3deg)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="drift-a"], [style*="drift-b"], [style*="drift-c"] {
+    animation: none !important;
+  }
+}
