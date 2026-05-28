@@ -47,8 +47,8 @@ export default function Home() {
                 Research
               </a>
               <span className="text-gray-400 select-none">|</span>
-              <a href="/extras" className="hover:underline transition-all">
-                Extras
+              <a href="/updates" className="hover:underline transition-all">
+                Updates
               </a>
               <span className="text-gray-400 select-none">|</span>
               <a href="/contact" className="hover:underline transition-all">
