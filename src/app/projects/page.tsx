@@ -1,92 +1,120 @@
 import Link from "next/link";
 
+type Category = "fe" | "be" | "hw" | "ai" | "db";
+
+type Pill = {
+  label: string;
+  category: Category;
+};
+
 type Project = {
   name: string;
-  timeframe?: string;
+  date: string;
   description: string;
-  tags?: string[];
-  highlights?: string[];
+  pills: Pill[];
+};
+
+const categoryStyles: Record<Category, string> = {
+  // frontend — purple
+  fe: "border-purple-400/40 bg-purple-500/10 text-purple-200",
+  // backend — green
+  be: "border-emerald-400/40 bg-emerald-500/10 text-emerald-200",
+  // hardware — coral/orange
+  hw: "border-orange-400/40 bg-orange-500/10 text-orange-200",
+  // AI/ML — pink
+  ai: "border-pink-400/40 bg-pink-500/10 text-pink-200",
+  // database — blue
+  db: "border-sky-400/40 bg-sky-500/10 text-sky-200",
 };
 
 const projects: Project[] = [
   {
-    name: "TagOpt",
-    timeframe: "Building…",
+    name: "thinkclear",
+    date: "jul 2025 – present",
     description:
-      "AI for SEO by optimizing hashtags per platform and goal.",
-    tags: ["AI", "SEO", "Startup"],
-    highlights: ["Pitched to VCs"],
-  },
-  {
-    name: "HOTSPOT",
-    timeframe: "Feb 2025 – Mar 2026",
-    description:
-      "Multi-source ML pipeline for harmful algal bloom (HAB) early warning — fuses NASA Aqua MODIS spectral retrievals, World Ocean Atlas phosphate climatologies, and NOAA bloom event records into a spatially blocked logistic regression + random forest ensemble. Converted raw satellite readings to monthly anomalies to capture trend signals over absolute values; applied spatial interpolation across cloud-induced data gaps. A rule-based threshold filter post-processes model outputs to suppress low-confidence predictions. Achieves ~75% TPR with a two-month lead time, no local sensor infrastructure required.",
-    tags: ["ML", "Remote Sensing", "Research"],
-    highlights: [
-      "Regional Stockholm Junior Water Prize",
-      "Regional Science Fair 3rd Place",
-      "Presented at NCSSM Research Symposium",
+      "Smart glasses platform with real-time facial recognition and AI-powered memory assistance — built for memory-impaired users. Demoed to an 8-figure digital therapeutics CEO and Penn faculty at M&TSI 2025. 400K+ interactions across demos and deployments.",
+    pills: [
+      { label: "computer vision", category: "ai" },
+      { label: "embedded systems", category: "hw" },
+      { label: "full-stack", category: "fe" },
     ],
   },
   {
-    name: "NEMO",
-    timeframe: "Mar 2026",
+    name: "tagopt",
+    date: "nov 2025 – present",
     description:
-      "Autonomous aquatic data-gathering submarine on a Raspberry Pi — water quality, temperature, and depth sensors with a remote navigation interface. Next.js dashboard for real-time sensor streaming, historical trend analysis, and geospatial mapping of environmental readings. Architected for multi-unit global deployment so additional units feed into a unified modeling layer without infrastructure changes.",
-    tags: ["Hardware", "Raspberry Pi", "Next.js"],
-    highlights: ["Built for SMath Hacks 2026"],
-  },
-  {
-    name: "Memo",
-    timeframe: "Aug 2025 – Dec 2025",
-    description:
-      "Wearable audio capture device on a Raspberry Pi with a two-mode recording interface — forward-trigger continuous capture and a reverse-buffer mode that retroactively saves the prior 60 seconds of audio. Recordings run through OpenAI Whisper for on-device transcription, then GPT-4o via API to extract structured summaries and to-do lists. Paired React Native mobile app handles cloud sync, time/date/location tagging, and natural language search over transcript history.",
-    tags: ["Wearable", "Whisper", "React Native"],
-    highlights: [
-      "Backed by the NCSSM Colopy Entrepreneurship Fund",
-      "2nd Most Innovative Venture, NCSSM Entrepreneurship Fair",
-      "Selected for NCSSM Entrepreneurship Program, Fall 2025",
+      "AI-powered hashtag optimization engine that analyzes platform algorithms and post intent to surface high-signal tags — an SEO layer for organic content growth. Pitched to VCs as a standalone growth tool for creators.",
+    pills: [
+      { label: "Next.js", category: "fe" },
+      { label: "NLP", category: "ai" },
+      { label: "full-stack", category: "fe" },
     ],
   },
   {
-    name: "ThinkClear",
-    timeframe: "Jul 2025 – Dec 2025",
+    name: "portfolio",
+    date: "aug 2025 – present",
     description:
-      "Facial recognition pipeline on a Raspberry Pi + camera module using DeepFace for real-time identity matching, integrated into a smart glasses form factor to surface contextual memory cues for users with early-to-mid stage dementia. Paired with a React Native-backed web app delivering AI-powered memory matching games clinically targeting cognitive retention — designed to slow dementia progression through spaced repetition and personalized recall challenges. 400K+ interactions across the web platform.",
-    tags: ["Smart Glasses", "DeepFace", "Healthtech"],
-    highlights: [
-      "Pitched to the CEO of an 8-figure digital therapeutics company and Penn faculty",
-      "M&TSI 2025",
+      "Personal site built from scratch — no templates. Documents projects, research, and writing with a focus on clarity and load speed. 30K+ interactions across visitors.",
+    pills: [
+      { label: "Next.js", category: "fe" },
+      { label: "UI/UX", category: "fe" },
+      { label: "TypeScript", category: "be" },
     ],
   },
   {
-    name: "Engage360",
-    timeframe: "Aug 2024 – Oct 2024",
+    name: "memo",
+    date: "aug – dec 2025",
     description:
-      "Civic engagement platform in Next.js consolidating voter registration, representative lookup, and issue tracking into a single interface — reducing the friction of navigating fragmented government data sources.",
-    tags: ["Next.js", "Civic Tech"],
-    highlights: [
-      "Grand Winner, 2025 Congressional App Challenge",
-      "Presented to Congressman Timmons (SC-04)",
+      "Wearable recorder with on-device AI summarization and structured note output — no cloud dependency. Backed by the NCSSM Colopy Entrepreneurship Fund and awarded 2nd most innovative product at the NCSSM entrepreneurship fair.",
+    pills: [
+      { label: "embedded systems", category: "hw" },
+      { label: "NLP", category: "ai" },
+      { label: "product design", category: "hw" },
     ],
   },
   {
-    name: "Patent 11610482",
-    timeframe: "Pedestrian Crosswalk Warning System",
+    name: "engage360",
+    date: "oct 2024 – jan 2025",
     description:
-      "Real-time pedestrian detection and motorist alert system using an ultrasonic sensor array deployed at traffic intersections. Continuously measures proximity of pedestrians in crosswalk zones and triggers alerts to approaching motorists below a distance threshold, reducing collision risk without camera-based infrastructure or CV compute overhead.",
-    tags: ["Hardware", "Patent", "Safety"],
-    highlights: [
-      "Collaborated with 20+ DOT officials for compliance & field testing",
-      "U.S. Patent 11610482",
+      "Civic engagement app connecting constituents to representatives and simplifying local legislation tracking. Built and shipped end-to-end — won the Congressional App Challenge 2025 and presented to Congressman Timmons.",
+    pills: [
+      { label: "React Native", category: "fe" },
+      { label: "mobile dev", category: "fe" },
+      { label: "TypeScript", category: "be" },
     ],
   },
   {
-    name: "Portfolio",
-    description: "What you’re looking at right now!!",
-    tags: ["Next.js", "Design"],
-    highlights: ["30K+ interactions"],
+    name: "nemo",
+    date: "mar 2026",
+    description:
+      "Autonomous underwater vehicle for real-time aquatic environmental monitoring, paired with a live global modeling dashboard. Competed at SMath Hacks 2026 tracking water quality and ecological indicators.",
+    pills: [
+      { label: "robotics", category: "hw" },
+      { label: "environmental sensing", category: "hw" },
+      { label: "FastAPI", category: "be" },
+    ],
+  },
+  {
+    name: "4-bit adder/subtractor",
+    date: "apr – may 2026",
+    description:
+      "Designed and built a physical binary arithmetic circuit from scratch. Performs real-time addition and subtraction on 4-bit binary inputs via a single mode toggle, with carry-out and sum outputs wired to indicator LEDs.",
+    pills: [
+      { label: "circuit design", category: "hw" },
+      { label: "digital logic", category: "hw" },
+      { label: "schematics", category: "hw" },
+    ],
+  },
+  {
+    name: "patent 11610482",
+    date: "filed mar 2021 · granted mar 2023",
+    description:
+      "Embedded sensor system that detects pedestrians in active crosswalks and alerts approaching motorists in real time. Currently in compliance testing with 20+ Department of Transportation officials working toward municipal deployment.",
+    pills: [
+      { label: "circuit design", category: "hw" },
+      { label: "sensor fusion", category: "hw" },
+      { label: "hardware", category: "hw" },
+    ],
   },
 ];
 
@@ -94,59 +122,46 @@ export default function ProjectsPage() {
   return (
     <main className="min-h-screen bg-background px-6 py-16 sm:py-24">
       <div className="max-w-4xl mx-auto">
-        <Link href="/" className="text-gray-400 hover:text-black text-sm font-mono transition-colors">
+        <Link
+          href="/"
+          className="text-gray-400 hover:text-black text-sm font-mono transition-colors"
+        >
           ← Back
         </Link>
 
         <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">Projects</h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
           {projects.map((project) => (
             <article
               key={project.name}
-              className="group relative flex flex-col rounded-xl border border-black/10 bg-white/60 p-5 transition-all hover:border-black/30 hover:bg-white hover:shadow-[0_4px_20px_-8px_rgba(0,0,0,0.15)]"
+              className="flex flex-col bg-[#111] rounded-[14px] p-5"
             >
-              <header className="mb-3">
-                <h2 className="text-lg font-bold text-black leading-tight">
+              <header className="flex items-baseline justify-between gap-3 mb-3">
+                <h2 className="text-[16px] font-medium text-white leading-tight">
                   {project.name}
                 </h2>
-                {project.timeframe && (
-                  <span className="mt-1 block text-xs font-mono text-gray-400">
-                    {project.timeframe}
-                  </span>
-                )}
+                <span className="text-[11px] font-mono text-white/40 shrink-0 whitespace-nowrap">
+                  {project.date}
+                </span>
               </header>
 
-              <p className="text-[14px] leading-relaxed text-gray-700 flex-1">
+              <p className="text-[13px] leading-[1.6] text-white/60 flex-1">
                 {project.description}
               </p>
 
-              {project.highlights && project.highlights.length > 0 && (
-                <ul className="mt-4 space-y-1 border-t border-black/5 pt-3">
-                  {project.highlights.map((h) => (
-                    <li
-                      key={h}
-                      className="text-[12.5px] leading-snug text-gray-600 flex gap-2"
-                    >
-                      <span className="text-gray-300 select-none">·</span>
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <hr className="border-0 border-t border-white/10 my-4" />
 
-              {project.tags && project.tags.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[10.5px] font-mono uppercase tracking-wide text-gray-500 bg-black/[0.04] rounded px-1.5 py-0.5"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+              <div className="flex flex-wrap gap-1.5">
+                {project.pills.map((pill) => (
+                  <span
+                    key={pill.label}
+                    className={`text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full border ${categoryStyles[pill.category]}`}
+                  >
+                    {pill.label}
+                  </span>
+                ))}
+              </div>
             </article>
           ))}
         </div>
