@@ -58,8 +58,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Right half — Hero image only */}
-        <section className="w-full md:w-1/2 flex items-center justify-center px-6 py-12 md:py-0">
+        {/* Right half — Hero image, anchored toward the screen center */}
+        <section className="w-full md:w-1/2 flex items-center justify-center md:justify-start px-6 py-12 md:py-0 md:pl-4 lg:pl-8">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/tanujhero.png"
