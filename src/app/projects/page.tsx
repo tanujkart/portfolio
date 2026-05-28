@@ -10,6 +10,7 @@ type Pill = {
 type Project = {
   name: string;
   date: string;
+  href?: string;
   description: string;
   pills: Pill[];
 };
@@ -31,6 +32,7 @@ const projects: Project[] = [
   {
     name: "thinkclear",
     date: "jul 2025 – present",
+    href: "https://thinkclear.net",
     description:
       "Smart glasses platform with real-time facial recognition and AI-powered memory assistance — built for memory-impaired users. Demoed to an 8-figure digital therapeutics CEO and Penn faculty at M&TSI 2025. 400K+ interactions across demos and deployments.",
     pills: [
@@ -42,6 +44,7 @@ const projects: Project[] = [
   {
     name: "tagopt",
     date: "nov 2025 – present",
+    href: "https://tagopt.com",
     description:
       "AI-powered hashtag optimization engine that analyzes platform algorithms and post intent to surface high-signal tags — an SEO layer for organic content growth. Pitched to VCs as a standalone growth tool for creators.",
     pills: [
@@ -53,6 +56,7 @@ const projects: Project[] = [
   {
     name: "portfolio",
     date: "aug 2025 – present",
+    href: "https://github.com/tanujkart/portfolio",
     description:
       "Personal site built from scratch — no templates. Documents projects, research, and writing with a focus on clarity and load speed. 30K+ interactions across visitors.",
     pills: [
@@ -75,6 +79,7 @@ const projects: Project[] = [
   {
     name: "engage360",
     date: "oct 2024 – jan 2025",
+    href: "https://www.congressionalappchallenge.us/24-sc04/",
     description:
       "Civic engagement app connecting constituents to representatives and simplifying local legislation tracking. Built and shipped end-to-end — won the Congressional App Challenge 2025 and presented to Congressman Timmons.",
     pills: [
@@ -86,6 +91,7 @@ const projects: Project[] = [
   {
     name: "nemo",
     date: "mar 2026",
+    href: "https://devpost.com/software/nemo-7vrum0",
     description:
       "Autonomous underwater vehicle for real-time aquatic environmental monitoring, paired with a live global modeling dashboard. Competed at SMath Hacks 2026 tracking water quality and ecological indicators.",
     pills: [
@@ -107,7 +113,8 @@ const projects: Project[] = [
   },
   {
     name: "patent 11610482",
-    date: "filed mar 2021 · granted mar 2023",
+    date: "granted mar 2023",
+    href: "https://patents.justia.com/patent/11610482",
     description:
       "Embedded sensor system that detects pedestrians in active crosswalks and alerts approaching motorists in real time. Currently in compliance testing with 20+ Department of Transportation officials working toward municipal deployment.",
     pills: [
@@ -130,7 +137,7 @@ export default function ProjectsPage() {
 
       <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">Projects</h1>
 
-      <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
+      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {projects.map((project) => (
           <article
             key={project.name}
@@ -138,7 +145,18 @@ export default function ProjectsPage() {
           >
             <header className="flex items-baseline justify-between gap-3 mb-3">
               <h2 className="text-[16px] font-medium text-black leading-tight">
-                {project.name}
+                {project.href ? (
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2 decoration-gray-300 hover:decoration-black transition-colors"
+                  >
+                    {project.name}
+                  </a>
+                ) : (
+                  project.name
+                )}
               </h2>
               <span className="text-[11px] font-mono text-gray-400 shrink-0 whitespace-nowrap">
                 {project.date}
