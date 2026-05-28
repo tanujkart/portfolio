@@ -134,6 +134,17 @@ const projects: Project[] = [
     ],
   },
   {
+    name: "predator-prey model",
+    date: "jan 2025",
+    description:
+      "Simulated predator and prey population dynamics using the Lotka-Volterra differential equations in Mathematica. Built adjustable parameter controls, time-series plots, phase plane visualizations, and equilibrium analysis to model cyclical ecological behavior.",
+    pills: [
+      { label: "mathematical modeling", category: "ai" },
+      { label: "differential equations", category: "ai" },
+      { label: "simulation", category: "be" },
+    ],
+  },
+  {
     name: "patent 11610482",
     date: "granted mar 2023",
     href: "https://patents.justia.com/patent/11610482",
