@@ -16,15 +16,15 @@ type Project = {
 
 const categoryStyles: Record<Category, string> = {
   // frontend — purple
-  fe: "border-purple-400/40 bg-purple-500/10 text-purple-200",
+  fe: "border-purple-300/60 bg-purple-100/60 text-purple-700",
   // backend — green
-  be: "border-emerald-400/40 bg-emerald-500/10 text-emerald-200",
+  be: "border-emerald-300/60 bg-emerald-100/60 text-emerald-700",
   // hardware — coral/orange
-  hw: "border-orange-400/40 bg-orange-500/10 text-orange-200",
+  hw: "border-orange-300/70 bg-orange-100/60 text-orange-700",
   // AI/ML — pink
-  ai: "border-pink-400/40 bg-pink-500/10 text-pink-200",
+  ai: "border-pink-300/60 bg-pink-100/60 text-pink-700",
   // database — blue
-  db: "border-sky-400/40 bg-sky-500/10 text-sky-200",
+  db: "border-sky-300/60 bg-sky-100/60 text-sky-700",
 };
 
 const projects: Project[] = [
@@ -120,51 +120,49 @@ const projects: Project[] = [
 
 export default function ProjectsPage() {
   return (
-    <main className="min-h-screen bg-background px-6 py-16 sm:py-24">
-      <div className="max-w-4xl mx-auto">
-        <Link
-          href="/"
-          className="text-gray-400 hover:text-black text-sm font-mono transition-colors"
-        >
-          ← Back
-        </Link>
+    <main className="min-h-screen bg-background px-6 sm:px-8 lg:px-12 py-16 sm:py-24">
+      <Link
+        href="/"
+        className="text-gray-400 hover:text-black text-sm font-mono transition-colors"
+      >
+        ← Back
+      </Link>
 
-        <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">Projects</h1>
+      <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">Projects</h1>
 
-        <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
-          {projects.map((project) => (
-            <article
-              key={project.name}
-              className="flex flex-col bg-[#111] rounded-[14px] p-5"
-            >
-              <header className="flex items-baseline justify-between gap-3 mb-3">
-                <h2 className="text-[16px] font-medium text-white leading-tight">
-                  {project.name}
-                </h2>
-                <span className="text-[11px] font-mono text-white/40 shrink-0 whitespace-nowrap">
-                  {project.date}
+      <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
+        {projects.map((project) => (
+          <article
+            key={project.name}
+            className="flex flex-col rounded-[14px] border border-black/10 bg-white/60 p-5 transition-all hover:border-black/30 hover:bg-white hover:shadow-[0_4px_20px_-8px_rgba(0,0,0,0.15)]"
+          >
+            <header className="flex items-baseline justify-between gap-3 mb-3">
+              <h2 className="text-[16px] font-medium text-black leading-tight">
+                {project.name}
+              </h2>
+              <span className="text-[11px] font-mono text-gray-400 shrink-0 whitespace-nowrap">
+                {project.date}
+              </span>
+            </header>
+
+            <p className="text-[13px] leading-[1.6] text-gray-600 flex-1">
+              {project.description}
+            </p>
+
+            <hr className="border-0 border-t border-black/10 my-4" />
+
+            <div className="flex flex-wrap gap-1.5">
+              {project.pills.map((pill) => (
+                <span
+                  key={pill.label}
+                  className={`text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full border ${categoryStyles[pill.category]}`}
+                >
+                  {pill.label}
                 </span>
-              </header>
-
-              <p className="text-[13px] leading-[1.6] text-white/60 flex-1">
-                {project.description}
-              </p>
-
-              <hr className="border-0 border-t border-white/10 my-4" />
-
-              <div className="flex flex-wrap gap-1.5">
-                {project.pills.map((pill) => (
-                  <span
-                    key={pill.label}
-                    className={`text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full border ${categoryStyles[pill.category]}`}
-                  >
-                    {pill.label}
-                  </span>
-                ))}
-              </div>
-            </article>
-          ))}
-        </div>
+              ))}
+            </div>
+          </article>
+        ))}
       </div>
     </main>
   );
