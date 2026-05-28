@@ -7,6 +7,23 @@ type Update = {
 
 const updates: Update[] = [
   {
+    date: "May '26",
+    entries: [
+      {
+        label: "goals",
+        content: "run a sub 6 mile, start swimming weekly once",
+      },
+      {
+        label: "learning to",
+        content: "wood work, use Claude Code",
+      },
+      {
+        label: "in progress",
+        content: "running, eating healthy, Italian",
+      },
+    ],
+  },
+  {
     date: "March '26",
     entries: [
       {
