@@ -103,6 +103,7 @@ const projects: Project[] = [
   {
     name: "4-bit adder/subtractor",
     date: "apr – may 2026",
+    href: "/projects/4-bit-adder-subtractor.pdf",
     description:
       "Designed and built a physical binary arithmetic circuit from scratch. Performs real-time addition and subtraction on 4-bit binary inputs via a single mode toggle, with carry-out and sum outputs wired to indicator LEDs.",
     pills: [
