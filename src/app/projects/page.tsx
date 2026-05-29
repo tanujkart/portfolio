@@ -146,6 +146,18 @@ const projects: Project[] = [
     ],
   },
   {
+    name: "algal bloom simulator",
+    date: "may 2026",
+    href: "https://github.com/tanujkart/esfinal26",
+    description:
+      "Interactive eutrophication model that drives a virtual lake toward a toxic cyanobacterial bloom in real time. Tune fertilizer runoff, temperature, sunlight, and water flow — then watch dissolved oxygen crash, microcystin toxicity spike, and fish die off across the lake. A live canvas visualization turns the nutrient-pollution feedback loop into something you can see and steer.",
+    pills: [
+      { label: "eutrophication", category: "ai" },
+      { label: "simulation", category: "be" },
+      { label: "HTML canvas", category: "fe" },
+    ],
+  },
+  {
     name: "patent 11610482",
     date: "granted mar 2023",
     href: "https://patents.justia.com/patent/11610482",
