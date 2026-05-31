@@ -159,6 +159,19 @@ const projects: Project[] = [
     ],
   },
   {
+    name: "voice assistant",
+    date: "may 2026",
+    href: "https://github.com/tanujkart/voice-assistant",
+    description:
+      "macOS push-to-talk voice assistant that answers questions about your Google Calendar, Tasks, and Gmail out loud. Hold a hotkey, speak your question — speech is transcribed on-device via Whisper, then Claude reasons over your live data and speaks the answer back. Nothing leaves your machine except the transcribed query.",
+    pills: [
+      { label: "Python", category: "be" },
+      { label: "speech recognition", category: "ai" },
+      { label: "Claude API", category: "ai" },
+      { label: "Google APIs", category: "be" },
+    ],
+  },
+  {
     name: "patent 11610482",
     date: "granted mar 2023",
     href: "https://patents.justia.com/patent/11610482",
