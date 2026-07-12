@@ -14,27 +14,43 @@ export default function Home() {
               <p>I&apos;m Tanuj (tuh-nooj).</p>
               <p>I like figuring out why things work the way they do.</p>
               <p>
-                In 2024, I interned at an agentic financial modeling start-up where I helped raise
-                7-figures.
-              </p>
-              <p>
-                In 2025, I was all in on AI. Over the summer I was at the University of Pennsylvania
-                working on an AI dementia care product, now with over 400k interactions. I was also
-                doing AI modeling research at Duke.
-              </p>
-              <p>
-                Now, I&apos;m looking for opportunities in tech and/or venture. I&apos;m also
-                working on{" "}
+                In 2024, I interned at an{" "}
                 <a
-                  href="https://tagopt.com"
+                  href="https://docubridge.ai"
                   className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  TagOpt
-                </a>
-                : agents for SEO.
+                  agentic financial modeling start-up
+                </a>{" "}
+                where I helped raise 7-figures.
               </p>
+              <p>
+                In 2025, I was all in on AI. At Duke University, I was working on AI modeling
+                research. At Penn, I built AI for dementia care (400k interactions in 7 days).
+              </p>
+              <p>
+                So far, in 2026, I&apos;ve been in the Bay working at{" "}
+                <a
+                  href="https://effluent.ai"
+                  className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Effluent
+                </a>{" "}
+                helping build AI for wastewater facilities. I&apos;m also an analyst for{" "}
+                <a
+                  href="https://moe-capital.com/"
+                  className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  MoE Capital
+                </a>
+                , helping build internal AI tools for scouting.
+              </p>
+              <p>And now, I&apos;m building in the company brain space…</p>
               <p>I also like ravioli and running :)</p>
             </div>
 
