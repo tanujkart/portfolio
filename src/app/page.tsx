@@ -14,16 +14,16 @@ export default function Home() {
               <p>I&apos;m Tanuj (tuh-nooj).</p>
               <p>I like figuring out why things work the way they do.</p>
               <p>
-                In 2024, I interned at an{" "}
+                In 2024, I interned at{" "}
                 <a
                   href="https://docubridge.ai"
                   className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  agentic financial modeling start-up
-                </a>{" "}
-                where I helped raise 7-figures.
+                  DocuBridge
+                </a>
+                , an agentic financial modeling start-up, where I helped raise 7 figures.
               </p>
               <p>
                 In 2025, I was all in on AI. At Duke University, I was working on AI modeling
@@ -38,8 +38,8 @@ export default function Home() {
                   rel="noopener noreferrer"
                 >
                   Effluent
-                </a>{" "}
-                helping build AI for wastewater facilities. I&apos;m also an analyst for{" "}
+                </a>
+                , helping build AI for wastewater facilities. I&apos;m also an analyst for{" "}
                 <a
                   href="https://moe-capital.com/"
                   className="underline underline-offset-2 decoration-gray-400 hover:decoration-black hover:text-black transition-colors"
@@ -50,7 +50,7 @@ export default function Home() {
                 </a>
                 , helping build internal AI tools for scouting.
               </p>
-              <p>And now, I&apos;m building in the company brain space…</p>
+              <p>And now, I&apos;m building in the company brain and context space…</p>
               <p>I also like ravioli and running :)</p>
             </div>
 
