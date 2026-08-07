@@ -35,12 +35,19 @@ below the readability floor for sustained reading.
 
 ## Measure
 
-Prose columns cap at `max-w-prose` (65ch), never the container width.
+Prose columns cap at `max-w-measure` (`--container-measure: 33rem`), never the
+container width. That measures **~75 characters** at 16px, the top of the comfortable
+range.
 
 At 768px and 15px the detail-page prose rendered **116 characters per line** — roughly
-double the comfortable range. On the return sweep the eye has to travel that whole
-distance and re-find the line, which is where re-reading and line-skipping come from.
-Nobody reports this. They just read less.
+double. On the return sweep the eye has to travel that whole distance and re-find the
+line, which is where re-reading and line-skipping come from. Nobody reports this. They
+just read less.
+
+**Do not use Tailwind's `max-w-prose`.** It is 65`ch`, and `ch` is the advance width of
+the "0" glyph, which is wider than Figtree's average character — it measured 94, not 65.
+That was the first fix attempted here and it was not enough. Measure with
+`ctx.measureText(text).length` in a real browser before trusting any width.
 
 Header, imagery and receipts may span the full `max-w-3xl`. Only running prose is
 constrained.
