@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-background">
@@ -58,11 +60,11 @@ export default function Home() {
               <a href="/projects" className="hover:underline transition-all">
                 Projects
               </a>
-              <span className="text-gray-400 select-none">|</span>
+              <span className="text-gray-500 select-none">|</span>
               <a href="/research" className="hover:underline transition-all">
                 Research
               </a>
-              <span className="text-gray-400 select-none">|</span>
+              <span className="text-gray-500 select-none">|</span>
               <a href="/contact" className="hover:underline transition-all">
                 Contact
               </a>
@@ -72,10 +74,14 @@ export default function Home() {
 
         {/* Right half — Hero image, anchored toward the screen center */}
         <section className="w-full md:w-1/2 flex items-center justify-center md:justify-start px-6 py-12 md:py-0 md:pl-4 lg:pl-8">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          {/* Source is 2.4 MB. next/image serves a sized WebP instead. */}
+          <Image
             src="/tanujhero.png"
             alt="Tanuj Karthikeyan"
+            width={1024}
+            height={1536}
+            priority
+            sizes="(max-width: 768px) 80vw, 45vw"
             className="h-[60vh] sm:h-[75vh] md:h-[88vh] lg:h-[92vh] w-auto"
             draggable={false}
           />

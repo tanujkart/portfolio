@@ -4,7 +4,7 @@ export default function ResearchPage() {
   return (
     <main className="min-h-screen bg-background px-6 py-16 sm:py-24">
       <div className="max-w-3xl mx-auto">
-        <Link href="/" className="text-gray-400 hover:text-black text-sm font-mono transition-colors">
+        <Link href="/" className="text-gray-500 hover:text-black text-sm font-mono transition-colors">
           ← Back
         </Link>
 
@@ -14,7 +14,7 @@ export default function ResearchPage() {
           <h2 className="text-lg font-bold text-black">
             HOTSPOT (Hybrid Oceanic Tracking via Satellite Proxy and Optimized Time-series)
           </h2>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-500 text-sm">
             Studying how remote sensing and time-series modeling can be used to infer nutrient-driven
             ecological changes in marine environments.
           </p>
@@ -38,7 +38,7 @@ export default function ResearchPage() {
                 href="/research/hotspot-paper.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-mono text-gray-400 hover:text-black transition-colors"
+                className="text-sm font-mono text-gray-500 hover:text-black transition-colors"
               >
                 open in new tab ↗
               </a>
@@ -64,7 +64,7 @@ export default function ResearchPage() {
           <div className="h-2" />
 
           <h2 className="text-lg font-bold text-black">AI Interpretability Research: Mechanistic Interpretability</h2>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-500 text-sm">
             Studying how neural networks represent concepts internally using modern interpretability methods.
           </p>
           <p>

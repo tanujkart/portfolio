@@ -54,7 +54,7 @@ export default function ContactPage() {
       <div className="max-w-xl mx-auto">
         <Link
           href="/"
-          className="text-gray-400 hover:text-black text-sm font-mono transition-colors"
+          className="text-gray-500 hover:text-black text-sm font-mono transition-colors"
         >
           ← Back
         </Link>
@@ -79,7 +79,7 @@ export default function ContactPage() {
                       <a
                         key={addr.href}
                         href={addr.href}
-                        className="text-[13px] font-mono text-gray-400 hover:text-black transition-colors"
+                        className="text-[13px] font-mono text-gray-500 hover:text-black transition-colors"
                       >
                         {addr.display}
                       </a>
@@ -96,7 +96,7 @@ export default function ContactPage() {
                   <span className="text-lg font-bold text-black group-hover:underline">
                     {link.label}
                   </span>
-                  <span className="text-[13px] font-mono text-gray-400 group-hover:text-black transition-colors">
+                  <span className="text-[13px] font-mono text-gray-500 group-hover:text-black transition-colors">
                     {link.display}
                   </span>
                 </a>
