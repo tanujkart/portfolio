@@ -34,6 +34,12 @@ export type ProjectStory = {
     width: number;
     height: number;
   };
+  /**
+   * A PDF that can be read inline, behind a closed <details>. Never mounted
+   * open: Chrome renders an inline PDF object with its own black toolbar and
+   * thumbnail rail, and closing the details also defers the fetch.
+   */
+  paper?: { src: string; label: string };
   /** Renders a sandboxed, poster-backed interactive embed below the story. */
   embed?: {
     /** Path under public/ to a standalone index.html. */
@@ -48,8 +54,13 @@ export type ProjectStory = {
 export type Project = {
   slug: string;
   name: string;
-  /** "YYYY-MM". Machine-sortable — never parse the display string. */
-  start: string;
+  /**
+   * "YYYY-MM", machine-sortable — never parse the display string. Null when
+   * the timeframe genuinely isn't recorded; the card then shows no date and
+   * the entry sorts to the end of its status group. Guessing a date to
+   * satisfy the sort would put a wrong fact on the page.
+   */
+  start: string | null;
   /** "YYYY-MM", or null for ongoing work. */
   end: string | null;
   status: ProjectStatus;
@@ -281,6 +292,61 @@ export const projects: Project[] = [
     pills: ["React Native", "mobile dev", "TypeScript"],
   },
   {
+    slug: "hotspot",
+    name: "HOTSPOT",
+    start: "2025-09",
+    end: "2025-09",
+    status: "shipped",
+    featured: false,
+    blurb:
+      "Satellite-proxy model inferring nutrient-driven ecological change in marine environments from remote sensing and time-series data.",
+    highlights: [
+      "Won the Stockholm Regional Water Prize",
+      "3rd at regionals, and advanced to the state science fair",
+      "Constraint filters and time-series interpolation to reconstruct missing data",
+    ],
+    story: {
+      problem:
+        "Nutrient pollution changes marine ecosystems faster than field sampling can measure it. Satellites see the whole ocean, but their record is full of gaps, and a forecast built on interpolated nonsense is worse than no forecast.",
+      approach:
+        "Ecological constraint filters and local time-series interpolation that reconstruct missing data while enforcing physically consistent predictions, so the model cannot invent states the ocean could not actually be in.",
+      outcome:
+        "Focused on reducing false positives so environmental forecasts stay usable in real monitoring settings. Won the Stockholm Regional Water Prize, placed 3rd at regionals, and advanced to the state science fair.",
+      paper: { src: "/research/hotspot-paper.pdf", label: "HOTSPOT paper" },
+    },
+    links: [{ kind: "pdf", label: "Paper (PDF)", href: "/research/hotspot-paper.pdf" }],
+    pills: ["remote sensing", "time-series", "environmental sensing"],
+  },
+  {
+    slug: "mechanistic-interpretability",
+    name: "mechanistic interpretability",
+    // No timeframe recorded for this one, so it carries no date rather than a
+    // guessed one. Add "YYYY-MM" here and it sorts into place automatically.
+    start: null,
+    end: null,
+    status: "archived",
+    featured: false,
+    blurb:
+      "Reading how neural networks represent concepts internally, through feature discovery, probing, and activation patching.",
+    highlights: [
+      "Synthesized 30+ papers on modern mechanistic interpretability",
+      "Feature discovery, probing, activation patching and weight-based analysis",
+      "NCSSM Research in Computational Science program",
+    ],
+    story: {
+      problem:
+        "A trained network is a working system nobody can read. It is possible to know exactly what a model outputs and have no account of why, which makes it hard to trust, debug, or steer.",
+      approach:
+        "Feature discovery, probing, activation patching and weight-based analysis, focused on representation geometry, sparse feature directions, and toy models that expose mechanisms like superposition and grokking.",
+      outcome:
+        "Synthesized 30+ papers on modern mechanistic interpretability through the NCSSM Research in Computational Science program.",
+    },
+    // TODO(receipts): no artifact. A writeup or the reading list would make
+    // this checkable rather than asserted.
+    links: [],
+    pills: ["interpretability", "neural networks", "machine learning"],
+  },
+  {
     slug: "voice-assistant",
     name: "voice assistant",
     start: "2026-05",
@@ -447,9 +513,10 @@ function parse(ym: string): { year: number; month: number } {
   return { year: Number(y), month: Number(m) };
 }
 
-/** "jul 2025 – present", "apr – may 2026", "may 2026". */
-export function formatDateRange(project: Project): string {
+/** "jul 2025 – present", "apr – may 2026", "may 2026". Null when undated. */
+export function formatDateRange(project: Project): string | null {
   if (project.dateLabel) return project.dateLabel;
+  if (project.start === null) return null;
 
   const s = parse(project.start);
   const startLabel = `${MONTHS[s.month - 1]} ${s.year}`;
@@ -482,10 +549,14 @@ export function sortProjects(list: Project[]): Project[] {
   return [...list].sort((a, b) => {
     if (a.status === "active" && b.status !== "active") return -1;
     if (b.status === "active" && a.status !== "active") return 1;
-    const aEnd = a.end ?? "9999-99";
-    const bEnd = b.end ?? "9999-99";
+    // Undated entries sort last within their status group: "0000-00" loses
+    // every descending comparison. `end: null` still means ongoing and wins.
+    const aEnd = a.end ?? (a.start === null ? "0000-00" : "9999-99");
+    const bEnd = b.end ?? (b.start === null ? "0000-00" : "9999-99");
     if (aEnd !== bEnd) return bEnd.localeCompare(aEnd);
-    if (a.start !== b.start) return b.start.localeCompare(a.start);
+    const aStart = a.start ?? "0000-00";
+    const bStart = b.start ?? "0000-00";
+    if (aStart !== bStart) return bStart.localeCompare(aStart);
     return a.slug.localeCompare(b.slug);
   });
 }

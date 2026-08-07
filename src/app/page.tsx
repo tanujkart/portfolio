@@ -64,10 +64,6 @@ export default function Home() {
                 Projects
               </Link>
               <span className="text-gray-500 select-none">|</span>
-              <Link href="/research" className="inline-flex min-h-6 items-center transition-all hover:underline">
-                Research
-              </Link>
-              <span className="text-gray-500 select-none">|</span>
               <Link href="/contact" className="inline-flex min-h-6 items-center transition-all hover:underline">
                 Contact
               </Link>

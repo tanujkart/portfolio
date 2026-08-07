@@ -136,15 +136,24 @@ and only appears after the toggle opens. No JavaScript involved.
 A direct link to the file always sits in the receipts row too, so the document is
 reachable without expanding anything.
 
-## Research and projects share one structure
+## One list, not two
 
-`/research` and `/projects/[slug]` render the same blocks in the same order: name and
-date, blurb, exactly three highlights, tags, receipts, then prose. `src/data/research.ts`
-mirrors `src/data/projects.ts`, and both draw tags from the same `PILL_CATEGORY` map, so
-a category can never mean one thing on one page and something else on the other.
+There is no research section. HOTSPOT and the interpretability work are projects, in
+`src/data/projects.ts`, with the same shape as everything else. Two pages that render
+the same blocks from the same fields were two places to keep in sync for no reader
+benefit — nobody arrives wanting to know which bucket a thing was filed under.
 
-Before this, research was four loose paragraphs per entry with no dates, no tags, and
-its three awards buried in the closing sentence.
+`/research` permanently redirects to `/projects/hotspot`; the page was live for months
+and may be linked from a resume or an application.
+
+## Undated entries
+
+`start` may be `null` when a timeframe genuinely isn't recorded. The card renders no
+date and the entry sorts to the end of its status group. An undated entry cannot be
+`active` — the validator rejects it, since there is no start to be ongoing from.
+
+Inventing a plausible date to satisfy a sort puts a wrong fact on the page. An absent
+date says nothing; a wrong one lies.
 
 ## Absence
 

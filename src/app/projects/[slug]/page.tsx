@@ -171,6 +171,45 @@ export default async function ProjectDetailPage({
               ))}
             </div>
 
+            {/* Closed by default. Chrome renders an inline PDF object with its
+                own black toolbar and thumbnail rail, which becomes the loudest
+                thing on the page; keeping the details shut also defers the
+                fetch, so a 1 MB paper is never pulled by someone who only
+                wanted the summary. Verified with performance.getEntriesByType.
+                The receipts row above still links the file directly. */}
+            {story.paper ? (
+              <details className="group mt-8 rounded-[14px] border border-black/10 bg-white/60 open:bg-white">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[14px] px-5 font-mono text-sub text-gray-600 transition-colors hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black">
+                  <span
+                    aria-hidden="true"
+                    className="inline-block transition-transform group-open:rotate-90"
+                  >
+                    ▸
+                  </span>
+                  Read the paper here
+                </summary>
+                <div className="px-5 pb-5">
+                  <object
+                    data={story.paper.src}
+                    type="application/pdf"
+                    aria-label={story.paper.label}
+                    className="h-[80vh] w-full rounded-lg border border-black/10 bg-white"
+                  >
+                    <p className="p-4 text-sub text-gray-600">
+                      Your browser can&apos;t display PDFs inline.{" "}
+                      <a
+                        href={story.paper.src}
+                        className="rounded-sm underline decoration-gray-300 underline-offset-2 hover:text-black hover:decoration-black"
+                      >
+                        Download it instead
+                      </a>
+                      .
+                    </p>
+                  </object>
+                </div>
+              </details>
+            ) : null}
+
             {story.embed ? (
               <CanvasEmbed
                 src={story.embed.src}

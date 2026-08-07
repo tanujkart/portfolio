@@ -18,7 +18,6 @@ import {
   CATEGORIES,
   type Project,
 } from "../src/data/projects";
-import { research } from "../src/data/research";
 
 const PUBLIC_DIR = join(process.cwd(), "public");
 
@@ -61,15 +60,23 @@ for (const p of projects) {
 
   if (!p.blurb.trim()) fail(p, "blurb is empty");
 
-  if (!YM.test(p.start)) fail(p, `start must be "YYYY-MM", got "${p.start}"`);
+  if (p.start !== null && !YM.test(p.start)) {
+    fail(p, `start must be "YYYY-MM" or null, got "${p.start}"`);
+  }
   if (p.end !== null) {
     if (!YM.test(p.end)) fail(p, `end must be "YYYY-MM" or null, got "${p.end}"`);
-    else if (p.end < p.start) fail(p, `end (${p.end}) is before start (${p.start})`);
+    else if (p.start !== null && p.end < p.start) {
+      fail(p, `end (${p.end}) is before start (${p.start})`);
+    }
   }
-
+  // An undated entry cannot claim to be ongoing — there is no start to be
+  // ongoing from, and the card would show a live dot with no timeframe.
+  if (p.start === null && p.status === "active") {
+    fail(p, "has no start date but status is \"active\" — undated work cannot be ongoing");
+  }
   // `end: null` means ongoing. Anything ongoing must say so in its status,
   // or the live indicator and the date range disagree with each other.
-  if (p.end === null && p.status !== "active") {
+  if (p.end === null && p.start !== null && p.status !== "active") {
     fail(p, `end is null (ongoing) but status is "${p.status}" — pick one`);
   }
   // A dateLabel means the date is a point-in-time event ("granted mar 2023")
@@ -105,6 +112,11 @@ for (const p of projects) {
     if (media.width <= 0 || media.height <= 0) {
       fail(p, "story.media needs real width and height for next/image");
     }
+  }
+
+  const paper = p.story?.paper;
+  if (paper && !assetExists(paper.src)) {
+    fail(p, `story.paper.src is ${paper.src}, which is not in public/`);
   }
 
   const embed = p.story?.embed;
@@ -168,46 +180,8 @@ for (const c of CATEGORIES) {
 // A pill defined but never used is dead weight that will drift out of sync.
 // Research shares the taxonomy, so it counts as usage.
 for (const pill of Object.keys(PILL_CATEGORY)) {
-  const used =
-    projects.some((p) => p.pills.includes(pill)) ||
-    research.some((r) => r.tags.includes(pill));
-  if (!used) warn(null, `PILL_CATEGORY defines "${pill}" but nothing uses it`);
-}
-
-// --- research checks -------------------------------------------------------
-
-const rSlugs = research.map((r) => r.slug);
-for (const d of [...new Set(rSlugs.filter((s, i) => rSlugs.indexOf(s) !== i))]) {
-  fail(null, `duplicate research slug "${d}"`);
-}
-for (const r of research) {
-  if (!r.blurb.trim()) fail(null, `research ${r.slug}: blurb is empty`);
-  if (r.date !== null && !YM.test(r.date)) {
-    fail(null, `research ${r.slug}: date must be "YYYY-MM" or null, got "${r.date}"`);
-  }
-  if (r.highlights.length !== 3) {
-    fail(null, `research ${r.slug}: has ${r.highlights.length} highlights, expected exactly 3`);
-  }
-  for (const [i, h] of r.highlights.entries()) {
-    if (!h.trim()) fail(null, `research ${r.slug}: highlight ${i + 1} is empty`);
-    if (h.length > 90) {
-      fail(null, `research ${r.slug}: highlight ${i + 1} is ${h.length} chars, keep bullets under 90`);
-    }
-  }
-  if (r.tags.length === 0) fail(null, `research ${r.slug}: has no tags`);
-  for (const t of r.tags) {
-    if (!(t in PILL_CATEGORY)) fail(null, `research ${r.slug}: tag "${t}" has no category in PILL_CATEGORY`);
-  }
-  for (const l of r.links) {
-    if (l.href.startsWith("/") && !assetExists(l.href)) {
-      fail(null, `research ${r.slug}: link "${l.label}" points at ${l.href}, not in public/`);
-    }
-  }
-  if (r.paper && !assetExists(r.paper.src)) {
-    fail(null, `research ${r.slug}: paper.src is ${r.paper.src}, not in public/`);
-  }
-  if (r.links.length === 0) {
-    warn(null, `research ${r.slug}: no links — nothing here is verifiable by a visitor`);
+  if (!projects.some((p) => p.pills.includes(pill))) {
+    warn(null, `PILL_CATEGORY defines "${pill}" but nothing uses it`);
   }
 }
 
@@ -223,6 +197,6 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `validate-projects: ${projects.length} projects + ${research.length} research OK ` +
+  `validate-projects: ${projects.length} projects OK ` +
     `(${featuredCount} featured, ${warnings.length} warning(s))`,
 );
