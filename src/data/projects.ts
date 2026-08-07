@@ -161,12 +161,6 @@ export const projects: Project[] = [
         "A smart glasses platform pairing real-time facial recognition with AI-powered memory assistance, spanning embedded hardware, computer vision, and a full-stack application layer.",
       outcome:
         "Demoed to an 8-figure digital therapeutics CEO and Penn faculty at M&TSI 2025. 400K+ interactions across demos and deployments.",
-      media: {
-        src: "/pics/GlassesDesign.PNG",
-        alt: "thinkclear smart glasses industrial design render",
-        width: 1158,
-        height: 642,
-      },
     },
     links: [{ kind: "live", label: "thinkclear.net", href: "https://thinkclear.net" }],
     pills: ["computer vision", "embedded systems", "full-stack"],
@@ -218,12 +212,6 @@ export const projects: Project[] = [
         "An embedded sensor system that detects pedestrians in an active crosswalk and alerts approaching motorists in real time, combining circuit design and sensor fusion in a roadside unit.",
       outcome:
         "Granted as US Patent 11610482. Currently in compliance testing with 20+ Department of Transportation officials, working toward municipal deployment.",
-      media: {
-        src: "/pics/TrafficSignal.png",
-        alt: "Crosswalk traffic signal installation for the pedestrian detection system",
-        width: 1024,
-        height: 1536,
-      },
     },
     links: [
       { kind: "patent", label: "US 11610482", href: "https://patents.justia.com/patent/11610482" },

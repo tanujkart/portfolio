@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -56,18 +57,20 @@ export default function Home() {
               <p>I also like ravioli and running :)</p>
             </div>
 
-            <nav className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-[15px] font-bold text-black">
-              <a href="/projects" className="hover:underline transition-all">
+            {/* Link, not <a>. These were full page reloads on the site's only
+                navigation — the route into everything else. */}
+            <nav className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-body font-bold text-black">
+              <Link href="/projects" className="inline-flex min-h-6 items-center transition-all hover:underline">
                 Projects
-              </a>
+              </Link>
               <span className="text-gray-500 select-none">|</span>
-              <a href="/research" className="hover:underline transition-all">
+              <Link href="/research" className="inline-flex min-h-6 items-center transition-all hover:underline">
                 Research
-              </a>
+              </Link>
               <span className="text-gray-500 select-none">|</span>
-              <a href="/contact" className="hover:underline transition-all">
+              <Link href="/contact" className="inline-flex min-h-6 items-center transition-all hover:underline">
                 Contact
-              </a>
+              </Link>
             </nav>
           </div>
         </section>

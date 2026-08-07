@@ -85,28 +85,41 @@ probing four points with `elementFromPoint`.
 
 ## Imagery
 
-**Project images are never cropped.** Grid cards box images in a fixed `4/3` with
-`object-contain`, so every card in a row is the same height while each image still
-shows whole. Detail pages drop the fixed ratio entirely and size from the image's own
-dimensions with a `max-h-[70vh]` cap — sources range from 16:9 renders to 2:3
-photographs, and forcing one ratio either crops the image or strands it in empty space.
+**The projects section currently carries no imagery.** It is text and type. The support
+below stays in the code because it costs nothing to keep and the moment a real
+screenshot exists it should go in.
 
-`object-cover` was the original choice and it cut the top and bottom off a portrait
-photograph on the most important card on the page.
+When images do return:
+
+- **Never cropped.** Grid cards box them in a fixed `4/3` with `object-contain`, so a
+  row keeps even card heights while each image still shows whole. Detail pages drop the
+  fixed ratio entirely and size from the image's own dimensions with a `max-h-[70vh]`
+  cap — sources range from 16:9 renders to 2:3 photographs, and one ratio cannot serve
+  both without cropping or stranding.
+- `object-cover` was the original choice and it cut the top and bottom off a portrait
+  photograph on the most important card on the page.
 
 ## Placeholder plates
 
-A featured project with no `story.media` renders a flat neutral wordmark plate so the
-three-up row keeps its titles aligned. It is a placeholder, not a design goal — a real
-screenshot always wins.
+A featured project with no `story.media` can render a flat neutral wordmark plate so a
+mixed row keeps its titles aligned. Three rules govern it, and together they mean the
+plate is currently invisible everywhere:
 
-**The plate is suppressed below `sm`.** Its only job is aligning a row, and there is
-no row at one card per column. On mobile it cost 191px of an 844px viewport to render
-a word that repeated 60px below it.
+1. **Only when something to align to exists.** `ProjectsIndex` passes `showPlate` only
+   if at least one featured project has an image. With none, the plate would be the
+   project's name printed above the project's name.
+2. **Never below `sm`.** Its only job is aligning a row, and there is no row at one card
+   per column. On mobile it cost 191px of an 844px viewport.
+3. **No gradients.** A purple gradient is the most recognizable AI-generated visual
+   signature there is, and it was the least specific thing on a page that otherwise
+   earns its keep through content.
 
-No gradients on the plate. A purple gradient is the most recognizable AI-generated
-visual signature there is, and it was the least specific thing on a page that otherwise
-earns its keep through content.
+## Absence
+
+Pages do not apologize for what they lack. A project without a writeup shows its name,
+dates, three highlights, tags and receipts, and then stops. It previously ended with
+"No writeup for this one yet" — an apology that drew attention to a gap the reader had
+not noticed, on a page that was never actually empty.
 
 ## What keeps this page from looking generated
 

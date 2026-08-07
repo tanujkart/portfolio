@@ -111,14 +111,24 @@ export default function ProjectCard({
   project,
   variant,
   priority = false,
+  showPlate = false,
 }: {
   project: Project;
   variant: Variant;
   priority?: boolean;
+  /**
+   * Whether an imageless featured card should render the wordmark plate. The
+   * plate exists only to keep a row's titles aligned when SOME cards have an
+   * image and some don't. When no featured project has one, there is nothing
+   * to align and the plate is just the project's name printed above the
+   * project's name. ProjectsIndex decides; the card can't see its siblings.
+   */
+  showPlate?: boolean;
 }) {
   const media = project.story?.media;
   const isActive = project.status === "active";
   const featured = variant === "featured";
+  const showBand = featured && (media || showPlate);
 
   return (
     <article
@@ -126,15 +136,16 @@ export default function ProjectCard({
         "group relative flex flex-col rounded-[14px] border border-black/10 bg-white/60 transition-all",
         "hover:border-black/30 hover:bg-white hover:shadow-[0_4px_20px_-8px_rgba(0,0,0,0.15)]",
         "focus-within:border-black/40 focus-within:ring-2 focus-within:ring-black/60 focus-within:ring-offset-2",
-        featured ? "p-0 overflow-hidden" : "p-5",
+        showBand ? "p-0 overflow-hidden" : "p-5",
       )}
     >
-      {/* The plate exists only to keep the four-up row's titles aligned, so it
-          is suppressed below sm where cards are one per column and there is no
-          row to align. It was costing 191px of an 844px viewport to render a
-          word that repeated 60px below it. Real imagery still shows at every
-          width — only the placeholder is mobile-suppressed. */}
-      {featured ? (
+      {/* The plate exists only to keep the featured row's titles aligned, so
+          it is suppressed below sm where cards are one per column and there is
+          no row to align. It was costing 191px of an 844px viewport to render
+          a word that repeated 60px below it. Real imagery still shows at every
+          width — only the placeholder is mobile-suppressed, and `showBand`
+          drops it entirely when no featured card has an image to align to. */}
+      {showBand ? (
         <div
           className={cn(
             "relative aspect-[4/3] w-full overflow-hidden border-b border-black/10 bg-gray-50",
@@ -156,7 +167,7 @@ export default function ProjectCard({
         </div>
       ) : null}
 
-      <div className={cn("flex flex-1 flex-col", featured && "p-5")}>
+      <div className={cn("flex flex-1 flex-col", showBand && "p-5")}>
         {/* Featured stacks the date under the title; compact keeps them on one
             line. At text-title a long name like "patent 11610482" competing
             with a date for a 321px card wraps to two lines and knocks that

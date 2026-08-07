@@ -31,6 +31,10 @@ export default function ProjectsIndex({ activeTag }: { activeTag?: CategoryKey }
   const filtered = activeTag ? projectsForTag(activeTag) : null;
   const featured = sortedProjects.filter((p) => p.featured);
   const rest = sortedProjects.filter((p) => !p.featured);
+  // The wordmark plate only earns its space when it is levelling a row against
+  // cards that DO have an image. With no imagery at all it is the project's
+  // name printed above the project's name, so it does not render.
+  const anyFeaturedImagery = featured.some((p) => p.story?.media);
 
   return (
     <main className="min-h-screen bg-background px-6 py-16 sm:px-8 sm:py-24 lg:px-12">
@@ -80,6 +84,7 @@ export default function ProjectsIndex({ activeTag }: { activeTag?: CategoryKey }
                   project={project}
                   variant="featured"
                   priority={i < 2}
+                  showPlate={anyFeaturedImagery}
                 />
               ))}
             </div>

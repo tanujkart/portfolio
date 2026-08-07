@@ -182,37 +182,7 @@ export default async function ProjectDetailPage({
               />
             ) : null}
           </>
-        ) : (
-          // Thin variant. Deliberately quiet rather than apologetic — it says
-          // where to go next instead of announcing an absence.
-          <p className="mt-10 max-w-measure border-t border-black/10 pt-6 text-sub leading-relaxed text-gray-500">
-            {primaryExternal ? (
-              <>
-                No writeup for this one yet.{" "}
-                <a
-                  href={primaryExternal.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-sm underline decoration-gray-300 underline-offset-2 transition-colors hover:text-black hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                >
-                  {primaryExternal.label} ↗
-                </a>{" "}
-                is the best place to look.
-              </>
-            ) : (
-              <>
-                No writeup for this one yet. Happy to talk about it —{" "}
-                <Link
-                  href="/contact"
-                  className="rounded-sm underline decoration-gray-300 underline-offset-2 transition-colors hover:text-black hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                >
-                  get in touch
-                </Link>
-                .
-              </>
-            )}
-          </p>
-        )}
+        ) : null}
       </div>
     </main>
   );
