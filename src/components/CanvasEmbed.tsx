@@ -112,7 +112,7 @@ export default function CanvasEmbed({
               className="object-cover"
             />
             {state === "loading" ? (
-              <span className="absolute bottom-3 right-3 rounded-full bg-black/70 px-3 py-1 font-mono text-[11px] text-white">
+              <span className="absolute bottom-3 right-3 rounded-full bg-black/70 px-3 py-1 font-mono text-meta text-white">
                 loading…
               </span>
             ) : null}
@@ -120,7 +120,7 @@ export default function CanvasEmbed({
         ) : null}
       </div>
 
-      <figcaption className="mt-2 flex items-baseline justify-between gap-4 font-mono text-[12px] text-gray-500">
+      <figcaption className="mt-2 flex items-baseline justify-between gap-4 font-mono text-meta text-gray-500">
         <span>
           {state === "failed"
             ? "Interactive demo could not load — showing a screenshot."

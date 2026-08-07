@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   CATEGORY_BY_KEY,
-  categoriesOf,
   categoryOf,
   formatDateRange,
   type Project,
@@ -38,34 +37,19 @@ function StatusDot() {
   );
 }
 
-const PLATE_TINT: Record<string, string> = {
-  fe: "from-purple-100 to-purple-50 text-purple-900/25",
-  be: "from-emerald-100 to-emerald-50 text-emerald-900/25",
-  hw: "from-orange-100 to-orange-50 text-orange-900/25",
-  ai: "from-pink-100 to-pink-50 text-pink-900/25",
-  sci: "from-sky-100 to-sky-50 text-sky-900/25",
-};
-
+// Flat neutral, no gradient. A purple gradient is the most recognizable
+// AI-generated visual signature there is, and this was the least specific
+// surface on a page that otherwise earns its keep through content.
 function PlaceholderPlate({ project }: { project: Project }) {
-  const key = categoriesOf(project)[0];
-  const tint = key ? PLATE_TINT[key] : "from-gray-100 to-gray-50 text-gray-900/30";
   // The project's own name, not its category — two projects sharing a
   // category would otherwise render byte-identical plates side by side,
   // which reads as a rendering bug rather than a design choice.
   return (
     <div
       aria-hidden="true"
-      className={cn(
-        "flex h-full w-full items-center justify-center bg-gradient-to-br px-5",
-        tint,
-      )}
+      className="flex h-full w-full items-center justify-center bg-black/[0.035] px-5"
     >
-      <span
-        className={cn(
-          "text-center font-bold leading-none tracking-tight",
-          project.name.length > 14 ? "text-[26px]" : "text-[34px]",
-        )}
-      >
+      <span className="text-center text-display font-bold leading-none tracking-tight text-black/25">
         {project.name}
       </span>
     </div>
@@ -84,7 +68,7 @@ function Pills({ pills }: { pills: string[] }) {
           <span
             key={pill}
             className={cn(
-              "rounded-full border px-2 py-1 text-[11px] font-medium tracking-wide",
+              "rounded-full border px-2 py-1 text-meta font-medium tracking-wide",
               style,
             )}
           >
@@ -109,7 +93,10 @@ function Receipts({ project }: { project: Project }) {
             href={link.href}
             target={external ? "_blank" : undefined}
             rel={external ? "noopener noreferrer" : undefined}
-            className="rounded-sm text-[12px] font-mono text-gray-500 underline decoration-gray-300 underline-offset-2 transition-colors hover:text-black hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            // min-h-6 (24px) is the WCAG 2.5.8 AA floor. These were 18px —
+            // the smallest target on the page, on the affordance the whole
+            // receipts idea exists for.
+            className="inline-flex min-h-6 items-center rounded-sm font-mono text-meta text-gray-500 underline decoration-gray-300 underline-offset-2 transition-colors hover:text-black hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
           >
             {link.label}
             {external ? " ↗" : ""}
@@ -142,8 +129,18 @@ export default function ProjectCard({
         featured ? "p-0 overflow-hidden" : "p-5",
       )}
     >
+      {/* The plate exists only to keep the four-up row's titles aligned, so it
+          is suppressed below sm where cards are one per column and there is no
+          row to align. It was costing 191px of an 844px viewport to render a
+          word that repeated 60px below it. Real imagery still shows at every
+          width — only the placeholder is mobile-suppressed. */}
       {featured ? (
-        <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-black/10 bg-gray-50">
+        <div
+          className={cn(
+            "relative aspect-[16/9] w-full overflow-hidden border-b border-black/10 bg-gray-50",
+            media ? "block" : "hidden sm:block",
+          )}
+        >
           {media ? (
             <Image
               src={media.src}
@@ -154,20 +151,29 @@ export default function ProjectCard({
               className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
           ) : (
-            // Every featured card fills this slot whether or not a screenshot
-            // exists, so the row stays aligned. A tinted category plate reads
-            // as a deliberate choice; a collapsed slot reads as a broken card.
             <PlaceholderPlate project={project} />
           )}
         </div>
       ) : null}
 
       <div className={cn("flex flex-1 flex-col", featured && "p-5")}>
-        <header className="mb-3 flex items-baseline justify-between gap-3">
+        {/* Featured stacks the date under the title; compact keeps them on one
+            line. At text-title a long name like "patent 11610482" competing
+            with a date for a 321px card wraps to two lines and knocks that
+            card's header out of line with the other three. Full width for the
+            title removes the competition. */}
+        <header
+          className={cn(
+            "mb-3 gap-x-3",
+            featured
+              ? "flex flex-col items-start gap-y-1"
+              : "flex items-baseline justify-between",
+          )}
+        >
           <h2
             className={cn(
               "flex items-center gap-2 font-medium leading-tight text-black",
-              featured ? "text-[18px]" : "text-[16px]",
+              featured ? "text-title" : "text-body",
             )}
           >
             {isActive ? <StatusDot /> : null}
@@ -179,17 +185,12 @@ export default function ProjectCard({
               {isActive ? <span className="sr-only"> (currently active)</span> : null}
             </Link>
           </h2>
-          <span className="shrink-0 whitespace-nowrap font-mono text-[11px] text-gray-500">
+          <span className="shrink-0 whitespace-nowrap font-mono text-meta text-gray-500">
             {formatDateRange(project)}
           </span>
         </header>
 
-        <p
-          className={cn(
-            "flex-1 leading-[1.6] text-gray-600",
-            featured ? "text-[14px]" : "text-[13px]",
-          )}
-        >
+        <p className="flex-1 text-sub leading-[1.6] text-gray-600">
           {project.blurb}
         </p>
 

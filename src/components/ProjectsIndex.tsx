@@ -36,13 +36,18 @@ export default function ProjectsIndex({ activeTag }: { activeTag?: CategoryKey }
     <main className="min-h-screen bg-background px-6 py-16 sm:px-8 sm:py-24 lg:px-12">
       <Link
         href="/"
-        className="rounded-sm font-mono text-sm text-gray-500 transition-colors hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+        className="inline-flex min-h-6 items-center rounded-sm font-mono text-sub text-gray-500 transition-colors hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
       >
         ← Back
       </Link>
 
-      <h1 className="mb-3 mt-8 text-3xl font-bold sm:text-4xl">Projects</h1>
-      <p className="mb-10 max-w-2xl text-[15px] leading-relaxed text-gray-600">
+      {/* mb-6 on mobile because the subhead below is hidden there and its
+          margin goes with it; sm:mb-3 restores the tighter title/subhead pair. */}
+      <h1 className="mb-6 mt-8 text-display font-bold sm:mb-3">Projects</h1>
+      {/* Hidden below sm. On a phone this line sat between the title and the
+          work, and every pixel above the first card is a pixel a recruiter
+          spends on chrome instead of proof. */}
+      <p className="mb-10 hidden max-w-measure text-body leading-relaxed text-gray-600 sm:block">
         Things I&apos;ve built, with links to check them. Filter by what they&apos;re made of.
       </p>
 
@@ -64,7 +69,7 @@ export default function ProjectsIndex({ activeTag }: { activeTag?: CategoryKey }
           <section aria-labelledby="featured-heading" className="mb-14">
             <h2
               id="featured-heading"
-              className="mb-4 font-mono text-[12px] uppercase tracking-[0.14em] text-gray-500"
+              className="mb-4 font-mono text-meta uppercase tracking-[0.14em] text-gray-500"
             >
               Featured
             </h2>
@@ -83,7 +88,7 @@ export default function ProjectsIndex({ activeTag }: { activeTag?: CategoryKey }
           <section aria-labelledby="rest-heading">
             <h2
               id="rest-heading"
-              className="mb-4 font-mono text-[12px] uppercase tracking-[0.14em] text-gray-500"
+              className="mb-4 font-mono text-meta uppercase tracking-[0.14em] text-gray-500"
             >
               Everything else
             </h2>

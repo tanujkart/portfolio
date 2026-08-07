@@ -54,14 +54,14 @@ export default function ContactPage() {
       <div className="max-w-xl mx-auto">
         <Link
           href="/"
-          className="text-gray-500 hover:text-black text-sm font-mono transition-colors"
+          className="inline-flex min-h-6 items-center text-gray-500 hover:text-black text-sub font-mono transition-colors"
         >
           ← Back
         </Link>
 
-        <h1 className="text-3xl sm:text-4xl font-bold mt-8 mb-8">Contact</h1>
+        <h1 className="text-display font-bold mt-8 mb-8">Contact</h1>
 
-        <p className="text-[15px] leading-relaxed text-gray-700 mb-8">
+        <p className="max-w-measure text-body leading-relaxed text-gray-700 mb-8">
           The best ways to reach me — happy to chat about projects, research,
           ventures, or food.
         </p>
@@ -71,7 +71,7 @@ export default function ContactPage() {
             <li key={link.label}>
               {"addresses" in link ? (
                 <div className="flex items-baseline justify-between gap-4 py-4">
-                  <span className="text-lg font-bold text-black">
+                  <span className="text-title font-bold text-black">
                     {link.label}
                   </span>
                   <div className="flex flex-col items-end gap-1">
@@ -79,7 +79,7 @@ export default function ContactPage() {
                       <a
                         key={addr.href}
                         href={addr.href}
-                        className="text-[13px] font-mono text-gray-500 hover:text-black transition-colors"
+                        className="inline-flex min-h-6 items-center font-mono text-sub text-gray-500 hover:text-black transition-colors"
                       >
                         {addr.display}
                       </a>
@@ -93,10 +93,10 @@ export default function ContactPage() {
                   rel={link.external ? "noopener noreferrer" : undefined}
                   className="group flex items-baseline justify-between gap-4 py-4 transition-colors"
                 >
-                  <span className="text-lg font-bold text-black group-hover:underline">
+                  <span className="text-title font-bold text-black group-hover:underline">
                     {link.label}
                   </span>
-                  <span className="text-[13px] font-mono text-gray-500 group-hover:text-black transition-colors">
+                  <span className="inline-flex min-h-6 items-center font-mono text-sub text-gray-500 group-hover:text-black transition-colors">
                     {link.display}
                   </span>
                 </a>

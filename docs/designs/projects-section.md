@@ -236,6 +236,49 @@ This plan therefore has **no independent cross-model challenge**. Install Codex 
 
 **One unverified assumption:** E2 assumes `github.com/tanujkart/esfinal26` is a standalone HTML/JS canvas app. Two fetch attempts failed (socket hang up). Verify before scheduling T10; the fallback is a screenshot plus link, which T14 wants regardless.
 
+## Design Review (2026-08-07, post-ship)
+
+`/plan-design-review` run against the shipped implementation on tanujk.com rather than
+against this document, since the section was already live. Initial rating **7/10**,
+final **9/10**. All findings measured in a real browser, not eyeballed.
+
+| # | Pass | Finding | Measured | Decision |
+|---|------|---------|----------|----------|
+| 1 | 1 Info Arch | Filter was the third thing a mobile visitor saw | first card 427px = 51% of an 844px fold; first project **name** at 639px = 76% | **1A** — one scrolling chip row below `sm`, subhead hidden. Now 315px (37%) and 336px (40%), two cards in fold |
+| 2 | 5 Design System | Prose measure and type-scale sprawl | 116 chars/line at 768px/15px; nine distinct sizes, six inside a 5px band | **2B** — `max-w-measure` (33rem) → 75 chars, body to 16px, five-step scale in DESIGN.md |
+| 3 | 6 Accessibility | Receipt links below the WCAG 2.5.8 AA floor | 18px tall; `← Back` also 18px | **3A** — `min-h-6` (24px) on both, everywhere |
+| 4 | 3, 4, 6 | Placeholder plate | 191px = 23% of the mobile fold to repeat a word 60px below it; purple gradient = AI-slop blacklist item 1 | **4B** — suppressed below `sm`, flat neutral instead of gradient |
+
+**Regression caught during the fix:** raising featured card titles to `text-title` (20px)
+made `patent 11610482` wrap to two lines, knocking that card's header out of line with
+the other three. Featured cards now stack the date under the title.
+
+**False positive worth recording:** a naive audit flagged 22 of 30 targets as under 24px.
+Most were card title links, which measure 23px by bounding box but carry the stretched-link
+`::after` overlay. Probing four points across a card with `elementFromPoint` — plate centre,
+blurb, right padding, pill row — resolved all four to the detail page. Effective target is
+342×424. Only the receipts genuinely failed.
+
+**Verified after the fixes:** `/projects` renders exactly the five scale steps
+(32/20/16/14/12), zero interactive targets under 24px, plate has no gradient, all routes
+still 200 and both 404 paths still 404.
+
+### Design pass scores
+
+| Pass | Before | After |
+|------|--------|-------|
+| 1 Information Architecture | 7/10 | 9/10 |
+| 2 Interaction State Coverage | 9/10 | 9/10 |
+| 3 User Journey | 8/10 | 9/10 |
+| 4 AI Slop Risk | 9/10 | 10/10 |
+| 5 Design System Alignment | 4/10 | 9/10 |
+| 6 Responsive & Accessibility | 6/10 | 9/10 |
+| **Overall** | **7/10** | **9/10** |
+
+Not scored 10: two featured cards still show a wordmark plate rather than the thing
+itself, and tertiary text sits at 4.71 contrast — passing, but 0.21 above the AA
+threshold across four roles.
+
 ## GSTACK REVIEW REPORT
 
 | Review | Trigger | Why | Runs | Status | Findings |
@@ -243,9 +286,9 @@ This plan therefore has **no independent cross-model challenge**. Install Codex 
 | CEO Review | `/plan-ceo-review` | Scope & strategy | 1 | CLEAR | 6 proposals, 5 accepted, 1 deferred; 11 sections, 8 issues resolved, 0 critical gaps |
 | Codex Review | `/codex review` | Independent 2nd opinion | 0 | — | — |
 | Eng Review | `/plan-eng-review` | Architecture & tests (required) | 0 | NOT RUN | — |
-| Design Review | `/plan-design-review` | UI/UX gaps | 0 | — | — |
+| Design Review | `/plan-design-review` | UI/UX gaps | 1 | CLEAR (FULL) | score: 7/10 → 9/10, 4 decisions |
 | DX Review | `/plan-devex-review` | Developer experience gaps | 0 | — | — |
 
-**VERDICT:** CEO CLEARED — scope locked, 8 review issues resolved, 0 critical gaps. Eng review required before implementation. Outside voice did not run, so this plan carries no cross-model challenge.
+**VERDICT:** CEO + DESIGN CLEARED — scope locked and 8 review issues resolved at plan stage; design review found 4 measured defects post-ship and all 4 are fixed. Eng review required. Neither review ran an outside voice, so nothing here carries a cross-model challenge.
 
 NO UNRESOLVED DECISIONS

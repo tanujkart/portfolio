@@ -38,6 +38,23 @@ Deferred work with enough context to pick up cold. Created 2026-08-07 by `/plan-
 
 ---
 
+## P2 — Real screenshots for tagopt and engage360
+
+**What:** Capture a screenshot of tagopt.com and one of the engage360 Congressional App Challenge page, drop them in `public/projects/`, and add a `story` block with `media` to each project in `src/data/projects.ts`.
+
+**Why:** Two of the four featured cards currently render a wordmark plate instead of a picture of the thing. The plate is a placeholder wearing a design — it exists to keep the four-up row's titles aligned, not because a word is a good thing to show. Four featured cards showing four real objects is what the tier was built for.
+
+**Pros:** The plate disappears on its own — the card already prefers an image whenever one is present, so no component changes are needed. Also removes the last placeholder surface from the page.
+
+**Cons:** None beyond your time. Both sources are live and public, so this is a browser screenshot each.
+
+**Context:** Surfaced by `/plan-design-review` on 2026-08-07 as Issue 4. The interim fix was to suppress the plate below `sm` and drop its purple gradient for a flat neutral — good enough to ship, not the real answer. The build-time validator (`scripts/validate-projects.ts`) already warns on every build for exactly these two projects and will confirm the files exist once added. The prior learning on this repo applies: on a portfolio the binding constraint is your content, not the code, which is why this is written down rather than assumed.
+
+**Effort:** S (human ~15 min / CC: cannot do this — needs you) · **Priority:** P2
+**Depends on:** nothing.
+
+---
+
 ## P3 — Content-Security-Policy header
 
 **What:** Add a CSP header via `next.config.ts` headers or `middleware.ts`.

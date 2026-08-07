@@ -55,14 +55,14 @@ export default async function ProjectDetailPage({
       <div className="mx-auto max-w-3xl">
         <Link
           href="/projects"
-          className="rounded-sm font-mono text-sm text-gray-500 transition-colors hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+          className="inline-flex min-h-6 items-center rounded-sm font-mono text-sub text-gray-500 transition-colors hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
         >
           ← Projects
         </Link>
 
         <header className="mt-8">
           <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-            <h1 className="flex items-center gap-2.5 text-3xl font-bold sm:text-4xl">
+            <h1 className="flex items-center gap-2.5 text-display font-bold">
               {isActive ? (
                 <span className="relative inline-flex h-2 w-2 shrink-0" aria-hidden="true">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
@@ -71,13 +71,13 @@ export default async function ProjectDetailPage({
               ) : null}
               {project.name}
             </h1>
-            <span className="font-mono text-[13px] text-gray-500">
+            <span className="font-mono text-meta text-gray-500">
               {formatDateRange(project)}
               {isActive ? " · active" : ""}
             </span>
           </div>
 
-          <p className="mt-4 text-[16px] leading-relaxed text-gray-700">{project.blurb}</p>
+          <p className="mt-4 max-w-measure text-body leading-relaxed text-gray-700">{project.blurb}</p>
 
           <div className="mt-5 flex flex-wrap gap-1.5">
             {project.pills.map((pill) => {
@@ -86,7 +86,7 @@ export default async function ProjectDetailPage({
                 <span
                   key={pill}
                   className={cn(
-                    "rounded-full border px-2.5 py-1 text-[11px] font-medium tracking-wide",
+                    "rounded-full border px-2.5 py-1 text-meta font-medium tracking-wide",
                     key ? CATEGORY_BY_KEY[key].chip : "border-black/10 bg-black/5 text-gray-700",
                   )}
                 >
@@ -98,7 +98,7 @@ export default async function ProjectDetailPage({
 
           {project.links.length > 0 ? (
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-black/10 pt-5">
-              <span className="font-mono text-[12px] uppercase tracking-[0.14em] text-gray-500">
+              <span className="font-mono text-meta uppercase tracking-[0.14em] text-gray-500">
                 Receipts
               </span>
               {project.links.map((link) => {
@@ -109,7 +109,7 @@ export default async function ProjectDetailPage({
                     href={link.href}
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
-                    className="rounded-sm text-[13px] font-medium text-gray-700 underline decoration-gray-300 underline-offset-2 transition-colors hover:text-black hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                    className="inline-flex min-h-6 items-center rounded-sm text-sub font-medium text-gray-700 underline decoration-gray-300 underline-offset-2 transition-colors hover:text-black hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                   >
                     {link.label}
                     {external ? " ↗" : ""}
@@ -144,10 +144,10 @@ export default async function ProjectDetailPage({
                 ] as const
               ).map(([heading, body]) => (
                 <section key={heading}>
-                  <h2 className="mb-2 font-mono text-[12px] uppercase tracking-[0.14em] text-gray-500">
+                  <h2 className="mb-2 font-mono text-meta uppercase tracking-[0.14em] text-gray-500">
                     {heading}
                   </h2>
-                  <p className="text-[15px] leading-relaxed text-gray-700">{body}</p>
+                  <p className="max-w-measure text-body leading-relaxed text-gray-700">{body}</p>
                 </section>
               ))}
             </div>
@@ -166,7 +166,7 @@ export default async function ProjectDetailPage({
         ) : (
           // Thin variant. Deliberately quiet rather than apologetic — it says
           // where to go next instead of announcing an absence.
-          <p className="mt-10 border-t border-black/10 pt-6 text-[14px] leading-relaxed text-gray-500">
+          <p className="mt-10 max-w-measure border-t border-black/10 pt-6 text-sub leading-relaxed text-gray-500">
             {primaryExternal ? (
               <>
                 No writeup for this one yet.{" "}

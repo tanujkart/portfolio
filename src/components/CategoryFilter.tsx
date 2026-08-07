@@ -18,15 +18,24 @@ export default function CategoryFilter({
   counts: Record<CategoryKey, number>;
 }) {
   return (
-    <nav aria-label="Filter projects by category" className="mb-10">
-      <ul className="flex flex-wrap items-center gap-2">
+    // Below sm the chips scroll horizontally on one line instead of wrapping to
+    // two rows. Wrapping cost ~60px of vertical space and pushed the first card
+    // to 51% of the mobile fold — a filter was the third thing a visitor saw,
+    // and nobody arrives at a portfolio wanting to filter. Negative margin +
+    // matching padding lets the row bleed to the screen edge so the cut-off
+    // chip signals "there is more this way".
+    <nav
+      aria-label="Filter projects by category"
+      className="mb-10 -mx-6 overflow-x-auto px-6 pb-1 [scrollbar-width:none] sm:mx-0 sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden"
+    >
+      <ul className="flex w-max items-center gap-2 sm:w-auto sm:flex-wrap">
         <li>
           <Link
             href="/projects"
             aria-current={activeTag ? undefined : "page"}
             className={cn(
               // 44px min height: these are tap targets now, not decoration
-              "inline-flex min-h-[44px] items-center rounded-full border px-4 text-[13px] font-medium transition-colors",
+              "inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-4 text-sub font-medium transition-colors",
               "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black",
               activeTag
                 ? "border-black/15 bg-white/60 text-gray-600 hover:border-black/30 hover:text-black"
@@ -45,7 +54,7 @@ export default function CategoryFilter({
                 href={`/projects/tag/${c.key}`}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "inline-flex min-h-[44px] items-center gap-2 rounded-full border px-4 text-[13px] font-medium transition-colors",
+                  "inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full border px-4 text-sub font-medium transition-colors",
                   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black",
                   c.chip,
                   active
@@ -54,7 +63,7 @@ export default function CategoryFilter({
                 )}
               >
                 {c.label}
-                <span className="font-mono text-[11px] opacity-60">
+                <span className="font-mono text-meta opacity-60">
                   {counts[c.key]}
                 </span>
               </Link>
