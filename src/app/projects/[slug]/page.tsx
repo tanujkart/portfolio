@@ -79,7 +79,20 @@ export default async function ProjectDetailPage({
 
           <p className="mt-4 max-w-measure text-body leading-relaxed text-gray-700">{project.blurb}</p>
 
-          <div className="mt-5 flex flex-wrap gap-1.5">
+          {/* Three bullets, above the prose. A visitor who reads nothing else
+              should still leave knowing the stack, the award, and the number.
+              Exactly three is enforced in scripts/validate-projects.ts — the
+              moment it becomes four it stops being a summary. */}
+          <ul className="mt-5 max-w-measure space-y-2">
+            {project.highlights.map((h) => (
+              <li key={h} className="flex gap-2.5 text-body leading-relaxed text-gray-700">
+                <span aria-hidden="true" className="mt-[0.5em] h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-6 flex flex-wrap gap-1.5">
             {project.pills.map((pill) => {
               const key = categoryOf(pill);
               return (
@@ -122,15 +135,21 @@ export default async function ProjectDetailPage({
 
         {story ? (
           <>
+            {/* No forced aspect ratio on the hero. Sources range from 16:9
+                renders to 2:3 photographs; boxing them all into one ratio
+                either crops the image or strands it in empty space. Intrinsic
+                dimensions plus a viewport cap shows each one whole, at its own
+                shape. */}
             {story.media ? (
-              <div className="relative mt-10 aspect-[16/9] w-full overflow-hidden rounded-[14px] border border-black/10 bg-gray-50">
+              <div className="mt-10 flex justify-center overflow-hidden rounded-[14px] border border-black/10 bg-gray-50 p-4">
                 <Image
                   src={story.media.src}
                   alt={story.media.alt}
-                  fill
+                  width={story.media.width}
+                  height={story.media.height}
                   priority
                   sizes="(max-width: 768px) 100vw, 768px"
-                  className="object-cover"
+                  className="h-auto max-h-[70vh] w-auto max-w-full rounded-[6px] object-contain"
                 />
               </div>
             ) : null}

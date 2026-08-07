@@ -137,7 +137,7 @@ export default function ProjectCard({
       {featured ? (
         <div
           className={cn(
-            "relative aspect-[16/9] w-full overflow-hidden border-b border-black/10 bg-gray-50",
+            "relative aspect-[4/3] w-full overflow-hidden border-b border-black/10 bg-gray-50",
             media ? "block" : "hidden sm:block",
           )}
         >
@@ -148,7 +148,7 @@ export default function ProjectCard({
               fill
               priority={priority}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+              className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.02]"
             />
           ) : (
             <PlaceholderPlate project={project} />

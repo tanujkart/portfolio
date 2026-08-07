@@ -56,6 +56,14 @@ export type Project = {
   featured: boolean;
   /** Grid card summary. Keep to roughly two lines. */
   blurb: string;
+  /**
+   * Exactly three, shown as bullets at the top of the detail page. This is the
+   * scannable version of the project — stack, awards, hard numbers. It runs
+   * ABOVE the prose, because a visitor who reads nothing else should still
+   * leave knowing these three things. Validated at exactly 3 so it stays a
+   * summary rather than drifting into a list.
+   */
+  highlights: [string, string, string];
   /** Escape hatch for dates the formatter can't express (e.g. "granted"). */
   dateLabel?: string;
   story?: ProjectStory;
@@ -124,8 +132,9 @@ export const PILL_CATEGORY: Record<string, CategoryKey> = {
 // Projects
 // ---------------------------------------------------------------------------
 //
-// FEATURED: exactly four, chosen for spread — two live products, one granted
-// patent, one national competition win. Flip `featured` to change the lineup.
+// FEATURED: exactly three — thinkclear, nemo, and the granted patent. The
+// grid is built for three; change EXPECTED_FEATURED in scripts/validate-
+// projects.ts and the lg:grid-cols-3 in ProjectsIndex together if that changes.
 //
 // STATUS: only mark `active` what you are genuinely still building. A live
 // indicator on a dormant repo is worse than no indicator.
@@ -140,6 +149,11 @@ export const projects: Project[] = [
     featured: true,
     blurb:
       "Smart glasses with real-time facial recognition and AI memory assistance, built for memory-impaired users.",
+    highlights: [
+      "Demoed to an 8-figure digital therapeutics CEO and Penn faculty at M&TSI 2025",
+      "400K+ interactions across demos and deployments",
+      "Computer vision running on embedded hardware, with a full-stack application layer",
+    ],
     story: {
       problem:
         "People living with memory impairment lose the thread of who they are talking to. The social cost compounds: conversations get avoided, isolation deepens, and the tools that exist are clinical rather than wearable.",
@@ -158,6 +172,31 @@ export const projects: Project[] = [
     pills: ["computer vision", "embedded systems", "full-stack"],
   },
   {
+    slug: "nemo",
+    name: "nemo",
+    start: "2026-03",
+    end: "2026-03",
+    status: "shipped",
+    featured: true,
+    blurb:
+      "Autonomous underwater vehicle for aquatic environmental monitoring, paired with a live global modeling dashboard.",
+    highlights: [
+      "Competed at SMath Hacks 2026",
+      "Live global dashboard tracking water quality and ecological indicators",
+      "Autonomous underwater vehicle over a FastAPI backend",
+    ],
+    story: {
+      problem:
+        "Aquatic monitoring data is gathered by hand, from a handful of fixed points, on a slow cadence. By the time a water-quality problem surfaces in a report, the conditions that produced it have already moved.",
+      approach:
+        "An autonomous underwater vehicle that samples aquatic conditions in real time, paired with a live global modeling dashboard served from a FastAPI backend.",
+      outcome:
+        "Competed at SMath Hacks 2026, tracking water quality and ecological indicators.",
+    },
+    links: [{ kind: "demo", label: "Devpost", href: "https://devpost.com/software/nemo-7vrum0" }],
+    pills: ["robotics", "environmental sensing", "FastAPI"],
+  },
+  {
     slug: "patent-11610482",
     name: "patent 11610482",
     start: "2023-03",
@@ -167,6 +206,11 @@ export const projects: Project[] = [
     featured: true,
     blurb:
       "Granted patent: embedded sensor system that detects pedestrians in active crosswalks and alerts approaching motorists.",
+    highlights: [
+      "Granted as US Patent 11610482",
+      "In compliance testing with 20+ Department of Transportation officials",
+      "Sensor fusion and custom circuit design in a roadside unit",
+    ],
     story: {
       problem:
         "Drivers approaching a crosswalk often cannot see a pedestrian already in it — at night, in rain, or around a blind corner. The warning has to reach the driver before the sightline does.",
@@ -186,15 +230,47 @@ export const projects: Project[] = [
     ],
     pills: ["circuit design", "sensor fusion", "hardware"],
   },
+
+  // ----- everything else -------------------------------------------------
+
+  {
+    slug: "tagopt",
+    name: "tagopt",
+    start: "2025-11",
+    end: null,
+    status: "active",
+    featured: false,
+    blurb:
+      "AI hashtag optimization engine that reads platform algorithms and post intent to surface high-signal tags.",
+    highlights: [
+      "Pitched to VCs as a standalone growth tool for creators",
+      "Reads platform algorithms and post intent, not just keyword frequency",
+      "Next.js front end over an NLP scoring engine",
+    ],
+    story: {
+      problem:
+        "Organic reach on social platforms is gated by tag selection, and creators pick tags by folklore. There is no SEO layer for the part of content distribution that actually decides who sees it.",
+      approach:
+        "An engine that analyzes platform algorithms and post intent to surface high-signal tags, built as a standalone growth tool rather than a feature bolted onto a scheduler.",
+      outcome: "Pitched to VCs as a standalone growth tool for creators.",
+    },
+    links: [{ kind: "live", label: "tagopt.com", href: "https://tagopt.com" }],
+    pills: ["Next.js", "NLP", "full-stack"],
+  },
   {
     slug: "engage360",
     name: "engage360",
     start: "2024-10",
     end: "2025-01",
     status: "shipped",
-    featured: true,
+    featured: false,
     blurb:
       "Civic engagement app connecting constituents to representatives and simplifying local legislation tracking.",
+    highlights: [
+      "Won the Congressional App Challenge 2025",
+      "Presented to Congressman Timmons",
+      "React Native and TypeScript, built and shipped end to end",
+    ],
     story: {
       problem:
         "Local legislation is where policy actually touches people, and it is also where it is hardest to follow. Constituents who want to engage cannot easily find what is being voted on or who to contact about it.",
@@ -213,28 +289,6 @@ export const projects: Project[] = [
     pills: ["React Native", "mobile dev", "TypeScript"],
   },
   {
-    slug: "tagopt",
-    name: "tagopt",
-    start: "2025-11",
-    end: null,
-    status: "active",
-    featured: true,
-    blurb:
-      "AI hashtag optimization engine that reads platform algorithms and post intent to surface high-signal tags.",
-    story: {
-      problem:
-        "Organic reach on social platforms is gated by tag selection, and creators pick tags by folklore. There is no SEO layer for the part of content distribution that actually decides who sees it.",
-      approach:
-        "An engine that analyzes platform algorithms and post intent to surface high-signal tags, built as a standalone growth tool rather than a feature bolted onto a scheduler.",
-      outcome: "Pitched to VCs as a standalone growth tool for creators.",
-    },
-    links: [{ kind: "live", label: "tagopt.com", href: "https://tagopt.com" }],
-    pills: ["Next.js", "NLP", "full-stack"],
-  },
-
-  // ----- everything else -------------------------------------------------
-
-  {
     slug: "voice-assistant",
     name: "voice assistant",
     start: "2026-05",
@@ -243,6 +297,11 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "macOS push-to-talk assistant that answers questions about your Calendar, Tasks, and Gmail out loud. Transcription runs on-device.",
+    highlights: [
+      "On-device transcription via Whisper — only the text query leaves the machine",
+      "Claude reasons over live Google Calendar, Tasks and Gmail data",
+      "Python, push-to-talk hotkey, spoken responses on macOS",
+    ],
     links: [
       { kind: "repo", label: "GitHub", href: "https://github.com/tanujkart/voice-assistant" },
     ],
@@ -257,6 +316,11 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "Interactive eutrophication model that drives a virtual lake toward a toxic cyanobacterial bloom in real time.",
+    highlights: [
+      "Tune fertilizer runoff, temperature, sunlight and water flow live",
+      "Models dissolved oxygen crash, microcystin toxicity and fish die-off",
+      "HTML canvas visualization of the nutrient-pollution feedback loop",
+    ],
     // To turn on the live embed: drop the standalone build into
     // public/demos/algal-bloom/, add a screenshot, then add a `story` with an
     // `embed` block. The component renders the poster until the sim loads and
@@ -273,22 +337,15 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "Physical binary arithmetic circuit built from scratch. Real-time addition and subtraction on 4-bit inputs via a single mode toggle.",
+    highlights: [
+      "Addition and subtraction on 4-bit inputs from a single mode toggle",
+      "Carry-out and sum wired to indicator LEDs",
+      "Designed from schematic through to the physical build",
+    ],
     links: [
       { kind: "pdf", label: "Writeup (PDF)", href: "/projects/4-bit-adder-subtractor.pdf" },
     ],
     pills: ["circuit design", "digital logic", "schematics"],
-  },
-  {
-    slug: "nemo",
-    name: "nemo",
-    start: "2026-03",
-    end: "2026-03",
-    status: "shipped",
-    featured: false,
-    blurb:
-      "Autonomous underwater vehicle for aquatic environmental monitoring, paired with a live global modeling dashboard.",
-    links: [{ kind: "demo", label: "Devpost", href: "https://devpost.com/software/nemo-7vrum0" }],
-    pills: ["robotics", "environmental sensing", "FastAPI"],
   },
   {
     slug: "memo",
@@ -299,10 +356,13 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "Wearable recorder with on-device AI summarization and structured note output. No cloud dependency.",
-    // TODO(receipts): backed by the NCSSM Colopy Entrepreneurship Fund and
-    // awarded 2nd most innovative product at the NCSSM entrepreneurship fair.
-    // Both are checkable claims with no link. A fair listing or a photo would
-    // close this.
+    highlights: [
+      "Backed by the NCSSM Colopy Entrepreneurship Fund",
+      "2nd most innovative product at the NCSSM entrepreneurship fair",
+      "On-device summarization with no cloud dependency",
+    ],
+    // TODO(receipts): both claims above are checkable but have no link. A fair
+    // listing or a photo would close this.
     links: [],
     pills: ["embedded systems", "NLP", "product design"],
   },
@@ -315,6 +375,11 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "This site. Built from scratch, no templates. Static, typed, and validated at build time.",
+    highlights: [
+      "Next.js and TypeScript from scratch, no templates",
+      "Every page statically generated; project data validated at build time",
+      "Documented design system: five-step type scale, 24px touch-target floor",
+    ],
     links: [{ kind: "repo", label: "GitHub", href: "https://github.com/tanujkart/portfolio" }],
     pills: ["Next.js", "UI/UX", "TypeScript"],
   },
@@ -327,6 +392,11 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "Lotka-Volterra population dynamics in Mathematica, with adjustable parameters, phase plane plots, and equilibrium analysis.",
+    highlights: [
+      "Lotka-Volterra differential equations modeled in Mathematica",
+      "Adjustable parameters, time-series plots and phase plane visualizations",
+      "Equilibrium analysis of cyclical population behavior",
+    ],
     links: [{ kind: "repo", label: "GitHub", href: "https://github.com/tanujkart/predatorprey" }],
     pills: ["mathematical modeling", "differential equations", "simulation"],
   },
@@ -339,6 +409,11 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "Student productivity tool with algorithm-driven task prioritization and real-time assignment tracking.",
+    highlights: [
+      "Algorithm-driven task prioritization",
+      "Real-time assignment tracking",
+      "Designed to reduce cognitive load around deadlines",
+    ],
     // TODO(receipts): no artifact. A repo, a screenshot, or a short writeup
     // would make this checkable instead of asserted.
     links: [],
@@ -353,6 +428,11 @@ export const projects: Project[] = [
     featured: false,
     blurb:
       "ML model trained on 2,400 labeled lung images, detecting pneumonia at 85% accuracy with augmentation for robustness.",
+    highlights: [
+      "85% accuracy on 2,400 labeled lung images",
+      "Data augmentation applied to improve model robustness",
+      "Findings and clinical applications presented to a technical audience",
+    ],
     // TODO(receipts): the 85%-on-2,400-images claim is the most specific
     // number on this page and the least verifiable. Slides or a notebook
     // would fix that.

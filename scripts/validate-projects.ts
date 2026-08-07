@@ -23,7 +23,7 @@ const PUBLIC_DIR = join(process.cwd(), "public");
 
 /** Width of the generated OG card leaves room for roughly this many chars. */
 const MAX_NAME_LENGTH = 42;
-const EXPECTED_FEATURED = 4;
+const EXPECTED_FEATURED = 3;
 
 const errors: string[] = [];
 const warnings: string[] = [];
@@ -122,6 +122,16 @@ for (const p of projects) {
   if (p.featured && !p.story) {
     fail(p, "is featured but has no story — featured cards carry the writeup");
   }
+
+  // Exactly three keeps this a summary. Two reads thin, four starts becoming
+  // the list the prose already is.
+  if (p.highlights.length !== 3) {
+    fail(p, `has ${p.highlights.length} highlights, expected exactly 3`);
+  }
+  p.highlights.forEach((h, i) => {
+    if (!h.trim()) fail(p, `highlight ${i + 1} is empty`);
+    if (h.length > 90) fail(p, `highlight ${i + 1} is ${h.length} chars, keep bullets under 90`);
+  });
   if (p.featured && !p.story?.media) {
     warn(p, "is featured with no image — falling back to a category plate; a real screenshot would carry more");
   }
@@ -139,7 +149,7 @@ const featuredCount = projects.filter((p) => p.featured).length;
 if (featuredCount !== EXPECTED_FEATURED) {
   fail(
     null,
-    `${featuredCount} projects are featured, expected exactly ${EXPECTED_FEATURED} (the grid is built for four)`,
+    `${featuredCount} projects are featured, expected exactly ${EXPECTED_FEATURED} (the grid is built for three)`,
   );
 }
 
