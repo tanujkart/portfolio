@@ -121,7 +121,11 @@ export const PILL_CATEGORY: Record<string, CategoryKey> = {
   "speech recognition": "ai",
   "Claude API": "ai",
   "data augmentation": "ai",
+  interpretability: "ai",
+  "neural networks": "ai",
   // modeling & simulation
+  "remote sensing": "sci",
+  "time-series": "sci",
   simulation: "sci",
   "mathematical modeling": "sci",
   "differential equations": "sci",

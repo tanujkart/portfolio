@@ -121,6 +121,31 @@ plate is currently invisible everywhere:
    signature there is, and it was the least specific thing on a page that otherwise
    earns its keep through content.
 
+## Embedded documents
+
+A PDF is never mounted open. It sits behind a native `<details>`, closed by default.
+
+Chrome renders an inline `<object data="*.pdf">` with its own black toolbar and
+thumbnail rail — on a warm `#fcfcfc` page that slab becomes the loudest thing on screen
+and sets the aesthetic for everything around it. The research page was 80vh of it.
+
+Closing the `<details>` also defers the fetch: verified with
+`performance.getEntriesByType('resource')` that the 1 MB paper is not requested on load
+and only appears after the toggle opens. No JavaScript involved.
+
+A direct link to the file always sits in the receipts row too, so the document is
+reachable without expanding anything.
+
+## Research and projects share one structure
+
+`/research` and `/projects/[slug]` render the same blocks in the same order: name and
+date, blurb, exactly three highlights, tags, receipts, then prose. `src/data/research.ts`
+mirrors `src/data/projects.ts`, and both draw tags from the same `PILL_CATEGORY` map, so
+a category can never mean one thing on one page and something else on the other.
+
+Before this, research was four loose paragraphs per entry with no dates, no tags, and
+its three awards buried in the closing sentence.
+
 ## Absence
 
 Pages do not apologize for what they lack. A project without a writeup shows its name,
