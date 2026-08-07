@@ -4,7 +4,7 @@ Personal site for Tanuj Karthikeyan. Next.js 16 (App Router) / React 19 / Tailwi
 
 ## Layout
 
-- `src/app/` — routes. `page.tsx` (home), `projects/`, `contact/`, plus placeholder stubs at `blog/`, `writing/`, `photos/`. `/research` redirects to `/projects/hotspot`.
+- `src/app/` — routes. `page.tsx` (home), `projects/`, plus placeholder stubs at `blog/`, `writing/`, `photos/`. `/research` redirects to `/projects/hotspot`; `/contact` redirects to `/`.
 - `src/data/` — content data, separated from render.
 - `src/components/` — currently unreferenced by any route.
 - `public/` — static assets, PDFs under `public/research/` and `public/projects/`.

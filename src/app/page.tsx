@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import SocialLinks from "@/components/SocialLinks";
 
 export default function Home() {
   return (
@@ -10,10 +11,10 @@ export default function Home() {
         {/* Left half — About + inline nav */}
         <section className="w-full md:w-1/2 flex items-center justify-center px-6 py-12 md:py-24 md:pl-12 lg:pl-20">
           <div className="max-w-md w-full">
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-black mb-6">
+            <h2 className="text-display font-bold tracking-tight text-black mb-6">
               Tanuj Karthikeyan
             </h2>
-            <div className="space-y-4 text-[15px] leading-relaxed text-gray-700">
+            <div className="max-w-measure space-y-4 text-body leading-relaxed text-gray-700">
               <p>I&apos;m Tanuj (tuh-nooj).</p>
               <p>I like figuring out why things work the way they do.</p>
               <p>
@@ -63,11 +64,11 @@ export default function Home() {
               <Link href="/projects" className="inline-flex min-h-6 items-center transition-all hover:underline">
                 Projects
               </Link>
-              <span className="text-gray-500 select-none">|</span>
-              <Link href="/contact" className="inline-flex min-h-6 items-center transition-all hover:underline">
-                Contact
-              </Link>
             </nav>
+
+            {/* Replaces the /contact page, which was a table of label + URL.
+                Nobody reads a URL they are about to click. */}
+            <SocialLinks className="mt-5 flex flex-wrap items-center gap-2" />
           </div>
         </section>
 

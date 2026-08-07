@@ -146,6 +146,23 @@ benefit — nobody arrives wanting to know which bucket a thing was filed under.
 `/research` permanently redirects to `/projects/hotspot`; the page was live for months
 and may be linked from a resume or an application.
 
+## Contact is four icons
+
+There is no contact page. Gmail, GitHub, LinkedIn and Substack sit as a row of icon
+links on the homepage. The page it replaced was a table of label plus URL, and nobody
+reads a URL they are about to click.
+
+The marks are monochrome, not brand-colored: four saturated logos would be the loudest
+thing on a page that is otherwise black text on `#fcfcfc`, and they would fight the
+category pills for attention. They darken to black on hover.
+
+Each is a 44px target with an `aria-label` and a `title` carrying the destination —
+an icon with no text needs an accessible name, and sighted users get the same
+information on hover. The mailto deliberately has no `target="_blank"`; opening a mail
+client in a new browser tab leaves a dead tab behind.
+
+`/contact` permanently redirects to `/`.
+
 ## Undated entries
 
 `start` may be `null` when a timeframe genuinely isn't recorded. The card renders no

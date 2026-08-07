@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
       // section, so send the old URL to the better of the two rather than
       // letting it 404. Permanent: the page is not coming back.
       { source: "/research", destination: "/projects/hotspot", permanent: true },
+      // /contact is now the icon row on the homepage.
+      { source: "/contact", destination: "/", permanent: true },
     ];
   },
 };
