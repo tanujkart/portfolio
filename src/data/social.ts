@@ -3,7 +3,7 @@
 // Replaced the /contact page, which listed the same destinations as a table of
 // label + URL. Nobody reads a URL they are about to click.
 
-export type SocialKey = "email" | "github" | "linkedin" | "substack";
+export type SocialKey = "email" | "github" | "linkedin" | "medium";
 
 export type SocialLink = {
   key: SocialKey;
@@ -16,5 +16,5 @@ export const socialLinks: SocialLink[] = [
   { key: "email", label: "Email — soccertanuj@gmail.com", href: "mailto:soccertanuj@gmail.com" },
   { key: "github", label: "GitHub — @tanujkart", href: "https://github.com/tanujkart" },
   { key: "linkedin", label: "LinkedIn — /in/tanujkart", href: "https://www.linkedin.com/in/tanujkart" },
-  { key: "substack", label: "Substack — @tanujkarthikeyan", href: "https://substack.com/@tanujkarthikeyan" },
+  { key: "medium", label: "Medium — @tkart", href: "https://medium.com/@tkart" },
 ];

@@ -148,7 +148,7 @@ and may be linked from a resume or an application.
 
 ## Contact is four icons
 
-There is no contact page. Gmail, GitHub, LinkedIn and Substack sit as a row of icon
+There is no contact page. Gmail, GitHub, LinkedIn and Medium sit as a row of icon
 links on the homepage. The page it replaced was a table of label plus URL, and nobody
 reads a URL they are about to click.
 
