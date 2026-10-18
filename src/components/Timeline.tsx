@@ -55,15 +55,27 @@ export default function Timeline({ className }: { className?: string }) {
               aria-hidden
               className={
                 "relative mt-[6px] justify-self-center rounded-full " +
-                (e.current
-                  ? "h-[9px] w-[9px] bg-foreground ring-4 ring-foreground/15"
-                  : "h-[9px] w-[9px] border border-foreground bg-background")
+                (e.milestone
+                  ? "h-[9px] w-[9px] bg-[#d62054] ring-4 ring-[#d62054]/20"
+                  : e.current
+                    ? "h-[9px] w-[9px] bg-foreground ring-4 ring-foreground/15"
+                    : "h-[9px] w-[9px] border border-foreground bg-background")
               }
             />
 
             <div>
-              <h3 className="text-body font-bold leading-tight tracking-tight text-black">
+              <h3
+                className={cn(
+                  "text-body font-bold leading-tight tracking-tight",
+                  e.milestone ? "text-[#d62054]" : "text-black",
+                )}
+              >
                 <Org entry={e} />
+                {e.milestone && (
+                  <span aria-hidden className="ml-1.5">
+                    🏃
+                  </span>
+                )}
               </h3>
               <p className="mt-0.5 text-sub leading-snug text-gray-700">{e.blurb}</p>
             </div>
