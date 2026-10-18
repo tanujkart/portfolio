@@ -5,7 +5,6 @@ export type TimelineEntry = {
   logo?: string; // under /public
   blurb: string;
   current?: boolean;
-  milestone?: boolean; // a personal highlight rather than a role; styled to stand apart
 };
 
 // Oldest first, by start date.
@@ -22,12 +21,6 @@ export const TIMELINE: TimelineEntry[] = [
     org: "Duke University",
     logo: "/logos/duke.png",
     blurb: "Performed AI modeling research for spatiotemporal climate forecasting.",
-  },
-  {
-    dates: "May 2025",
-    org: "First Half-Marathon",
-    blurb: "Ran my first half-marathon in 1:51.",
-    milestone: true,
   },
   {
     dates: "Jul 2025",
