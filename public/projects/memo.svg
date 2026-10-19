@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#fff1ec"/>
+  <circle cx="220" cy="180" r="62" fill="#ee6a4d"/>
+  <g stroke="#fff" stroke-width="9" stroke-linecap="round">
+    <path d="M192 168v24M206 152v56M220 160v40M234 146v68M248 168v24"/>
+  </g>
+  <text x="305" y="203" font-family="Helvetica, Arial, sans-serif" font-size="68" font-weight="700" fill="#3a1d15">memo</text>
+</svg>
