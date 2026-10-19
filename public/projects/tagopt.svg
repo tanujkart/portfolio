@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#e9ebfa"/>
+  <rect x="150" y="125" width="110" height="110" rx="26" fill="#6b7bf0"/>
+  <path d="M188 160h34M184 200h34M201 148l-9 64M229 148l-9 64" stroke="#fff" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <text x="284" y="201" font-family="Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#1b2142">TagOpt</text>
+</svg>
