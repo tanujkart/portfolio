@@ -65,6 +65,8 @@ export type Project = {
   end: string | null;
   status: ProjectStatus;
   featured: boolean;
+  /** Keep the project and its /projects/[slug] page, but leave it off the /projects list. */
+  hidden?: boolean;
   /** Grid card summary. Keep to roughly two lines. */
   blurb: string;
   /**
@@ -77,6 +79,20 @@ export type Project = {
   highlights: [string, string, string];
   /** Escape hatch for dates the formatter can't express (e.g. "granted"). */
   dateLabel?: string;
+  /** Remainder of the description after `blurb`, shown on the detail page. */
+  details?: string;
+  /** Short status label on the card, e.g. "submitted, result pending". */
+  badge?: string;
+  /**
+   * Card and detail-page image for projects with no `story`. Under public/,
+   * validated to exist at build time. Without one the card draws its own mark.
+   */
+  cover?: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
   story?: ProjectStory;
   links: ProjectLink[];
   pills: string[];
@@ -87,11 +103,31 @@ export type Project = {
 // ---------------------------------------------------------------------------
 
 export const CATEGORIES: { key: CategoryKey; label: string; chip: string }[] = [
-  { key: "fe", label: "frontend", chip: "border-purple-300/60 bg-purple-100/60 text-purple-800" },
-  { key: "be", label: "backend", chip: "border-emerald-300/60 bg-emerald-100/60 text-emerald-800" },
-  { key: "hw", label: "hardware", chip: "border-orange-300/70 bg-orange-100/60 text-orange-800" },
-  { key: "ai", label: "AI/ML", chip: "border-pink-300/60 bg-pink-100/60 text-pink-800" },
-  { key: "sci", label: "modeling", chip: "border-sky-300/60 bg-sky-100/60 text-sky-800" },
+  {
+    key: "fe",
+    label: "frontend",
+    chip: "border-purple-300/60 bg-purple-100/60 text-purple-800",
+  },
+  {
+    key: "be",
+    label: "backend",
+    chip: "border-emerald-300/60 bg-emerald-100/60 text-emerald-800",
+  },
+  {
+    key: "hw",
+    label: "hardware",
+    chip: "border-orange-300/70 bg-orange-100/60 text-orange-800",
+  },
+  {
+    key: "ai",
+    label: "AI/ML",
+    chip: "border-pink-300/60 bg-pink-100/60 text-pink-800",
+  },
+  {
+    key: "sci",
+    label: "modeling",
+    chip: "border-sky-300/60 bg-sky-100/60 text-sky-800",
+  },
 ];
 
 export const CATEGORY_BY_KEY = Object.fromEntries(
@@ -116,6 +152,11 @@ export const PILL_CATEGORY: Record<string, CategoryKey> = {
   "full-stack": "be",
   algorithms: "be",
   "Google APIs": "be",
+  JavaScript: "be",
+  "Node.js": "be",
+  NumPy: "be",
+  Photon: "be",
+  "Google Maps API": "be",
   // hardware
   "embedded systems": "hw",
   "circuit design": "hw",
@@ -125,6 +166,8 @@ export const PILL_CATEGORY: Record<string, CategoryKey> = {
   "sensor fusion": "hw",
   "environmental sensing": "hw",
   hardware: "hw",
+  NFC: "hw",
+  "health tech": "hw",
   // AI/ML
   "computer vision": "ai",
   NLP: "ai",
@@ -134,6 +177,8 @@ export const PILL_CATEGORY: Record<string, CategoryKey> = {
   "data augmentation": "ai",
   interpretability: "ai",
   "neural networks": "ai",
+  "Gemini API": "ai",
+  ElevenLabs: "ai",
   // modeling & simulation
   "remote sensing": "sci",
   "time-series": "sci",
@@ -141,6 +186,9 @@ export const PILL_CATEGORY: Record<string, CategoryKey> = {
   "mathematical modeling": "sci",
   "differential equations": "sci",
   eutrophication: "sci",
+  "blended finance": "sci",
+  water: "sci",
+  "policy/finance modeling": "sci",
 };
 
 // ---------------------------------------------------------------------------
@@ -177,7 +225,9 @@ export const projects: Project[] = [
       outcome:
         "Demoed to an 8-figure digital therapeutics CEO and Penn faculty at M&TSI 2025. 400K+ interactions across demos and deployments.",
     },
-    links: [{ kind: "live", label: "thinkclear.net", href: "https://thinkclear.net" }],
+    links: [
+      { kind: "live", label: "thinkclear.net", href: "https://thinkclear.net" },
+    ],
     pills: ["computer vision", "embedded systems", "full-stack"],
   },
   {
@@ -202,7 +252,13 @@ export const projects: Project[] = [
       outcome:
         "Competed at SMath Hacks 2026, tracking water quality and ecological indicators.",
     },
-    links: [{ kind: "demo", label: "Devpost", href: "https://devpost.com/software/nemo-7vrum0" }],
+    links: [
+      {
+        kind: "demo",
+        label: "Devpost",
+        href: "https://devpost.com/software/nemo-7vrum0",
+      },
+    ],
     pills: ["robotics", "environmental sensing", "FastAPI"],
   },
   {
@@ -229,9 +285,37 @@ export const projects: Project[] = [
         "Granted as US Patent 11610482. Currently in compliance testing with 20+ Department of Transportation officials, working toward municipal deployment.",
     },
     links: [
-      { kind: "patent", label: "US 11610482", href: "https://patents.justia.com/patent/11610482" },
+      {
+        kind: "patent",
+        label: "US 11610482",
+        href: "https://patents.justia.com/patent/11610482",
+      },
     ],
     pills: ["circuit design", "sensor fusion", "hardware"],
+  },
+
+  {
+    slug: "onbrdy",
+    name: "onbrdy",
+    start: "2026-05",
+    end: null,
+    status: "active",
+    featured: false,
+    blurb:
+      "Company brain that connects to a team's tools (GitHub, Slack, Notion, Google Workspace) and builds a personalized ramp plan for each new hire.",
+    highlights: [
+      "Connects to GitHub, Slack, Notion, and Google Workspace",
+      "Builds a personalized ramp plan for each new hire",
+      "Running with three pilot companies after talking to 30+ startups",
+    ],
+    links: [
+      {
+        kind: "live",
+        label: "onbrdy.vercel.app",
+        href: "https://onbrdy.vercel.app",
+      },
+    ],
+    pills: ["Next.js", "Python", "FastAPI", "Claude API"],
   },
 
   // ----- everything else -------------------------------------------------
@@ -314,7 +398,13 @@ export const projects: Project[] = [
         "Focused on reducing false positives so environmental forecasts stay usable in real monitoring settings. Won the Stockholm Regional Water Prize, placed 3rd at regionals, and advanced to the state science fair.",
       paper: { src: "/research/hotspot-paper.pdf", label: "HOTSPOT paper" },
     },
-    links: [{ kind: "pdf", label: "Paper (PDF)", href: "/research/hotspot-paper.pdf" }],
+    links: [
+      {
+        kind: "pdf",
+        label: "Paper (PDF)",
+        href: "/research/hotspot-paper.pdf",
+      },
+    ],
     pills: ["remote sensing", "time-series", "environmental sensing"],
   },
   {
@@ -326,6 +416,7 @@ export const projects: Project[] = [
     end: null,
     status: "archived",
     featured: false,
+    hidden: true,
     blurb:
       "Reading how neural networks represent concepts internally, through feature discovery, probing, and activation patching.",
     highlights: [
@@ -353,6 +444,7 @@ export const projects: Project[] = [
     end: "2026-05",
     status: "shipped",
     featured: false,
+    hidden: true,
     blurb:
       "macOS push-to-talk assistant that answers questions about your Calendar, Tasks, and Gmail out loud. Transcription runs on-device.",
     highlights: [
@@ -361,7 +453,11 @@ export const projects: Project[] = [
       "Python, push-to-talk hotkey, spoken responses on macOS",
     ],
     links: [
-      { kind: "repo", label: "GitHub", href: "https://github.com/tanujkart/voice-assistant" },
+      {
+        kind: "repo",
+        label: "GitHub",
+        href: "https://github.com/tanujkart/voice-assistant",
+      },
     ],
     pills: ["Python", "speech recognition", "Claude API", "Google APIs"],
   },
@@ -372,6 +468,7 @@ export const projects: Project[] = [
     end: "2026-05",
     status: "shipped",
     featured: false,
+    hidden: true,
     blurb:
       "Interactive eutrophication model that drives a virtual lake toward a toxic cyanobacterial bloom in real time.",
     highlights: [
@@ -383,7 +480,13 @@ export const projects: Project[] = [
     // public/demos/algal-bloom/, add a screenshot, then add a `story` with an
     // `embed` block. The component renders the poster until the sim loads and
     // keeps showing it if the sim never does.
-    links: [{ kind: "repo", label: "GitHub", href: "https://github.com/tanujkart/esfinal26" }],
+    links: [
+      {
+        kind: "repo",
+        label: "GitHub",
+        href: "https://github.com/tanujkart/esfinal26",
+      },
+    ],
     pills: ["eutrophication", "simulation", "HTML canvas"],
   },
   {
@@ -401,7 +504,11 @@ export const projects: Project[] = [
       "Designed from schematic through to the physical build",
     ],
     links: [
-      { kind: "pdf", label: "Writeup (PDF)", href: "/projects/4-bit-adder-subtractor.pdf" },
+      {
+        kind: "pdf",
+        label: "Writeup (PDF)",
+        href: "/projects/4-bit-adder-subtractor.pdf",
+      },
     ],
     pills: ["circuit design", "digital logic", "schematics"],
   },
@@ -431,6 +538,7 @@ export const projects: Project[] = [
     end: null,
     status: "active",
     featured: false,
+    hidden: true,
     blurb:
       "This site. Built from scratch, no templates. Static, typed, and validated at build time.",
     highlights: [
@@ -438,7 +546,13 @@ export const projects: Project[] = [
       "Every page statically generated; project data validated at build time",
       "Documented design system: five-step type scale, 24px touch-target floor",
     ],
-    links: [{ kind: "repo", label: "GitHub", href: "https://github.com/tanujkart/portfolio" }],
+    links: [
+      {
+        kind: "repo",
+        label: "GitHub",
+        href: "https://github.com/tanujkart/portfolio",
+      },
+    ],
     pills: ["Next.js", "UI/UX", "TypeScript"],
   },
   {
@@ -448,6 +562,7 @@ export const projects: Project[] = [
     end: "2025-01",
     status: "shipped",
     featured: false,
+    hidden: true,
     blurb:
       "Lotka-Volterra population dynamics in Mathematica, with adjustable parameters, phase plane plots, and equilibrium analysis.",
     highlights: [
@@ -455,7 +570,13 @@ export const projects: Project[] = [
       "Adjustable parameters, time-series plots and phase plane visualizations",
       "Equilibrium analysis of cyclical population behavior",
     ],
-    links: [{ kind: "repo", label: "GitHub", href: "https://github.com/tanujkart/predatorprey" }],
+    links: [
+      {
+        kind: "repo",
+        label: "GitHub",
+        href: "https://github.com/tanujkart/predatorprey",
+      },
+    ],
     pills: ["mathematical modeling", "differential equations", "simulation"],
   },
   {
@@ -465,6 +586,7 @@ export const projects: Project[] = [
     end: "2024-02",
     status: "archived",
     featured: false,
+    hidden: true,
     blurb:
       "Student productivity tool with algorithm-driven task prioritization and real-time assignment tracking.",
     highlights: [
@@ -484,6 +606,7 @@ export const projects: Project[] = [
     end: "2023-07",
     status: "archived",
     featured: false,
+    hidden: true,
     blurb:
       "ML model trained on 2,400 labeled lung images, detecting pneumonia at 85% accuracy with augmentation for robustness.",
     highlights: [
@@ -497,6 +620,107 @@ export const projects: Project[] = [
     links: [],
     pills: ["machine learning", "computer vision", "data augmentation"],
   },
+  {
+    slug: "reachcare",
+    name: "reachcare",
+    start: "2026-10",
+    end: "2026-10",
+    status: "shipped",
+    featured: false,
+    badge: "built at HackNC 2026",
+    blurb:
+      "Helps hospitals pick the best locations for free mobile health clinics by scoring census tracts on health need and transportation barriers, then texts nearby residents about upcoming clinics.",
+    details:
+      "Residents can text or send a voice note in their own language and get a reply in the same language. Built in 24 hours at HackNC 2026 by a team of four.",
+    highlights: [
+      "Scores census tracts on health need and transportation barriers",
+      "Replies to texts and voice notes in the resident's own language",
+      "Built in 24 hours by a team of four at HackNC 2026",
+    ],
+    cover: {
+      src: "/projects/reachcare.jpg",
+      alt: "ReachCare simulation result: a map of census tracts around a hospital with three suggested clinic sites and figures for adults newly within reach",
+      width: 1200,
+      height: 800,
+    },
+    links: [
+      {
+        kind: "live",
+        label: "reachcare.vercel.app",
+        href: "https://reachcare.vercel.app/",
+      },
+      {
+        kind: "demo",
+        label: "Devpost",
+        href: "https://devpost.com/software/reach-17fimz",
+      },
+      // Teammate's account, so it stays last as the secondary link.
+      {
+        kind: "repo",
+        label: "GitHub",
+        href: "https://github.com/jimmxchen/ReachCare",
+      },
+    ],
+    pills: [
+      "Python",
+      "NumPy",
+      "Node.js",
+      "JavaScript",
+      "Gemini API",
+      "ElevenLabs",
+      "Photon",
+      "Google Maps API",
+    ],
+  },
+  {
+    slug: "the-well-fund",
+    name: "the well fund",
+    start: "2026-10",
+    end: "2026-10",
+    status: "shipped",
+    featured: false,
+    hidden: true,
+    badge: "submitted, result pending",
+    blurb:
+      "Western NC private-well program built for the LIFT Challenge (UNC Kenan-Flagler Ackerman Center blended finance competition).",
+    details:
+      "Grant-funded chemical testing of private wells in Yancey County, results matched to up to 3 bids from certified contractors, and repairs financed by low-interest loans (up to $15,000 at 1% fixed, 20 years) backed by public and philanthropic first-loss capital. Consented, anonymized results become county baselines that data buyers can pay for. Submitted Oct 12, 2026.",
+    highlights: [
+      "Built for the LIFT Challenge, a blended finance competition",
+      "Repair loans of up to $15,000 at 1% fixed over 20 years",
+      "Submitted Oct 12, 2026, result pending",
+    ],
+    cover: {
+      src: "/projects/the-well-fund.png",
+      alt: "The Well Fund runs one closed loop: test, match, finance, repay. Repayments fund the next tests and loans.",
+      width: 1200,
+      height: 675,
+    },
+    links: [],
+    pills: ["blended finance", "water", "policy/finance modeling"],
+  },
+  {
+    slug: "synced",
+    name: "synced",
+    start: "2026-09",
+    end: "2026-10",
+    status: "shipped",
+    featured: false,
+    blurb:
+      "NFC keychain that gives first responders, free clinics and shelters access to a patient's critical health info.",
+    details:
+      "The tag is encrypted and works with no wifi or cell service, and it links to a patient-controlled break-glass health profile. Built for underserved NC populations. Working prototype, pitched at the Gillings School pitch competition.",
+    highlights: [
+      "Encrypted tag that works with no wifi or cell service",
+      "Links to a patient-controlled break-glass health profile",
+      "Working prototype, pitched at the Gillings School pitch competition",
+    ],
+    // PHOTO SLOT: drop a photo at public/projects/synced.jpg and uncomment to
+    // replace the drawn NFC keychain mark on the card.
+    // cover: { src: "/projects/synced.jpg", alt: "The Synced NFC keychain", width: 1200, height: 800 },
+    links: [],
+    pills: ["NFC", "hardware", "health tech"],
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -504,8 +728,18 @@ export const projects: Project[] = [
 // ---------------------------------------------------------------------------
 
 const MONTHS = [
-  "jan", "feb", "mar", "apr", "may", "jun",
-  "jul", "aug", "sep", "oct", "nov", "dec",
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "may",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "oct",
+  "nov",
+  "dec",
 ];
 
 function parse(ym: string): { year: number; month: number } {
