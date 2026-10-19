@@ -12,6 +12,7 @@
 
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { PROJECT_LIST } from "../src/data/projectList";
 import {
   projects,
   PILL_CATEGORY,
@@ -114,6 +115,12 @@ for (const p of projects) {
     }
   }
 
+  if (p.cover) {
+    if (!assetExists(p.cover.src)) fail(p, `cover.src is ${p.cover.src}, which is not in public/`);
+    if (!p.cover.alt.trim()) fail(p, "cover.alt is empty");
+    if (p.cover.width <= 0 || p.cover.height <= 0) fail(p, "cover needs real width and height");
+  }
+
   const paper = p.story?.paper;
   if (paper && !assetExists(paper.src)) {
     fail(p, `story.paper.src is ${paper.src}, which is not in public/`);
@@ -182,6 +189,22 @@ for (const c of CATEGORIES) {
 for (const pill of Object.keys(PILL_CATEGORY)) {
   if (!projects.some((p) => p.pills.includes(pill))) {
     warn(null, `PILL_CATEGORY defines "${pill}" but nothing uses it`);
+  }
+}
+
+// The /projects list: every row must point at a real project, and every project that is not
+// hidden must have a row, so a new project cannot silently go missing from the page.
+for (const row of PROJECT_LIST) {
+  const p = projects.find((x) => x.slug === row.slug);
+  if (!p) fail(null, `list row "${row.slug}" has no matching project in projects.ts`);
+  else if (p.hidden) fail(p, "is hidden but still has a row in projectList.ts");
+  for (const link of row.links) {
+    if (!link.href.trim()) fail(null, `list row "${row.slug}" has an empty ${link.kind} link`);
+  }
+}
+for (const p of projects) {
+  if (!p.hidden && !PROJECT_LIST.some((r) => r.slug === p.slug)) {
+    fail(p, "is not hidden but has no row in projectList.ts");
   }
 }
 
