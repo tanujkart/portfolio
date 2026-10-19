@@ -78,6 +78,12 @@ export default async function ProjectDetailPage({
           </div>
 
           <p className="mt-4 max-w-measure text-body leading-relaxed text-gray-700">{project.blurb}</p>
+          {project.details ? (
+            <p className="mt-3 max-w-measure text-body leading-relaxed text-gray-700">{project.details}</p>
+          ) : null}
+          {project.badge ? (
+            <p className="mt-3 font-mono text-meta text-gray-500">{project.badge}</p>
+          ) : null}
 
           {/* Three bullets, above the prose. A visitor who reads nothing else
               should still leave knowing the stack, the award, and the number.
@@ -132,6 +138,18 @@ export default async function ProjectDetailPage({
             </div>
           ) : null}
         </header>
+
+        {!story && project.cover ? (
+          <div className="mt-10 flex justify-center overflow-hidden rounded-[14px] border border-black/10 bg-gray-50 p-4">
+            <Image
+              src={project.cover.src}
+              alt={project.cover.alt}
+              width={project.cover.width}
+              height={project.cover.height}
+              className="h-auto max-h-[70vh] w-auto max-w-full rounded-[6px] object-contain"
+            />
+          </div>
+        ) : null}
 
         {story ? (
           <>
